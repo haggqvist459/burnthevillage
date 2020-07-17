@@ -6,6 +6,9 @@ function Header() {
   return (
       <header className="">
         <img src={logo}/>
+        <p>Burn the</p>
+        <br/>
+        <p>Village</p>
       </header>
   );
 }

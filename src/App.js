@@ -7,9 +7,9 @@ function App() {
   return (
     <div className="App">
       <Header/>
-        <img src={background}/>
     </div>
   );
 }
 
 export default App;
+  
