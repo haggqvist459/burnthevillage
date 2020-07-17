@@ -5,10 +5,8 @@ import './header.css'
 function Header() {
   return (
       <header className="">
+        <div></div>
         <img src={logo}/>
-        <p>Burn the</p>
-        <br/>
-        <p>Village</p>
       </header>
   );
 }
