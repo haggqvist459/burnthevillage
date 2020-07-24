@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
 import {NavLink} from 'react-router-dom';
-import "../../../sass/components/hamburger"
+import '../../sass/components/hamburger.scss'
 
 class SignedOutLinks extends Component {
 
   render() {
     return (
-        <div className="menu">
-        <ul>
+        <div className="cheeseburger">
+        <ul className="cheeseburger__menu_list">
 
-          <li className="menu__menu_item">
+          <li className="cheeseburger__menu_item">
         <NavLink to="/" onClick={this.props.closeCallback}> home </NavLink>
             </li>
 
-        <li className="menu__menu_item">
+        <li className="cheeseburger__menu_item">
         <NavLink to="/upload" onClick={this.props.closeCallback}> upload </NavLink>
+            </li>
+
+            <li className="cheeseburger__menu_item">
+        <NavLink to="/terms" onClick={this.props.closeCallback}> terms </NavLink>
             </li>
 
             </ul>
@@ -24,8 +27,5 @@ class SignedOutLinks extends Component {
   }
 }
 
-SignedOutLinks.propTypes = {
-  closeCallback: PropTypes.func.isRequired
-}
 
 export default SignedOutLinks
