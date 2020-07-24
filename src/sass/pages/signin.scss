@@ -1,0 +1,30 @@
+.sign_in_container {
+    margin: auto;
+    margin-top: 35vh;
+    width: 50vh;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+    &__bottom_row {
+        
+        margin: auto;
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        
+        a {
+            text-decoration: underline;
+            color: black;
+        }
+
+        p {
+            padding: 0;
+            margin: 0;
+            margin-bottom: -10px;
+        }
+    }
+
+
+}

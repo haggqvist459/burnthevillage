@@ -4,11 +4,11 @@ import '../sass/pages/upload.scss'
 
 class Upload extends Component {
   render (){
-  
     return(
         <div className="uploadBackground">
         <Hamburger />
         </div>
+      </div>  
     )
   }
 }
