@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import SignedOutLinks from './signedOutLinks';
 
 class MenuContent extends Component {
-    
+
   render() {
     return (
      <SignedOutLinks />
