@@ -8,7 +8,6 @@ class Upload extends Component {
     return(
         <div className="uploadBackground">
         <Hamburger />
-        <p>upload</p>
         </div>
     )
   }
