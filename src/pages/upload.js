@@ -3,12 +3,10 @@ import Hamburger from "../components/hamburger/hamburger";
 import '../sass/pages/upload.scss'
 
 class Upload extends Component {
-  render() {
-
-    return (
-      <div className="uploadBackground">
-        <div className="hamburger">
-          <Hamburger />
+  render (){
+    return(
+        <div className="uploadBackground">
+        <Hamburger />
         </div>
       </div>  
     )
