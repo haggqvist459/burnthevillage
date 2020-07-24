@@ -7,7 +7,7 @@ class Home extends Component {
     return(
         <div className="homeBackground">
         <Hamburger />
-        <p>home</p>
+        <p>Home Pageeee</p>
         </div>
     )
   }
