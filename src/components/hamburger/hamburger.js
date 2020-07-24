@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import CheeseburgerMenu from "cheeseburger-menu";
 import HamburgerMenu from 'react-hamburger-menu';
 import MenuContent from './menuContent';
+import CheeseburgerMenu from 'cheeseburger-menu'
+
 
 class Hamburger extends Component {
 
@@ -18,7 +19,7 @@ class Hamburger extends Component {
   }
 
   toggleMenu(menu) {
-    this.setState({ menuOpen: menu})
+    this.setState({ menuOpen: menu })
   }
 
   render() {
@@ -33,16 +34,31 @@ class Hamburger extends Component {
           rotate={0}
           color="white"
           borderRadius={0}
-          animationDuration={0.5}
         />
 
         <CheeseburgerMenu
           isOpen={this.state.menuOpen}
           closeCallback={this.closeMenu.bind(this)}
           topOffset="15vh"
+          bottomOffset="10vh"
+          backgroundColor="transparent"
+          noShadow={true}
+          width={200}
         >
           <MenuContent closeCallback={this.closeMenu.bind(this)} />
         </CheeseburgerMenu>
+
+        {/* <div className="drawer">
+          <Drawer
+            anchor="left"
+            open={this.state.menuOpen}
+            BackdropProps={{ invisible: true }}
+          >
+            <MenuContent closeCallback={this.closeMenu.bind(this)} />
+
+          </Drawer>
+        </div> */}
+
       </div>
     );
   }

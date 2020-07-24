@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import Header from '../components/header/header'
 
-class SignUp extends Component {
+class Forgot extends Component {
   render (){
   
     return(
         <div className="">
         <Header />
-        <p>sign up</p>
+        <p>forgot password</p>
         </div>
     )
   }
 }
 
-export default SignUp;
-
-  
+export default Forgot;

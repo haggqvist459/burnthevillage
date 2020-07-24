@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import Hamburger from "../components/hamburger/hamburger"
-import backgroundImage from '../assets/images/hpbackground.png'
 import '../sass/pages/homepage.scss';
 
 
 class Home extends Component {
-  render (){
-  
-    return(
-        <div className="homepageBackground">
-          <Hamburger className="hamburger"/>
+  render() {
+
+    return (
+      <div className="homepageBackground">
+        <div className="hamburger">
+          <Hamburger />
         </div>
+      </div>
     )
   }
 }
 
 export default Home;
 
-  
