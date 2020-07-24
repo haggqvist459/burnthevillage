@@ -9,7 +9,7 @@ class Home extends Component {
     return(
         <div className="homepageBackground">
           <img src={backgroundImage}></img>
-          <Hamburger />
+          {/* <Hamburger /> */}
         </div>
     )
   }
