@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Hamburger from "../bajskorv/hamburger/hamburger"
+import Hamburger from "../components/hamburger/hamburger"
 
 class Upload extends Component {
   render (){

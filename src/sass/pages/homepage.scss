@@ -1,12 +1,21 @@
-.homepageBackground img {
+.homepageBackground {
     position: absolute;
-    left: 0px;
     top: 0px;
-    text-align: center;
-    background-image: url(../../assets/images/hpbackground.png);
-    position: fixed;
-    width: 100%;
-    height: auto;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../../assets/images/hpbackground.png");
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+} 
+
+.homepageBackground img {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../../assets/images/hpbackground.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 } 
