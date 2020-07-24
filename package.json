@@ -1,6 +1,9 @@
 {
   "name": "burnthevillage",
   "version": "0.1.0",
+  "engines": {
+    "node": "12.x"
+  },
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -13,7 +16,7 @@
     "react-dom": "^16.13.1",
     "react-hamburger-menu": "^1.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.1",
     "sass": "^1.26.10"
   },
   "scripts": {
