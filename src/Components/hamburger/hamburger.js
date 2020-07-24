@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import CheeseburgerMenu from "cheeseburger-menu";
 import HamburgerMenu from "react-hamburger-menu";
 import MenuContent from "./menuContent";
 
-const contentStyles = {
-  fontFamily: "sans-serif",
-  textAlign: "center"
-};
+class Hamburger extends Component {
 
-class App extends Component {
   constructor(props) {
     super(props);
 
@@ -47,14 +42,10 @@ class App extends Component {
         >
           <MenuContent closeCallback={this.closeMenu.bind(this)} />
         </CheeseburgerMenu>
-
-        <div style={contentStyles}>
-          <h1>Cheeseburger Menu demo</h1>
-          <p>Click the hamburger icon to open menu</p>
-        </div>
       </div>
     );
   }
 }
 
-render(<App />, document.getElementById("root"));
+
+export default Hamburger;
