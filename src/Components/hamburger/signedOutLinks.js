@@ -1,37 +1,30 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import './menuContent.css'
+import {NavLink} from 'react-router-dom';
 
 class SignedOutLinks extends Component {
-  constructor(props) {
-    super(props)
-
-    this.items = []
-    for (let i=1; i<=5; i++) {
-      this.items.push(i)
-    }
-  }
 
   render() {
     return (
-      <div className="menu">
-        {this.items.map(i => <div className="menu-item" key={i}>
-          <a
-            href="https://github.com/Middlerun/cheeseburger-menu"
-            onClick={this.props.closeCallback}
-            target="_blank">
-            Menu item {i}
-          </a>
-        </div>)}
+        <div className="menu">
+        <ul>
 
-        <p className="hint">Click outside the menu to close it, or swipe it closed on touch device</p>
+          <li className="menu__menu_item">
+        <NavLink to="/" onClick={this.props.closeCallback}> home </NavLink>
+            </li>
+
+        <li className="menu__menu_item">
+        <NavLink to="/upload" onClick={this.props.closeCallback}> upload </NavLink>
+            </li>
+
+            </ul>
       </div>
     )
   }
 }
 
-MenuContent.propTypes = {
+SignedOutLinks.propTypes = {
   closeCallback: PropTypes.func.isRequired
 }
 
-export default MenuContent
+export default SignedOutLinks

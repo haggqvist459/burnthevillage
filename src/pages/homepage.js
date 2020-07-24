@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import background from '../assets/images/hpbackground.png';
-import './pages.css'
-
+import Hamburger from "../components/hamburger/hamburger"
 
 class Home extends Component {
   render (){
   
     return(
         <div className="homeBackground">
+        <Hamburger />
+        <p>home</p>
         </div>
     )
   }
