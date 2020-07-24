@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Hamburger from "../bajskorv/hamburger/hamburger"
+import Hamburger from "../components/hamburger/hamburger"
 import backgroundImage from '../assets/images/hpbackground.png'
 import '../sass/pages/homepage.scss';
 
