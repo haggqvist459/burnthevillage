@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import './menuContent.css'
+import './hamburger.css'
 
-class SignedOutLinks extends Component {
+class MenuContent extends Component {
   constructor(props) {
     super(props)
 
