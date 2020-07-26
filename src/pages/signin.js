@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/header/header';
+import Footer from '../components/footer/footer';
 import '../sass/pages/signin.scss';
 import { TextField, Button, withStyles } from '@material-ui/core';
+
 
 const ColorButton = withStyles(() => ({
   root: {
@@ -20,11 +22,12 @@ const ColorButton = withStyles(() => ({
 const StyledTextField = withStyles(() => ({
   root: {
     width: "100%",
-    marginTop: "20px",
+    marginTop: "10px",
   }
 }))(TextField);
 
 class SignIn extends Component {
+
 
 
   forgotPassword() {
@@ -33,6 +36,10 @@ class SignIn extends Component {
 
   signUp() {
     console.log("sign up clicked");
+  }
+
+  signIn() {
+
   }
 
   render() {
@@ -56,7 +63,7 @@ class SignIn extends Component {
             />
 
 
-            <ColorButton variant="outlined">Sign In</ColorButton>
+            <ColorButton onClick={() => this.signIn()} variant="outlined">Sign In</ColorButton>
 
             <div className="sign_in_container__bottom_row">
 
@@ -76,7 +83,8 @@ class SignIn extends Component {
 
 
         </div>
-
+        
+        <Footer />
       </div>
     )
   }

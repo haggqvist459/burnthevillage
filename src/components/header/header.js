@@ -5,6 +5,7 @@ import '../../sass/components/header.scss';
 function Header() {
   return (
     <div className="banner">
+    
       <div className="banner__hamburger">
         <Hamburger />
       </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Header from '../components/header/header'
-import '../sass/pages/about.scss'
+import Header from '../components/header/header';
+import Footer from '../components/footer/footer';
+import '../sass/pages/about.scss';
 import Tim from '../assets/images/about/abouttim.png';
 import Max from '../assets/images/about/aboutmax.png';
 import Alicia from '../assets/images/about/aboutalicia.png';
@@ -10,7 +11,9 @@ class About extends Component {
 
     return (
       <div>
+      
         <Header />
+
         <div className="aboutContainer">
           <h1>About us</h1>
           <div className="aboutContainer__card_column">
@@ -51,6 +54,9 @@ class About extends Component {
 
 
         </div>
+
+        <Footer />
+      
       </div>
     )
   }
