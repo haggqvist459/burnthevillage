@@ -3,32 +3,11 @@ import { Link } from 'react-router-dom';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import '../sass/pages/signin.scss';
-import { TextField, Button, withStyles } from '@material-ui/core';
+import { SignButton } from '../components/styledmaterial/buttons';
+import { SignField } from '../components/styledmaterial/textFields';
 
-
-const ColorButton = withStyles(() => ({
-  root: {
-    height: "100px",
-    width: "100%",
-    marginTop: "20px",
-    fontSize: "20px",
-    textTransform: "none",
-    '&:hover': {
-      backgroundColor: "#dfdfdf",
-    },
-  },
-}))(Button);
-
-const StyledTextField = withStyles(() => ({
-  root: {
-    width: "100%",
-    marginTop: "10px",
-  }
-}))(TextField);
 
 class SignIn extends Component {
-
-
 
   forgotPassword() {
     console.log("forgot password clicked");
@@ -51,19 +30,19 @@ class SignIn extends Component {
         <div className="sign_in_container">
           <form>
 
-            <StyledTextField
+            <SignField
               variant="outlined"
               label="email"
             />
 
-            <StyledTextField
+            <SignField
               variant="outlined"
               label="password"
               type="password"
             />
 
 
-            <ColorButton onClick={() => this.signIn()} variant="outlined">Sign In</ColorButton>
+            <SignButton onClick={() => this.signIn()} variant="outlined">Sign In</SignButton>
 
             <div className="sign_in_container__bottom_row">
 

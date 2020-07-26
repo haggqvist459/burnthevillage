@@ -3,27 +3,9 @@ import { Link } from 'react-router-dom';
 import Header from '../components/header/header'
 import Footer from '../components/footer/footer';
 import '../sass/pages/signup.scss';
-import { TextField, Button, withStyles } from '@material-ui/core';
+import { SignButton } from '../components/styledmaterial/buttons';
+import { SignField } from '../components/styledmaterial/textFields';
 
-const ColorButton = withStyles(() => ({
-  root: {
-    height: "100px",
-    width: "100%",
-    marginTop: "20px",
-    fontSize: "20px",
-    textTransform: "none",
-    '&:hover': {
-      backgroundColor: "#dfdfdf",
-    },
-  },
-}))(Button);
-
-const StyledTextField = withStyles(() => ({
-  root: {
-    width: "100%",
-    marginTop: "10px",
-  }
-}))(TextField);
 
 class SignUp extends Component {
 
@@ -41,31 +23,31 @@ class SignUp extends Component {
         <div className="sign_up_container">
           <form>
 
-            <StyledTextField
+            <SignField
               variant="outlined"
               label="username"
               required id="standard-required"
             />
 
-            <StyledTextField
+            <SignField
               variant="outlined"
               label="email"
               required id="standard-required"
             />
 
-            <StyledTextField
+            <SignField
               variant="outlined"
               label="password"
               type="password"
               required id="standard-required"
             />
 
-            <StyledTextField
+            <SignField
               variant="outlined"
               label="player-tag"
             />
 
-            <ColorButton onClick={() => this.signUp()} variant="outlined">Sign Up</ColorButton>
+            <SignButton onClick={() => this.signUp()} variant="outlined">Sign Up</SignButton>
 
             <div className="sign_up_container__bottom_row">
 
