@@ -14,6 +14,7 @@
     "bluebird": "^3.7.2",
     "cheeseburger-menu": "0.0.13",
     "clash-of-clans-api": "^0.6.3",
+    "cls-bluebird": "^2.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
