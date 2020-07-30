@@ -10,26 +10,32 @@ import About from './pages/about';
 import Contact from './pages/contact';
 import Forgot from './pages/forgot';
 import Profile from './pages/profile';
+import PrivateRoute from './components/utils/privateRoute'
+
+import { AuthProvider } from './components/utils/auth'
 
 import theme from './theme';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <div className="App">
-          <Route exact path='/' component={Home} />
-          <Route path='/upload' component={Upload} />
-          <Route path='/terms' component={Terms} />
-          <Route path='/signin' component={Signin} />
-          <Route path='/signup' component={Signup} />
-          <Route path='/contact' component={Contact} />
-          <Route path='/about' component={About} />
-          <Route path='/forgot' component={Forgot} />
-          <Route path='/profile' component={Profile}/>
-        </div>
-      </BrowserRouter>
-    </ThemeProvider>
+    <div className="App">
+      <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <BrowserRouter>
+            <Route exact path='/' component={Home} />
+            <Route path='/home' component={Home} />
+            <Route path='/upload' component={Upload} />
+            <Route path='/terms' component={Terms} />
+            <Route path='/signin' component={Signin} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/contact' component={Contact} />
+            <Route path='/about' component={About} />
+            <Route path='/forgot' component={Forgot} />
+            <PrivateRoute path='/profile' component={Profile} />
+          </BrowserRouter>
+        </AuthProvider>
+      </ThemeProvider>
+    </div>
   )
 }
 

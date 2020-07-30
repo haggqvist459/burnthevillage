@@ -28,6 +28,6 @@ const theme = createMuiTheme({
         },
     },
 });
-theme = responsiveFontSizes(theme);
+const responsiveTheme = responsiveFontSizes(theme);
 
-export default theme;
+export default responsiveTheme;

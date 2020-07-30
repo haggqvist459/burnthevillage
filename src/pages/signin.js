@@ -1,76 +1,75 @@
-import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useCallback, useContext } from 'react';
+import { withRouter, Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import '../sass/pages/signin.scss';
 import { SignButton } from '../components/styledmaterial/buttons';
 import { SignField } from '../components/styledmaterial/textFields';
+//login stuff
+import firebase from '../components/firebase/config'
+import { AuthContext } from '../components/utils/auth';
 
-class SignIn extends Component {
+const SignIn = ({history}) => {
 
-  state = { redirect: null };
 
-  forgotPassword() {
-    console.log("forgot password clicked");
-  }
+  const handleLogin = useCallback(
+    async event => {
+      event.preventDefault();
+      const { email, password } = event.target.elements;
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email.value, password.value);
+        history.push('/profile');
+      } catch (error) {
+        alert(error);
+      }
+    }, [history]);
 
-  signUp() {
-    console.log("sign up clicked");
-  }
 
-  signIn() {
-    this.setState({ redirect: "/profile" });
-  }
-
-  render() {
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />
+    const { currentUser } = useContext(AuthContext);
+    if(currentUser){
+      return <Redirect to='/profile'/>;
     }
-    return (
-      <div>
-        <Header />
 
-        <div className="sign_in_container">
-          <form>
+  return (
+    <div>
+      <Header />
 
-            <SignField
-              variant="outlined"
-              label="email"
-            />
-
-            <SignField
-              variant="outlined"
-              label="password"
-              type="password"
-            />
-
-
-            <SignButton onClick={() => this.signIn()} variant="outlined">Sign In</SignButton>
-
-            <div className="sign_in_container__bottom_row">
-
-              <div>
-                <Link to="/forgot">Forgot password?</Link>
-              </div>
-
-              <div>
-                <p>Need an account? </p>
-                <br></br>
-                <Link to="/signup">Sign up here!</Link>
-              </div>
+      <div className="sign_in_container">
+        <form onSubmit={handleLogin}>
+          <SignField
+            variant="outlined"
+            name="email"
+            type="email"
+            label="email"
+          />
+          <SignField
+            variant="outlined"
+            label="password"
+            name="password"
+            type="password"
+          />
+          <SignButton type="submit" variant="outlined">Sign In</SignButton>
+          <div className="sign_in_container__bottom_row">
+            <div>
+              <Link to="/forgot">Forgot password?</Link>
             </div>
-
-          </form>
-
-
-
-        </div>
-        
-        <Footer />
+            <div>
+              <p>Need an account? </p>
+              <br></br>
+              <Link to="/signup">Sign up here!</Link>
+            </div>
+          </div>
+        </form>
       </div>
-    )
-  }
+      <Footer />
+    </div>
+  )
 }
 
-export default SignIn;
+export default withRouter(SignIn);
 
+/*
+
+
+*/
