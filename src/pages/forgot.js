@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../components/header/header'
+import Footer from '../components/footer/footer';
 
 class Forgot extends Component {
   render (){
@@ -8,6 +9,8 @@ class Forgot extends Component {
         <div className="">
         <Header />
         <p>forgot password</p>
+
+        <Footer />
         </div>
     )
   }

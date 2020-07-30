@@ -1,94 +1,75 @@
-import React, { Component } from 'react';
+import React, { useCallback, useContext } from 'react';
+import { withRouter, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import '../sass/pages/signin.scss';
-import { TextField, Button, withStyles } from '@material-ui/core';
+import { SignButton } from '../components/styledmaterial/buttons';
+import { SignField } from '../components/styledmaterial/textFields';
+//login stuff
+import firebase from '../components/firebase/config'
+import { AuthContext } from '../components/utils/auth';
+
+const SignIn = ({history}) => {
 
 
-const ColorButton = withStyles(() => ({
-  root: {
-    height: "100px",
-    width: "100%",
-    marginTop: "20px",
-    fontSize: "20px",
-    textTransform: "none",
-    '&:hover': {
-      backgroundColor: "#dfdfdf",
-    },
-  },
-}))(Button);
-
-const StyledTextField = withStyles(() => ({
-  root: {
-    width: "100%",
-    marginTop: "10px",
-  }
-}))(TextField);
-
-class SignIn extends Component {
+  const handleLogin = useCallback(
+    async event => {
+      event.preventDefault();
+      const { email, password } = event.target.elements;
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email.value, password.value);
+        history.push('/profile');
+      } catch (error) {
+        alert(error);
+      }
+    }, [history]);
 
 
+    const { currentUser } = useContext(AuthContext);
+    if(currentUser){
+      return <Redirect to='/profile'/>;
+    }
 
-  forgotPassword() {
-    console.log("forgot password clicked");
-  }
+  return (
+    <div>
+      <Header />
 
-  signUp() {
-    console.log("sign up clicked");
-  }
-
-  signIn() {
-
-  }
-
-  render() {
-
-    return (
-      <div>
-        <Header />
-
-        <div className="sign_in_container">
-          <form>
-
-            <StyledTextField
-              variant="outlined"
-              label="email"
-            />
-
-            <StyledTextField
-              variant="outlined"
-              label="password"
-              type="password"
-            />
-
-
-            <ColorButton onClick={() => this.signIn()} variant="outlined">Sign In</ColorButton>
-
-            <div className="sign_in_container__bottom_row">
-
-              <div>
-                <Link to="/forgot">Forgot password?</Link>
-              </div>
-
-              <div>
-                <p>Need an account? </p>
-                <br></br>
-                <Link to="/signup">Sign up here!</Link>
-              </div>
+      <div className="sign_in_container">
+        <form onSubmit={handleLogin}>
+          <SignField
+            variant="outlined"
+            name="email"
+            type="email"
+            label="email"
+          />
+          <SignField
+            variant="outlined"
+            label="password"
+            name="password"
+            type="password"
+          />
+          <SignButton type="submit" variant="outlined">Sign In</SignButton>
+          <div className="sign_in_container__bottom_row">
+            <div>
+              <Link to="/forgot">Forgot password?</Link>
             </div>
-
-          </form>
-
-
-
-        </div>
-        
-        <Footer />
+            <div>
+              <p>Need an account? </p>
+              <br></br>
+              <Link to="/signup">Sign up here!</Link>
+            </div>
+          </div>
+        </form>
       </div>
-    )
-  }
+      <Footer />
+    </div>
+  )
 }
 
-export default SignIn;
+export default withRouter(SignIn);
 
+/*
+
+
+*/
