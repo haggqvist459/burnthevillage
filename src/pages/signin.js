@@ -1,34 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import '../sass/pages/signin.scss';
-import { TextField, Button, withStyles } from '@material-ui/core';
-
-
-const ColorButton = withStyles(() => ({
-  root: {
-    height: "100px",
-    width: "100%",
-    marginTop: "20px",
-    fontSize: "20px",
-    textTransform: "none",
-    '&:hover': {
-      backgroundColor: "#dfdfdf",
-    },
-  },
-}))(Button);
-
-const StyledTextField = withStyles(() => ({
-  root: {
-    width: "100%",
-    marginTop: "10px",
-  }
-}))(TextField);
+import { SignButton } from '../components/styledmaterial/buttons';
+import { SignField } from '../components/styledmaterial/textFields';
 
 class SignIn extends Component {
 
-
+  state = { redirect: null };
 
   forgotPassword() {
     console.log("forgot password clicked");
@@ -39,11 +19,13 @@ class SignIn extends Component {
   }
 
   signIn() {
-
+    this.setState({ redirect: "/profile" });
   }
 
   render() {
-
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
     return (
       <div>
         <Header />
@@ -51,19 +33,19 @@ class SignIn extends Component {
         <div className="sign_in_container">
           <form>
 
-            <StyledTextField
+            <SignField
               variant="outlined"
               label="email"
             />
 
-            <StyledTextField
+            <SignField
               variant="outlined"
               label="password"
               type="password"
             />
 
 
-            <ColorButton onClick={() => this.signIn()} variant="outlined">Sign In</ColorButton>
+            <SignButton onClick={() => this.signIn()} variant="outlined">Sign In</SignButton>
 
             <div className="sign_in_container__bottom_row">
 
