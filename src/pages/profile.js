@@ -2,39 +2,86 @@ import React, { Component } from 'react';
 import '../sass/pages/profile.scss';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
-//import {ProfileData} from '../components/api/profileData';
-import clashApi from 'clash-of-clans-api';
-var Promise = require("bluebird");
+//import clashApi from 'clash-of-clans-api';
 
-const client = clashApi({
-    token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjQzZTUyMTUwLWJjODMtNDMwNi05ZWUxLWE0ZWQyZGJmZjU5OSIsImlhdCI6MTU5NTc3MjI0OCwic3ViIjoiZGV2ZWxvcGVyL2QwNDhlNjI1LTE0MjUtYzU2Yy01NTViLWY1MTIyMmZiNDAyZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjYwLjI0MS4yMjkuMjM2Il0sInR5cGUiOiJjbGllbnQifV19.NCgihYBBP8e55BpViHcqR5U4ng2OJKTiZVyiPpOY0t_xVQxI-8PI1MH5KQvwpjZh9Y9NpHz-4tSOC0u9p_GjTA"
-});
+
+// const client = clashApi({
+//     token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjQzZTUyMTUwLWJjODMtNDMwNi05ZWUxLWE0ZWQyZGJmZjU5OSIsImlhdCI6MTU5NTc3MjI0OCwic3ViIjoiZGV2ZWxvcGVyL2QwNDhlNjI1LTE0MjUtYzU2Yy01NTViLWY1MTIyMmZiNDAyZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjYwLjI0MS4yMjkuMjM2Il0sInR5cGUiOiJjbGllbnQifV19.NCgihYBBP8e55BpViHcqR5U4ng2OJKTiZVyiPpOY0t_xVQxI-8PI1MH5KQvwpjZh9Y9NpHz-4tSOC0u9p_GjTA"
+// });
+var bearer = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjQzZTUyMTUwLWJjODMtNDMwNi05ZWUxLWE0ZWQyZGJmZjU5OSIsImlhdCI6MTU5NTc3MjI0OCwic3ViIjoiZGV2ZWxvcGVyL2QwNDhlNjI1LTE0MjUtYzU2Yy01NTViLWY1MTIyMmZiNDAyZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjYwLjI0MS4yMjkuMjM2Il0sInR5cGUiOiJjbGllbnQifV19.NCgihYBBP8e55BpViHcqR5U4ng2OJKTiZVyiPpOY0t_xVQxI-8PI1MH5KQvwpjZh9Y9NpHz-4tSOC0u9p_GjTA";
 
 class Profile extends Component {
 
     state = {
-        profile: null
+        profile: null,
+        playerTag: "LVPQ2R8R2"
     }
 
+
     componentDidMount() {
+        this.getData();
 
-        console.log(this.state.profile);
+    }
 
-        // //fetch here
-        // let playerTag = "LVPQ2R8R2"
-        // client
-        //     .fetch("https://api.clashofclans.com/v1/players/" + playerTag)
-        //     .then(response => response.json())
-        //     .then(data => console.log(data))
+    getData() {
 
-        client
-            .clans()
-            .withWarFrequency('always')
-            .withMinMembers(25)
-            .fetch()
-            .then(response => console.log(response))
-            .catch(err => console.log(err))
+        async function data() {
+            // try {
+            //     client
+            //     .token('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjQzZTUyMTUwLWJjODMtNDMwNi05ZWUxLWE0ZWQyZGJmZjU5OSIsImlhdCI6MTU5NTc3MjI0OCwic3ViIjoiZGV2ZWxvcGVyL2QwNDhlNjI1LTE0MjUtYzU2Yy01NTViLWY1MTIyMmZiNDAyZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjYwLjI0MS4yMjkuMjM2Il0sInR5cGUiOiJjbGllbnQifV19.NCgihYBBP8e55BpViHcqR5U4ng2OJKTiZVyiPpOY0t_xVQxI-8PI1MH5KQvwpjZh9Y9NpHz-4tSOC0u9p_GjTA')
 
+            //     .clanByTag('#92UY2UCR')
+            //     .then(response => console.log(response))
+            //     .catch(err => console.log(err));
+
+            // } catch (error) {
+            //     console.log(error);
+            // }
+            var proxyUrl = 'http://localhost:3000/',
+                targetUrl = 'https://api.clashofclans.com/v1/clans/%2392UY2UCR'
+        
+            // const user = await fetch(proxyUrl + targetUrl, {
+            //     method: "GET",
+            //     headers: {
+            //         Authorization: 'Bearer ' + bearer
+            //     },
+            // });
+
+            const clan = await fetch(proxyUrl + targetUrl, {
+                method: "GET",
+                Authorization: bearer
+                
+            })
+
+            const jsonClan = await clan.text();
+            if (jsonClan.error) {
+              throw jsonClan.error;
+            }
+            else {
+              console.log("user: " + jsonClan + " signed in.. ");
+              
+            }
+
+          
+
+            // const jsonUser = await user.json()
+            // .then(res => res.text())
+            // .then(text => console.log(text));
+
+            // if (jsonUser.error) {
+            //     throw jsonUser.error;
+            // }
+            // else {
+            //     //console.log("user: " + jsonUser + " signed in.. ");
+            // }
+        }
+
+
+        try {
+            data();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 

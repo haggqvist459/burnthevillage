@@ -35,17 +35,17 @@ class Home extends Component {
           </div>
 
           <div className="homepageBackground__instruction_container__row">
-          <div className="homepageBackground__instruction_container__row__instruction_box_hidden">
-              
+            <div className="homepageBackground__instruction_container__row__instruction_box_hidden">
+
             </div>
             <div className="homepageBackground__instruction_container__row__instruction_box">
               <Link to="/upload">Get started!</Link>
             </div>
             <div className="homepageBackground__instruction_container__row__instruction_box_hidden">
-              
+
             </div>
           </div>
-        
+
         </div>
       </div>
     )
