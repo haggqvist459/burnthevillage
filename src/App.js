@@ -8,6 +8,7 @@ import Signup from './pages/signup';
 import About from './pages/about';
 import Contact from './pages/contact';
 import Forgot from './pages/forgot';
+import Profile from './pages/profile';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/contact' component={Contact}/>
         <Route path='/about' component={About}/>
         <Route path='/forgot' component={Forgot}/>
+        <Route path='/profile' component={Profile}/>
       </div>
     </BrowserRouter>
   );

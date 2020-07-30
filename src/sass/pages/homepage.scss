@@ -8,6 +8,53 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    &__instruction_container {
+        height: 50vh;
+        width: 90vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        margin: auto;
+        margin-top: 10vh;
+
+        &__row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            &__instruction_box {
+                margin: 10px;
+                height: 15vh;
+                width: 25vh;
+                background-color: white;
+                opacity: 0.6;
+                border-radius: 2px;
+                display: flex;
+                justify-content: center;
+            
+                p {
+                    align-self: center;
+                }
+
+                a {
+                    align-self: center;
+                    font-size: large;
+                    text-decoration: none;
+                    color: black;
+                }
+            }
+
+            &__instruction_box_hidden {
+                margin: 10px;
+                height: 15vh;
+                width: 25vh;
+                background-color: transparent;
+                border-radius: 2px;
+            }
+        }
+    }
 }
 
 .hamburger {
