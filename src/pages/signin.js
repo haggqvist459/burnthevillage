@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import '../sass/pages/signin.scss';
 import { SignButton } from '../components/styledmaterial/buttons';
 import { SignField } from '../components/styledmaterial/textFields';
 
-
 class SignIn extends Component {
+
+  state = { redirect: null };
 
   forgotPassword() {
     console.log("forgot password clicked");
@@ -18,11 +19,13 @@ class SignIn extends Component {
   }
 
   signIn() {
-
+    this.setState({ redirect: "/profile" });
   }
 
   render() {
-
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
     return (
       <div>
         <Header />
