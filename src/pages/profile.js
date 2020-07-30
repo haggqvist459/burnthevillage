@@ -4,6 +4,8 @@ import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 //import {ProfileData} from '../components/api/profileData';
 import clashApi from 'clash-of-clans-api';
+import firebase from '../components/firebase/config';
+
 var Promise = require("bluebird");
 
 const client = clashApi({
@@ -37,6 +39,9 @@ class Profile extends Component {
 
     }
 
+    signOut() {
+        firebase.auth().signOut()
+    }
 
     render() {
 
@@ -53,7 +58,7 @@ class Profile extends Component {
 
                             </div>
 
-                            <div className="profile_container__profile_row__profile_fields">
+                            <div onClick={this.signOut} className="profile_container__profile_row__profile_fields">
                                 <p className="profile_container__profile_row__profile_fields__name">
                                     John Doe
                         </p>

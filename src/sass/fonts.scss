@@ -1,3 +1,5 @@
+$font-path: "../assets/fonts/";
+
 @font-face {
     font-family: "Supercell-magic-webfont";
     font-style: normal;
@@ -6,8 +8,8 @@
 }
 
 @font-face {
-    font-family: "ComicNeue";
+    font-family: "ComicNeue-Regular";
     font-style: normal;
-    src: local("ComicNeue"), local("ComicNeue"),
-    url('../assets/fonts/Comic-Neue/ComicNeue-Regular.ttf');
+    src: local("ComicNeue-Regular"), local("ComicNeue-Regular"),
+    url('../assets/fonts/Comic_Neue/ComicNeue-Regular.ttf');
 }
