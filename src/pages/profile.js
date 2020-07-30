@@ -3,7 +3,7 @@ import '../sass/pages/profile.scss';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 //import {ProfileData} from '../components/api/profileData';
-import clashApi from 'clash-of-clans-api';
+//import clashApi from 'clash-of-clans-api';
 import firebase from '../components/firebase/config';
 
 
