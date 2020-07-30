@@ -19,7 +19,7 @@ class Home extends Component {
 
             <div className="homepageBackground__instruction_container__row__instruction_box">
 
-              <p>[first instruction]</p>
+              <p>[bajskorv instruction]</p>
             </div>
 
             <div className="homepageBackground__instruction_container__row__instruction_box">
