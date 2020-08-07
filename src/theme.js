@@ -4,7 +4,7 @@ import './sass/fonts.scss'
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: "#0976E3",
+            main: "#101820",
         },
         secondary: {
             main: "#D4CE71"
@@ -12,7 +12,7 @@ const theme = createMuiTheme({
     },
     typography: {
 
-        fontFamily: "ComicNeue",
+        fontFamily: "ComicNeue-Regular",
 
         h1: {
             fontFamily: "Supercell-magic-webfont",
@@ -24,6 +24,12 @@ const theme = createMuiTheme({
             fontFamily: "Supercell-magic-webfont",
         },
         h4: {
+            fontFamily: "Supercell-magic-webfont",
+        },
+        h5: {
+            fontFamily: "Supercell-magic-webfont",
+        },
+        h6: {
             fontFamily: "Supercell-magic-webfont",
         },
     },
