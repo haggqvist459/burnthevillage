@@ -12,7 +12,7 @@ class ClanPage extends Component {
         super(props);
         const clanTag = this.props.match.params.clanTag;
         console.log('clan tag: ' + clanTag);
-        this.state = { 
+        this.state = {
             clanTag: this.props.match.params.clanTag,
             clan: {}
         };
@@ -53,38 +53,38 @@ class ClanPage extends Component {
             <div>
                 <Header />
 
-                <div className="profile_container">
-                    <div className="profile_container__profile_row">
+                <div className="clan_container">
+                    <div className="clan_container__profile_row">
 
-                        <div className="profile_container__profile_row__profile_box">
+                        <div className="clan_container__clan_row__clan_box">
 
-                            <div className="profile_container__profile_row__profile_picture">
+                            <div className="clan_container__clan_row__clan_picture">
 
                             </div>
 
-                            <div onClick={this.signOut} className="profile_container__profile_row__profile_fields">
-                                <p className="profile_container__profile_row__profile_fields__name">
-                                   {this.state.clan.name ? this.state.clan.name : 'loading.. '}
+                            <div onClick={this.signOut} className="clan_container__clan_row__clan_fields">
+                                <p className="clan_container__clan_row__clan_fields__name">
+                                    {this.state.clan.name ? this.state.clan.name : 'loading.. '}
+                                </p>
+                                <p className="clan_container__clan_row__clan_fields__clan">
+                                    Member list
                         </p>
-                                <p className="profile_container__profile_row__profile_fields__clan">
-                                    Sample Clan
-                        </p>
-                                <p className="profile_container__profile_row__profile_fields__upload_history">
-                                    Upload history
+                                <p className="clan_container__clan_row__clan_fields__upload_history">
+                                    War history
                         </p>
 
-                                <a href="/.netlify/functions/profileData">Trigger Function</a>
+
                             </div>
 
                         </div>
 
-                        <div className="profile_container__profile_row__edit_profile">
-                            <p>edit profile</p>
+                        <div className="clan_container__clan_row__edit_clan">
+                            <p>edit clan</p>
                         </div>
 
                     </div>
 
-                    <div className="profile_container__bio_row">
+                    <div className="clan_container__bio_row">
                         <h3>Bio:</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget metus et elit tempus imperdiet.
                         Nunc facilisis cursus mi, vel consectetur dolor pretium ac.
