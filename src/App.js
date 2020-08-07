@@ -9,8 +9,10 @@ import Signup from './pages/signup';
 import About from './pages/about';
 import Contact from './pages/contact';
 import Forgot from './pages/forgot';
+import ClanPage from './pages/clanpage';
 import Profile from './pages/profile';
 import PrivateRoute from './components/utils/privateRoute'
+
 
 import { AuthProvider } from './components/utils/auth'
 
@@ -32,6 +34,7 @@ function App() {
             <Route path='/about' component={About} />
             <Route path='/forgot' component={Forgot} />
             <PrivateRoute path='/profile' component={Profile} />
+            <Route path='/:clanTag' component={ClanPage} />
           </BrowserRouter>
         </AuthProvider>
       </ThemeProvider>

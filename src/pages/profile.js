@@ -1,40 +1,52 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import '../sass/pages/profile.scss';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
-//import {ProfileData} from '../components/api/profileData';
-import clashApi from 'clash-of-clans-api';
 import firebase from '../components/firebase/config';
-
-const client = clashApi({
-    token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjQzZTUyMTUwLWJjODMtNDMwNi05ZWUxLWE0ZWQyZGJmZjU5OSIsImlhdCI6MTU5NTc3MjI0OCwic3ViIjoiZGV2ZWxvcGVyL2QwNDhlNjI1LTE0MjUtYzU2Yy01NTViLWY1MTIyMmZiNDAyZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjYwLjI0MS4yMjkuMjM2Il0sInR5cGUiOiJjbGllbnQifV19.NCgihYBBP8e55BpViHcqR5U4ng2OJKTiZVyiPpOY0t_xVQxI-8PI1MH5KQvwpjZh9Y9NpHz-4tSOC0u9p_GjTA"
-});
 
 class Profile extends Component {
 
-    state = {
-        profile: null
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            playerTag: "2L29QJY9",
+            player: {},
+            clanTag: null,
+            clan: {}
+        }
+    }
+
+
+    async setPlayerData() {
+        fetch('https://australia-southeast1-burnthevillage.cloudfunctions.net/playerByTag/', {
+            method: "GET",
+            headers: {
+                playerTag: this.state.playerTag,
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json);
+                this.setState({
+                    player: json,
+                    clan: json.clan
+                });
+                var tag = this.state.clan.tag;
+                var noBracketTag = tag.slice(1);
+                this.setState({ clanTag: noBracketTag });
+                console.log('clan tag for clanpage: ' + noBracketTag)
+            })
     }
 
     componentDidMount() {
 
-        console.log(this.state.profile);
-
-        // //fetch here
-        // let playerTag = "LVPQ2R8R2"
-        // client
-        //     .fetch("https://api.clashofclans.com/v1/players/" + playerTag)
-        //     .then(response => response.json())
-        //     .then(data => console.log(data))
-
-        client
-            .clans()
-            .withWarFrequency('always')
-            .withMinMembers(25)
-            .fetch()
-            .then(response => console.log(response))
-            .catch(err => console.log(err))
-
+        try {
+            this.setPlayerData();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     signOut() {
@@ -58,14 +70,22 @@ class Profile extends Component {
 
                             <div onClick={this.signOut} className="profile_container__profile_row__profile_fields">
                                 <p className="profile_container__profile_row__profile_fields__name">
-                                    John Doe
-                        </p>
+                                    {this.state.player.name ? this.state.player.name : "loading.. "}
+                                </p>
                                 <p className="profile_container__profile_row__profile_fields__clan">
-                                    Sample Clan
-                        </p>
+                                <Link to={{
+                                    pathname: this.state.clanTag,
+                                    state: {clanTag: this.state.clanTag}
+                                }}>
+                                {this.state.clan.name ? this.state.clan.name : "loading.. "}
+                                </Link>
+                                
+                                </p>
                                 <p className="profile_container__profile_row__profile_fields__upload_history">
                                     Upload history
                         </p>
+
+                                <a href="/.netlify/functions/profileData">Trigger Function</a>
                             </div>
 
                         </div>

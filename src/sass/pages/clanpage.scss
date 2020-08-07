@@ -1,0 +1,101 @@
+.clan_container {
+    margin: auto;
+    margin-top: 22vh;
+    height: 60vh;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+
+
+    &__clan_row {
+
+        width: 90vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: center;
+        @media screen and (max-width: 1400px) {
+            flex-direction: column;
+        }
+
+
+        &__clan_box {
+            height: 24vh;
+            display: flex;
+            flex-direction: row;
+        }
+
+        &__clan_picture {
+            width: 24vh;
+            height: 24vh;
+            border: 1px solid black;
+        }
+
+        &__clan_fields {
+            width: 40vh;
+            height: 24vh;
+            margin-left: 2vh;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-content: center;
+
+            &__name {
+                font-size: 4vh;
+                margin: 0;
+            }
+
+            &__clan {
+                font-size: 3vh;
+                text-decoration: underline;
+                margin: 0;
+            }
+
+            &__upload_history {
+                font-size: 3vh;
+                text-decoration: underline;
+                margin: 0;
+            }
+        }
+
+        &__edit_clan {
+            width: 20vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+
+            p {
+                font-size: 2vh;
+                float: top;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__bio_row {
+
+        width: 90vw;
+        margin-top: 20px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        text-align: left;
+
+        p {
+            font-size: 2vh;
+        }
+
+        h3 {
+            font-size: 3vh;
+            margin-bottom: -10px;
+        }
+    }
+
+
+}
