@@ -3,20 +3,20 @@ import { NavLink, Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from "@material-ui/core/styles";
 import HamburgerMenu from 'react-hamburger-menu';
-import { Drawer, IconButton, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { List, Divider, ListItem, ListItemIcon, ListItemText, Menu } from '@material-ui/core'
 import InfoIcon from "@material-ui/icons/Info";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import HomeIcon from "@material-ui/icons/Home";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import MenuIcon from '@material-ui/icons/Menu';
+import { withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
+  // list: {
+  //   width: 250,
+  // },
+  // fullList: {
+  //   width: 'auto',
+  // },
   link: {
     textDecoration: "none",
     color: "#101820",
@@ -25,14 +25,44 @@ const useStyles = makeStyles({
   menuButton: {
     color: "white",
   },
+  drawer: {
+    height: "calc(100% - 15vh",
+    top: "15vh",
+  },
+
 });
+
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #101820',
+    marginTop: "5px",
+    // backgroundColor: "transparent",
+  },
+})((props) => (
+  <Menu
+    elevation={5}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
 
 const Hamburger = () => {
   const classes = useStyles();
+  const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  
   const [state, setState] = useState({
     left: false
   });
 
+  //drawer stuff, not in use
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -42,6 +72,28 @@ const Hamburger = () => {
     }
     setState({ ...state, [anchor]: open });
   };
+
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    if(hamburgerOpen){
+      setHamburgerOpen(false)
+    } else {
+      setHamburgerOpen(true)
+    }
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    if(hamburgerOpen){
+      setHamburgerOpen(false)
+    } else {
+      setHamburgerOpen(true)
+    }
+  };
+
 
   const list = (anchor) => (
     <div
@@ -125,31 +177,38 @@ const Hamburger = () => {
       <div>
         {["left"].map(anchor => (
           <div key={anchor}>
-            {/* <IconButton
-              edge="start"
-              className={classes.menuButton}
-              aria-label="menu"
-              onClick={toggleDrawer(anchor, true)}
-            >
-              <MenuIcon style={{ fontSize: "3rem" }}/>
-            </IconButton> */}
-
             <HamburgerMenu
-                width={32}
-                height={24}
-                strokeWidth={3}
-                rotate={0}
-                color="white"
-                borderRadius={0}
-                menuClicked={toggleDrawer(anchor, true)}
-              />
-            <Drawer
+              width={32}
+              height={24}
+              strokeWidth={3}
+              rotate={0}
+              color="white"
+              borderRadius={0}
+              isOpen={hamburgerOpen}
+              // menuClicked={toggleDrawer(anchor, true)}
+              menuClicked={handleClick}
+            />
+            <StyledMenu
+              id="customized-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              className={classes.Menu}
+            >
+
+              {list(anchor)}
+            </StyledMenu>
+
+
+            {/* <Drawer
               anchor={anchor}
               open={state[anchor]}
               onClose={toggleDrawer(anchor, false)}
+              classes={{ docked: moreClasses.paper }}
             >
-              {list(anchor)}
-            </Drawer>
+
+            </Drawer> */}
           </div>
         ))}
       </div>
