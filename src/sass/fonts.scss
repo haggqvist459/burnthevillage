@@ -13,3 +13,11 @@ $font-path: "../assets/fonts/";
     src: local("ComicNeue-Regular"), local("ComicNeue-Regular"),
     url('../assets/fonts/Comic_Neue/ComicNeue-Regular.ttf');
 }
+
+
+@font-face {
+    font-family: "ComicNeue-Bold";
+    font-style: bold;
+    src: local("ComicNeue-Bold"), local("ComicNeue-Bold"),
+    url('../assets/fonts/Comic_Neue/ComicNeue-Bold.ttf');
+}
