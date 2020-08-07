@@ -65,7 +65,7 @@ const Profile = ({ history }) => {
 
                     <div className="profile_container__profile_row__profile_box">
 
-                        <div className="profile_container__profile_row__profile_picture">
+                        <div onClick={signOut} className="profile_container__profile_row__profile_picture">
 
                         </div>
 

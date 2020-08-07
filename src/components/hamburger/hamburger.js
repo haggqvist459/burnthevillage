@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink, Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,6 +9,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import HomeIcon from "@material-ui/icons/Home";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { withStyles } from '@material-ui/core/styles';
+import { AuthContext } from '../utils/auth';
 
 const useStyles = makeStyles({
   // list: {
@@ -61,7 +62,7 @@ const Hamburger = () => {
   const [state, setState] = useState({
     left: false
   });
-
+  const { currentUser } = useContext(AuthContext);
   //drawer stuff, not in use
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -109,11 +110,19 @@ const Hamburger = () => {
           <ListItemIcon>
             <AccountCircleIcon fontSize="large" color="primary" />
           </ListItemIcon>
-          <Link to="/profile" rel="noopener noreferrer" className={classes.link}>
+          {currentUser ? 
+            <Link to="/profile" rel="noopener noreferrer" className={classes.link}>
             <ListItemText>
               Profile
             </ListItemText>
           </Link>
+          :
+          <Link to="/signin" rel="noopener noreferrer" className={classes.link}>
+            <ListItemText>
+              Sign In
+            </ListItemText>
+          </Link>}
+
         </ListItem>
         <Divider />
         <ListItem>
