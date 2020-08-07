@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from "@material-ui/core/styles";
+import HamburgerMenu from 'react-hamburger-menu';
 import { Drawer, IconButton, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import InfoIcon from "@material-ui/icons/Info";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -16,15 +17,20 @@ const useStyles = makeStyles({
   fullList: {
     width: 'auto',
   },
+  link: {
+    textDecoration: "none",
+    color: "#101820",
+    fontWeight: "bold",
+  },
+  menuButton: {
+    color: "white",
+  },
 });
 
 const Hamburger = () => {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false
+  const [state, setState] = useState({
+    left: false
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -49,38 +55,65 @@ const Hamburger = () => {
       <List>
         <ListItem>
           <ListItemIcon>
-            <AccountCircleIcon />
+            <AccountCircleIcon fontSize="large" color="primary" />
           </ListItemIcon>
-          <NavLink to="/profile" rel="noopener noreferrer"> Profile </NavLink>
+          <Link to="/profile" rel="noopener noreferrer" className={classes.link}>
+            <ListItemText>
+              Profile
+            </ListItemText>
+          </Link>
         </ListItem>
         <Divider />
         <ListItem>
           <ListItemIcon>
-            <HomeIcon />
+            <HomeIcon fontSize="large" color="primary" />
           </ListItemIcon>
-          <NavLink to="/" rel="noopener noreferrer"> Home </NavLink>
-        </ListItem><ListItem>
-          <ListItemIcon>
-            <AddCircleIcon />
-          </ListItemIcon>
-          <NavLink to="/upload" rel="noopener noreferrer"> Upload </NavLink>
+          <NavLink to="/" rel="noopener noreferrer" className={classes.link}>
+            <ListItemText>
+              Home
+            </ListItemText>
+          </NavLink>
         </ListItem>
-      <Divider />
-      <ListItem>
+        <ListItem>
           <ListItemIcon>
-            <InfoIcon />
+            <AddCircleIcon fontSize="large" color="primary" />
           </ListItemIcon>
-          <NavLink to="/about" rel="noopener noreferrer"> About </NavLink>
-        </ListItem><ListItem>
+          <NavLink to="/upload" rel="noopener noreferrer" className={classes.link}>
+            <ListItemText>
+              Upload
+            </ListItemText>
+          </NavLink>
+        </ListItem>
+        <Divider />
+        <ListItem>
           <ListItemIcon>
-            <InfoIcon />
+            <InfoIcon fontSize="large" color="primary" />
           </ListItemIcon>
-          <NavLink to="/contact" rel="noopener noreferrer"> Contact </NavLink>
-        </ListItem><ListItem>
+          <NavLink to="/about" rel="noopener noreferrer" className={classes.link}>
+            <ListItemText>
+              About
+            </ListItemText>
+          </NavLink>
+        </ListItem>
+        <ListItem>
           <ListItemIcon>
-            <InfoIcon />
+            <InfoIcon fontSize="large" color="primary" />
           </ListItemIcon>
-          <NavLink to="/terms" rel="noopener noreferrer"> Terms of Usage </NavLink>
+          <NavLink to="/contact" rel="noopener noreferrer" className={classes.link}>
+            <ListItemText>
+              Contact
+            </ListItemText>
+          </NavLink>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <InfoIcon fontSize="large" color="primary" />
+          </ListItemIcon>
+          <NavLink to="/terms" rel="noopener noreferrer" className={classes.link}>
+            <ListItemText>
+              Terms of Usage
+          </ListItemText>
+          </NavLink>
         </ListItem>
       </List>
     </div>
@@ -92,15 +125,24 @@ const Hamburger = () => {
       <div>
         {["left"].map(anchor => (
           <div key={anchor}>
-            <IconButton
+            {/* <IconButton
               edge="start"
               className={classes.menuButton}
-              color="inherit"
               aria-label="menu"
               onClick={toggleDrawer(anchor, true)}
             >
-              <MenuIcon />
-            </IconButton>
+              <MenuIcon style={{ fontSize: "3rem" }}/>
+            </IconButton> */}
+
+            <HamburgerMenu
+                width={32}
+                height={24}
+                strokeWidth={3}
+                rotate={0}
+                color="white"
+                borderRadius={0}
+                menuClicked={toggleDrawer(anchor, true)}
+              />
             <Drawer
               anchor={anchor}
               open={state[anchor]}
