@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core'
 import Home from './pages/homepage';
@@ -11,16 +11,17 @@ import Contact from './pages/contact';
 import Forgot from './pages/forgot';
 import ClanPage from './pages/clanpage';
 import Profile from './pages/profile';
-import PrivateRoute from './components/utils/privateRoute'
+import PrivateRoute from './components/utils/privateRoute';
+import ViewPlayer from './components/viewPlayer';
 
-
-import { AuthProvider } from './components/utils/auth'
+import { AuthProvider } from './components/utils/auth';
 
 import theme from './theme';
 
 function App() {
   return (
     <div className="App">
+    <StrictMode>
       <ThemeProvider theme={theme}>
         <AuthProvider>
           <BrowserRouter>
@@ -35,9 +36,11 @@ function App() {
             <Route path='/forgot' component={Forgot} />
             <PrivateRoute path='/profile' component={Profile} />
             <Route path='/clan' component={ClanPage} />
+            <Route path='/viewPlayer' component={ViewPlayer} />
           </BrowserRouter>
         </AuthProvider>
       </ThemeProvider>
+      </StrictMode>
     </div>
   )
 }

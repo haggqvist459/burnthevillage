@@ -1,103 +1,107 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import '../sass/pages/clanpage.scss';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
-import firebase from '../components/firebase/config';
+import MemberList from '../components/memberList';
 import { withRouter } from "react-router";
 
-class ClanPage extends Component {
+const ClanPage = ({ history }) => {
 
-    constructor(props) {
-        super(props);
-        const clanTag = this.props.match.params.clanTag;
-        console.log('clan tag: ' + clanTag);
-        this.state = {
-            clanTag: this.props.match.params.clanTag,
-            clan: {}
-        };
-    }
+    const [clanObject, setClanObject] = useState({});
+    const [load, setLoad] = useState(true);
+    const [memberList, setMemberList] = useState();
 
-    async setClanData() {
-        fetch('https://australia-southeast1-burnthevillage.cloudfunctions.net/clanByTag/', {
-            method: "GET",
-            headers: {
-                clanTag: this.state.clanTag,
-            }
-        })
-            .then(res => res.json())
-            .then(json => {
-                console.log(json);
-                this.setState({
-                    clan: json
-                });
+    useEffect(() => {
+
+        async function setClan() {
+
+            const clan = await fetch('https://australia-southeast1-burnthevillage.cloudfunctions.net/clanByTag/', {
+                method: "GET",
+                headers: {
+                    clanTag: localStorage.getItem('clanTag'),
+                }
             })
-    }
+            const clanResponse = await clan.json();
 
-    componentDidMount() {
+            localStorage.removeItem('clan');
+            localStorage.setItem('clan', clanResponse);
+            setClanObject(clanResponse);
+            console.log(clanResponse);
+
+            let temp = [];
+            clanResponse.memberList.forEach(element => {
+                temp.push(element);
+            });
+
+            setMemberList(temp);
+
+            const war = await fetch('https://australia-southeast1-burnthevillage.cloudfunctions.net/currentWar/', {
+                method: "GET",
+                headers: {
+                    clanTag: localStorage.getItem('clanTag'),
+                }
+            })
+            const warResponse = await war.json();
+
+            localStorage.setItem('currentWar', warResponse);
+            console.log(warResponse);
+            setLoad(false);
+        }
 
         try {
-            this.setClanData();
+            setClan();
         } catch (error) {
             console.log(error);
         }
-    }
 
-    signOut() {
-        firebase.auth().signOut()
-    }
-
-    render() {
-
-        return (
-            <div>
-                <Header />
-
-                <div className="clan_container">
-                    <div className="clan_container__profile_row">
-
-                        <div className="clan_container__clan_row__clan_box">
-
-                            <div className="clan_container__clan_row__clan_picture">
-
-                            </div>
-
-                            <div onClick={this.signOut} className="clan_container__clan_row__clan_fields">
-                                <p className="clan_container__clan_row__clan_fields__name">
-                                    {this.state.clan.name ? this.state.clan.name : 'loading.. '}
-                                </p>
-                                <p className="clan_container__clan_row__clan_fields__clan">
-                                    Member list
-                        </p>
-                                <p className="clan_container__clan_row__clan_fields__upload_history">
-                                    War history
-                        </p>
+    }, []);
 
 
-                            </div>
+    return (
+        <div>
+            <Header />
+
+            <div className="clan_container">
+                <div className="clan_container__profile_row">
+
+                    <div className="clan_container__clan_row__clan_box">
+
+                        <div className="clan_container__clan_row__clan_picture">
 
                         </div>
 
-                        <div className="clan_container__clan_row__edit_clan">
-                            <p>edit clan</p>
+                        <div className="clan_container__clan_row__clan_fields">
+
+                            <p className="clan_container__clan_row__clan_fields__name">
+                                {load ? 'loading.. ' : clanObject.name }
+                            </p>
+                            <div>
+                                {load ? <p>loading.. </p> : <MemberList list={memberList} />}
+                            </div>
+                            <div>
+                                {/* <WarList list={localStorage.getItem('warList')} handleWarClick={() => handleWarClick()}/> */}
+                            </div>
+
                         </div>
 
                     </div>
 
-                    <div className="clan_container__bio_row">
-                        <h3>Bio:</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget metus et elit tempus imperdiet.
-                        Nunc facilisis cursus mi, vel consectetur dolor pretium ac.
-                        Nulla pellentesque, elit id feugiat vestibulum, libero sem finibus sapien, in elementum augue lorem non eros.
-                    Vestibulum dolor ex, semper hendrerit quam at, viverra efficitur est.</p>
+                    <div className="clan_container__clan_row__edit_clan">
+                        <p>edit clan</p>
                     </div>
 
                 </div>
 
-                <Footer />
+                <div className="clan_container__bio_row">
+                    <h3>Description:</h3>
+                    {load ? <p>loading.. </p> : <p>{clanObject.description}</p>}
+                </div>
+
             </div>
-        )
-    }
+
+            <Footer />
+        </div>
+    )
 }
 
 export default withRouter(ClanPage);

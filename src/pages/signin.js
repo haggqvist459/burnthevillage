@@ -13,8 +13,7 @@ import { AuthContext } from '../components/utils/auth';
 const SignIn = ({history}) => {
 
 
-  const handleLogin = useCallback (
-    async event => {
+  const handleLogin = useCallback ( async event => {
       event.preventDefault();
       const { email, password } = event.target.elements;
       try {

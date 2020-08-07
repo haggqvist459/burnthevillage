@@ -1,28 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../sass/pages/profile.scss';
-import Header from '../components/header/header';
-import Footer from '../components/footer/footer';
+import Header from './header/header';
+import Footer from './footer/footer';
 import { withRouter } from 'react-router';
 
 
-const Profile = ({ history }) => {
+const ViewPlayer = ({ history }) => {
 
-    const [playerTag, setPlayerTag] = useState("2L29QJY9");
+    const [playerTag, setPlayerTag] = useState();
     const [playerObject, setPlayerObject] = useState({});
-    const [clanObject, setClanObject] = useState({});
-
-    const handleClanClick = useCallback(async event => {
-        event.preventDefault();
-
-        try {
-            history.push('/clan');
-        } catch (error) {
-            alert(error);
-        }
-
-    }, [history]);
 
     useEffect(() => {
+
+        setPlayerTag(JSON.parse('viewPlayer'));
 
         async function setPlayerData() {
             const player = await fetch('https://australia-southeast1-burnthevillage.cloudfunctions.net/playerByTag/', {
@@ -31,17 +21,9 @@ const Profile = ({ history }) => {
                     playerTag: playerTag,
                 }
             })
-
-            const response = await player.json()
-
+            
+            const response = await player.json();
             setPlayerObject(response);
-            setClanObject(response.clan)
-            localStorage.setItem('player', JSON.stringify(response));
-            localStorage.setItem('clan', JSON.stringify(response.clan));
-
-            var tag = response.clan.tag;
-            var noBracketTag = tag.slice(1);
-            localStorage.setItem('clanTag', noBracketTag);
 
             console.log(response);
         }
@@ -71,21 +53,14 @@ const Profile = ({ history }) => {
                             <p className="profile_container__profile_row__profile_fields__name">
                                 {playerObject.name ? playerObject.name : "loading.. "}
                             </p>
-                            <p className="profile_container__profile_row__profile_fields__clan" onClick={handleClanClick}>
+                            <p className="profile_container__profile_row__profile_fields__clan">
 
-                                {clanObject.name ? clanObject.name : "loading.. "}
+                                {playerObject.clan.name ? playerObject.clan.name : "loading.. "}
 
 
                             </p>
-                            <p className="profile_container__profile_row__profile_fields__upload_history">
-                                Upload history
-                                </p>
                         </div>
 
-                    </div>
-
-                    <div className="profile_container__profile_row__edit_profile">
-                        <p>edit profile</p>
                     </div>
 
                 </div>
@@ -105,5 +80,5 @@ const Profile = ({ history }) => {
     )
 }
 
-export default withRouter(Profile);
+export default withRouter(ViewPlayer);
 
