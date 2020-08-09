@@ -3,38 +3,19 @@ import '../sass/pages/profile.scss';
 import Header from './header/header';
 import Footer from './footer/footer';
 import { withRouter } from 'react-router';
+import { VIEW_PLAYER } from '../cloudFunctions';
 
 
 const ViewPlayer = ({ history }) => {
 
-    const [playerTag, setPlayerTag] = useState();
-    const [playerObject, setPlayerObject] = useState({});
+    const [player, setPlayer] = useState(JSON.parse(localStorage.getItem(VIEW_PLAYER)));
 
     useEffect(() => {
 
-        setPlayerTag(JSON.parse('viewPlayer'));
+        console.log(player.name);
 
-        async function setPlayerData() {
-            const player = await fetch('https://australia-southeast1-burnthevillage.cloudfunctions.net/playerByTag/', {
-                method: "GET",
-                headers: {
-                    playerTag: playerTag,
-                }
-            })
-            
-            const response = await player.json();
-            setPlayerObject(response);
 
-            console.log(response);
-        }
-
-        try {
-            setPlayerData();
-        } catch (error) {
-            console.log(error);
-        }
-
-    }, [playerTag]);
+    }, []);
 
     return (
         <div>
@@ -51,13 +32,9 @@ const ViewPlayer = ({ history }) => {
 
                         <div className="profile_container__profile_row__profile_fields">
                             <p className="profile_container__profile_row__profile_fields__name">
-                                {playerObject.name ? playerObject.name : "loading.. "}
+                                {player.name}
                             </p>
                             <p className="profile_container__profile_row__profile_fields__clan">
-
-                                {playerObject.clan.name ? playerObject.clan.name : "loading.. "}
-
-
                             </p>
                         </div>
 

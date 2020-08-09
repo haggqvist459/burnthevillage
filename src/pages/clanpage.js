@@ -1,60 +1,68 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../sass/pages/clanpage.scss';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
-import MemberList from '../components/memberList';
 import { withRouter } from "react-router";
+import { ClanByTag, CurrentWar, LOCAL_CLAN, LOCAL_CLAN_MEMBERS, LOCAL_CURRENT_WAR } from '../cloudFunctions';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { IconButton } from '@material-ui/core';
+import GroupIcon from '@material-ui/icons/Group';
+import Badge from '@material-ui/core/Badge';
 
 const ClanPage = ({ history }) => {
 
-    const [clanObject, setClanObject] = useState({});
-    const [load, setLoad] = useState(true);
-    const [memberList, setMemberList] = useState();
+    const [clanObject, setClanObject] = useState();
+    const [currentWar, setCurrentWar] = useState();
+    const [loadClan, setLoadClan] = useState(true);
+    const [loadWar, setLoadWar] = useState(true);
+    const [progress, setProgress] = useState(0);
+    const [noWar, setNoWar] = useState(true);
+
+    const handleListClick = useCallback(async event => {
+        event.preventDefault();
+
+        try {
+            history.push('/memberList');
+        } catch (error) {
+            alert(error);
+        }
+
+    }, [history]);
+
 
     useEffect(() => {
 
-        async function setClan() {
+        const timer = setInterval(() => {
+            setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
+        }, 100);
 
-            const clan = await fetch('https://australia-southeast1-burnthevillage.cloudfunctions.net/clanByTag/', {
-                method: "GET",
-                headers: {
-                    clanTag: localStorage.getItem('clanTag'),
-                }
-            })
-            const clanResponse = await clan.json();
+        const fetchData = async () => {
 
-            localStorage.removeItem('clan');
-            localStorage.setItem('clan', clanResponse);
-            setClanObject(clanResponse);
-            console.log(clanResponse);
-
-            let temp = [];
-            clanResponse.memberList.forEach(element => {
-                temp.push(element);
+            await ClanByTag().then(() => {
+                setClanObject(JSON.parse(localStorage.getItem(LOCAL_CLAN)));
+            }).then(() => {
+                // setClanMembers(JSON.parse(localStorage.getItem(LOCAL_CLAN_MEMBERS)));
+                setLoadClan(false);
             });
 
-            setMemberList(temp);
+            await CurrentWar().then(() => {
+                setCurrentWar(JSON.parse(localStorage.getItem(LOCAL_CURRENT_WAR)));
 
-            const war = await fetch('https://australia-southeast1-burnthevillage.cloudfunctions.net/currentWar/', {
-                method: "GET",
-                headers: {
-                    clanTag: localStorage.getItem('clanTag'),
-                }
+            }).then(() => {
+
+                setLoadWar(false);
             })
-            const warResponse = await war.json();
+        };
 
-            localStorage.setItem('currentWar', warResponse);
-            console.log(warResponse);
-            setLoad(false);
+        if (loadWar) {
+            fetchData();
         }
 
-        try {
-            setClan();
-        } catch (error) {
-            console.log(error);
-        }
+        return () => {
+            clearInterval(timer);
+        };
 
-    }, []);
+    }, [loadWar])
 
 
     return (
@@ -72,14 +80,35 @@ const ClanPage = ({ history }) => {
 
                         <div className="clan_container__clan_row__clan_fields">
 
-                            <p className="clan_container__clan_row__clan_fields__name">
-                                {load ? 'loading.. ' : clanObject.name }
-                            </p>
                             <div>
-                                {load ? <p>loading.. </p> : <MemberList list={memberList} />}
+                                {loadClan ?
+                                    <CircularProgress id="loader" variant="static" value={progress} />
+                                    :
+                                    <p className="clan_container__clan_row__clan_fields__name">
+                                        {clanObject.name}
+                                    </p>}
+                            </div>
+
+                            <div>
+                                {loadClan ?
+                                    <CircularProgress id="loader" variant="static" value={progress} />
+                                    :
+                                    <IconButton onClick={handleListClick} >
+                                    Members
+                                        <Badge badgeContent={clanObject.members} color="secondary">
+                                            <GroupIcon color="primary" />
+                                        </Badge>
+                                    </IconButton>}
                             </div>
                             <div>
-                                {/* <WarList list={localStorage.getItem('warList')} handleWarClick={() => handleWarClick()}/> */}
+                                {loadWar ?
+                                    <CircularProgress id="loader" variant="static" value={progress} />
+                                    :
+                                    <div>
+                                        <p>wars, not yet implemented</p>
+                                    </div>
+                                }
+
                             </div>
 
                         </div>
@@ -94,7 +123,10 @@ const ClanPage = ({ history }) => {
 
                 <div className="clan_container__bio_row">
                     <h3>Description:</h3>
-                    {load ? <p>loading.. </p> : <p>{clanObject.description}</p>}
+                    {loadClan ?
+                        <CircularProgress id="loader" variant="static" value={progress} />
+                        :
+                        <p>{clanObject.description}</p>}
                 </div>
 
             </div>

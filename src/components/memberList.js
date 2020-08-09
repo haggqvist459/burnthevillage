@@ -4,85 +4,96 @@ import Badge from '@material-ui/core/Badge';
 import Divider from '@material-ui/core/Divider';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { withRouter } from "react-router";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
+import Header from '../components/header/header';
+import Footer from '../components/footer/footer';
+import '../sass/components/memberList.scss'
+
+import { makeStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import { LOCAL_CLAN_MEMBERS, VIEW_PLAYER } from '../cloudFunctions';
 
 
-function MemberList(props) {
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        backgroundColor: theme.palette.background.paper,
+    },
+    gridList: {
+        width: 500,
+        height: 450,
+    },
+    icon: {
+        color: 'rgba(255, 255, 255, 0.54)',
+    },
+}));
 
-    const [empty, setEmpty] = useState(true);
-    const [open, setOpen] = useState(false);
+const MemberList = ({ history }) => {
+
+    const [list, setList] = useState([]);
+    const classes = useStyles();
 
     useEffect(() => {
 
-        console.log('memberList localstorage clan');
-        console.log(props.list);
+        console.log('memberList from localStorage');
+        setList(JSON.parse(localStorage.getItem(LOCAL_CLAN_MEMBERS)))
+        console.log(list);
 
-        if (props.list) {
-            setEmpty(false);
-        }
+    }, [])
 
-    }, [props.list])
-
-    
-
-    const handleMemberClick = useCallback(async event => {
-        
-        localStorage.setItem('viewPlayerTag', event.target.value);
-        console.log('event tag ' + event.target.value);
+    const handleClick = (tag) => {
+        let viewPlayer = list.find(player => player.tag === tag)
+        localStorage.removeItem(VIEW_PLAYER);
+        localStorage.setItem(VIEW_PLAYER, JSON.stringify(viewPlayer));
 
         try {
-            props.history.push('/viewPlayer');
+            history.push('/viewPlayer');
         }
         catch (error) {
             alert(error);
         }
+    }
 
-    }, [props.history]);
-
-    const handleClick = () => {
-        setOpen(!open);
-    };
+   
 
     return (
         <div>
-            {empty ?
-                <div>
-                    <p>No members yet</p>
+            <Header />
+
+
+            <div className="list_container">
+
+                <div className={classes.root}>
+                    <GridList cellHeight={180} className={classes.gridList}>
+                        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+                            <ListSubheader component="div">Members</ListSubheader>
+                        </GridListTile>
+                        {list.map((member, index) => (
+                            <GridListTile key={index}>
+                                {/* <img src={tile.img} alt={tile.title} /> */}
+                                <GridListTileBar
+                                    title={member.name}
+                                    subtitle={<span>tag: {member.tag}</span>}
+                                    actionIcon={
+                                        <IconButton aria-label={`info about ${member.name}`} className={classes.icon} onClick={() => handleClick(member.tag)}>
+                                            <InfoIcon />
+                                        </IconButton>
+                                    }
+                                />
+                            </GridListTile>
+                        ))}
+                    </GridList>
                 </div>
-                :
-                <List>
-                    <ListItem button onClick={handleClick}>
-                        <ListItemText primary="Members" />
-                        <ListItemIcon>
-                            <Badge badgeContent={props.list.length} color="secondary">
-                                <GroupIcon color="primary" />
-                            </Badge>
-                        </ListItemIcon>
-                    </ListItem>
-                    <Divider />
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            {props.list.map((item, index) => {
-                                return (
-                                    <div key={index}>
-                                        <ListItem button onClick={() => handleMemberClick(item.tag)}>
-                                            <ListItemText primary={item.name} />
-                                            <ListItemIcon>
-                                                <NavigateNextIcon />
-                                            </ListItemIcon>
-                                        </ListItem>
-                                        <Divider />
-                                    </div>
-                                )
-                            })}
-                        </List>
-                    </Collapse>
-                </List>
-            }
+
+            </div>
+            <Footer />
         </div>
     )
 }
