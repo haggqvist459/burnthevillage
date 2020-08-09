@@ -3,13 +3,15 @@ import '../sass/pages/profile.scss';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import { withRouter } from 'react-router';
+import { PlayerByTag, LOCAL_PLAYER } from '../cloudFunctions';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const Profile = ({ history }) => {
 
-    const [playerTag, setPlayerTag] = useState("2L29QJY9");
     const [playerObject, setPlayerObject] = useState({});
-    const [clanObject, setClanObject] = useState({});
+    const [load, setLoad] = useState(true);
+    const [progress, setProgress] = useState(0);
 
     const handleClanClick = useCallback(async event => {
         event.preventDefault();
@@ -24,35 +26,27 @@ const Profile = ({ history }) => {
 
     useEffect(() => {
 
-        async function setPlayerData() {
-            const player = await fetch('https://australia-southeast1-burnthevillage.cloudfunctions.net/playerByTag/', {
-                method: "GET",
-                headers: {
-                    playerTag: playerTag,
-                }
-            })
+        const timer = setInterval(() => {
+            setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
+        }, 100);
 
-            const response = await player.json()
+        const fetchData = async () => {
+            await PlayerByTag().then(() => {
+                setPlayerObject(JSON.parse(localStorage.getItem(LOCAL_PLAYER)));
+            }).then(() => {
+                setLoad(false);
+            });
+        };
 
-            setPlayerObject(response);
-            setClanObject(response.clan)
-            localStorage.setItem('player', JSON.stringify(response));
-            localStorage.setItem('clan', JSON.stringify(response.clan));
-
-            var tag = response.clan.tag;
-            var noBracketTag = tag.slice(1);
-            localStorage.setItem('clanTag', noBracketTag);
-
-            console.log(response);
+        if (load) {
+            fetchData();
         }
 
-        try {
-            setPlayerData();
-        } catch (error) {
-            console.log(error);
-        }
+        return () => {
+            clearInterval(timer);
+        };
 
-    }, [playerTag]);
+    }, [load])
 
     return (
         <div>
@@ -68,15 +62,28 @@ const Profile = ({ history }) => {
                         </div>
 
                         <div className="profile_container__profile_row__profile_fields">
-                            <p className="profile_container__profile_row__profile_fields__name">
-                                {playerObject.name ? playerObject.name : "loading.. "}
-                            </p>
-                            <p className="profile_container__profile_row__profile_fields__clan" onClick={handleClanClick}>
 
-                                {clanObject.name ? clanObject.name : "loading.. "}
+                            {load ?
+                                <div>
+                                    <CircularProgress id="loader" variant="static" value={progress} />
+                                </div>
+                                :
+                                <div className="profile_container__profile_row__profile_fields__clan" onClick={handleClanClick}>
+                                    {playerObject.name}
+                                </div>
+                            }
 
 
-                            </p>
+                            {load ?
+                                <div>
+                                    <CircularProgress id="loader" variant="static" value={progress} />
+                                </div>
+                                :
+                                <div className="profile_container__profile_row__profile_fields__clan" onClick={handleClanClick}>
+                                    {playerObject.clan.name}
+                                </div>
+                            }
+
                             <p className="profile_container__profile_row__profile_fields__upload_history">
                                 Upload history
                                 </p>

@@ -13,6 +13,7 @@ import ClanPage from './pages/clanpage';
 import Profile from './pages/profile';
 import PrivateRoute from './components/utils/privateRoute';
 import ViewPlayer from './components/viewPlayer';
+import MemberList from './components/memberList';
 
 import { AuthProvider } from './components/utils/auth';
 
@@ -37,6 +38,7 @@ function App() {
             <PrivateRoute path='/profile' component={Profile} />
             <Route path='/clan' component={ClanPage} />
             <Route path='/viewPlayer' component={ViewPlayer} />
+            <Route path='/memberList' component={MemberList} />
           </BrowserRouter>
         </AuthProvider>
       </ThemeProvider>
