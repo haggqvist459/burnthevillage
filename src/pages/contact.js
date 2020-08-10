@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from '../components/header/header'
+import { Header } from '../components';
 
 class Contact extends Component {
   render (){

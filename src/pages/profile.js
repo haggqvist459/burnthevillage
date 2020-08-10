@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import '../sass/pages/profile.scss';
-import Header from '../components/header/header';
-import Footer from '../components/footer/footer';
 import { withRouter } from 'react-router';
-import { PlayerByTag, ClanByTag, CurrentWar, LOCAL_PLAYER, LOCAL_CLAN } from '../cloudFunctions';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import '../sass/index.scss';
+import { Header, Footer, PlayerByTag, ClanByTag, CurrentWar, local_constants } from '../components';
+import { CircularProgress } from '@material-ui/core';
 
 
 const Profile = ({ history }) => {
 
-    const [playerObject, setPlayerObject]= useState(JSON.parse(localStorage.getItem(LOCAL_PLAYER)));
+    const [playerObject, setPlayerObject]= useState(JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER)));
     const [load, setLoad] = useState(false);
 
     const handleClanClick = useCallback(async event => {
@@ -23,6 +21,10 @@ const Profile = ({ history }) => {
 
     }, [history]);
 
+    const signOut = () => {
+
+    }
+
     useEffect(() => {
 
         const fetchClan = async () => {
@@ -30,13 +32,14 @@ const Profile = ({ history }) => {
             await CurrentWar();
         }
 
-        if(!localStorage.getItem(LOCAL_CLAN)) {
+        //no clan in localStorage, try fetch from API
+        if(!localStorage.getItem(local_constants.LOCAL_CLAN)) {
             fetchClan().then(function () {
                 if(!playerObject) {
                     setLoad(true);
                     const fetchPlayer = async () => {
                         await PlayerByTag().then(function () {
-                            setPlayerObject(JSON.parse(localStorage.getItem(LOCAL_PLAYER)));
+                            setPlayerObject(JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER)));
                         }).catch(function (error) {
                             console.log(error);
                         })
@@ -60,7 +63,7 @@ const Profile = ({ history }) => {
                 setLoad(false);
             })
         }
-        
+
     }, [playerObject]);
 
     return (

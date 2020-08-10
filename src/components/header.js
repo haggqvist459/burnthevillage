@@ -1,6 +1,7 @@
 import React from 'react';
-import Hamburger from '../hamburger/hamburger';
-import '../../sass/components/header.scss';
+import '../sass/index.scss';
+import { Hamburger } from './';
+
 
 function Header() {
   return (

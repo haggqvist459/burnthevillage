@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
-import { withRouter } from "react-router";
-import Hamburger from "../components/hamburger/hamburger"
+import { withRouter } from 'react-router';
+import '../sass/index.scss';
+import { Hamburger } from '../components';
 import { Button } from '@material-ui/core';
-import '../sass/pages/homepage.scss';
 
 
 const Home = ({ history }) => {

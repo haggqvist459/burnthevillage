@@ -1,15 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import Header from '../components/header/header';
-import Footer from '../components/footer/footer';
-import '../sass/pages/signin.scss';
-import { SignButton } from '../components/styledmaterial/buttons';
-import { SignField } from '../components/styledmaterial/textFields';
-
-import firebase from '../components/utils/firebaseConfig';
-import { PlayerByTag } from '../cloudFunctions';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import '../sass/index.scss';
+import { Header, Footer, SignButton, SignField, firebase, PlayerByTag } from '../components';
+import { LinearProgress } from '@material-ui/core';
 
 const SignIn = ({ history }) => {
 
@@ -23,6 +17,7 @@ const SignIn = ({ history }) => {
   const handleLogin = useCallback(async event => {
     event.preventDefault();
     const { email, password } = event.target.elements;
+    setError(false);
 
     const buffer300 = async (time) => { await sleep(time) }
     const startBuffer = async () => { await buffer300(300) }

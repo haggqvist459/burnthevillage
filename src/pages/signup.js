@@ -1,26 +1,15 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
-import Header from '../components/header/header'
-import Footer from '../components/footer/footer';
-import { SignButton } from '../components/styledmaterial/buttons';
-import { SignField } from '../components/styledmaterial/textFields';
-import { PlayerByTag, LOCAL_PLAYER_TAG, LOCAL_PLAYER } from '../cloudFunctions'
-import LinearProgress from '@material-ui/core/LinearProgress';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import '../sass/pages/signup.scss';
-import Popover from '@material-ui/core/Popover';
-import Button from '@material-ui/core/Button';
-
+import '../sass/index.scss';
+import { Header, Footer, SignButton, SignField, PlayerByTag, local_constants } from '../components';
+import { LinearProgress, IconButton, InputAdornment, Popover, Button } from '@material-ui/core';
+import { Visibility, VisibilityOff} from '@material-ui/icons';
 import firebase from 'firebase';
+
 const db = firebase.firestore();
 
-
 const SignUp = ({ history }) => {
-
 
   const [openPopover, setOpenPopover] = useState(false);
   const [load, setLoad] = useState(false);
@@ -73,13 +62,13 @@ const SignUp = ({ history }) => {
     setLoad(true);
 
     //set playertag in localstorage, will be used to fetch information
-    localStorage.setItem(LOCAL_PLAYER_TAG, playertag.value);
+    localStorage.setItem(local_constants.LOCAL_PLAYER_TAG, playertag.value);
 
     //check if playertag exists in api, return is put in localstorage
     await PlayerByTag();
 
     //get localstorage value
-    let player = JSON.parse(localStorage.getItem(LOCAL_PLAYER));
+    let player = JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER));
 
     //check missing playertag
     if (player.reason === 'notFound') {
@@ -91,10 +80,10 @@ const SignUp = ({ history }) => {
     }
     else {
 
-      //it does, start create user chain
+      //player tag exists, init a create user chain
       try {
 
-        //first in chain, create user
+        //first in chain, create user and give displayName = username (will be used later to connect user to firestore)
         await firebase.auth().createUserWithEmailAndPassword(email.value, password.value).then(() => {
           const user = firebase.auth().currentUser;
           return user.updateProfile({
@@ -138,6 +127,7 @@ const SignUp = ({ history }) => {
           })
 
       } catch (error) {
+        //reset field values, error happened during registration
         setLoad(false);
         setValues({
           username: '',

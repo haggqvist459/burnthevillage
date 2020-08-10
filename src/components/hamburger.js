@@ -1,15 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import clsx from 'clsx';
-import { makeStyles } from "@material-ui/core/styles";
 import HamburgerMenu from 'react-hamburger-menu';
-import { List, Divider, ListItem, ListItemIcon, ListItemText, Menu } from '@material-ui/core'
-import InfoIcon from "@material-ui/icons/Info";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import HomeIcon from "@material-ui/icons/Home";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import { withStyles } from '@material-ui/core/styles';
-import { AuthContext } from '../utils/auth';
+import clsx from 'clsx';
+import { AuthContext } from './';
+import { List, Divider, ListItem, ListItemIcon, ListItemText, Menu, withStyles, makeStyles } from '@material-ui/core'
+import { Info, AccountCircle, Home, AddCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   // list: {
@@ -108,7 +103,7 @@ const Hamburger = () => {
       <List>
         <ListItem>
           <ListItemIcon>
-            <AccountCircleIcon fontSize="large" color="primary" />
+            <AccountCircle fontSize="large" color="primary" />
           </ListItemIcon>
           {currentUser ? 
             <Link to="/profile" rel="noopener noreferrer" className={classes.link}>
@@ -127,7 +122,7 @@ const Hamburger = () => {
         <Divider />
         <ListItem>
           <ListItemIcon>
-            <HomeIcon fontSize="large" color="primary" />
+            <Home fontSize="large" color="primary" />
           </ListItemIcon>
           <NavLink to="/" rel="noopener noreferrer" className={classes.link}>
             <ListItemText>
@@ -137,7 +132,7 @@ const Hamburger = () => {
         </ListItem>
         <ListItem>
           <ListItemIcon>
-            <AddCircleIcon fontSize="large" color="primary" />
+            <AddCircle fontSize="large" color="primary" />
           </ListItemIcon>
           <NavLink to="/upload" rel="noopener noreferrer" className={classes.link}>
             <ListItemText>
@@ -148,7 +143,7 @@ const Hamburger = () => {
         <Divider />
         <ListItem>
           <ListItemIcon>
-            <InfoIcon fontSize="large" color="primary" />
+            <Info fontSize="large" color="primary" />
           </ListItemIcon>
           <NavLink to="/about" rel="noopener noreferrer" className={classes.link}>
             <ListItemText>
@@ -158,7 +153,7 @@ const Hamburger = () => {
         </ListItem>
         <ListItem>
           <ListItemIcon>
-            <InfoIcon fontSize="large" color="primary" />
+            <Info fontSize="large" color="primary" />
           </ListItemIcon>
           <NavLink to="/contact" rel="noopener noreferrer" className={classes.link}>
             <ListItemText>
@@ -168,7 +163,7 @@ const Hamburger = () => {
         </ListItem>
         <ListItem>
           <ListItemIcon>
-            <InfoIcon fontSize="large" color="primary" />
+            <Info fontSize="large" color="primary" />
           </ListItemIcon>
           <NavLink to="/terms" rel="noopener noreferrer" className={classes.link}>
             <ListItemText>

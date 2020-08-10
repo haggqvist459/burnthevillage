@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import Hamburger from "../components/hamburger/hamburger";
-import '../sass/pages/upload.scss'
-import {UploadButton} from '../components/styledmaterial/buttons';
-import {UploadIcon} from '../components/styledmaterial/icons';
+import '../sass/index.scss';
+import { Hamburger, UploadButton, UploadIcon } from '../components';
+
 
 class Upload extends Component {
   render() {

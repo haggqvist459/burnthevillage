@@ -1,0 +1,18 @@
+//global
+@import './fonts.scss';
+@import './app.scss';
+
+//pages
+@import './pages/about.scss';
+@import './pages/clanpage.scss';
+@import './pages/homepage.scss';
+@import './pages/profile.scss';
+@import './pages/signin.scss';
+@import './pages/signup.scss';
+@import './pages/upload.scss';
+
+//components
+@import './components/footer.scss';
+@import './components/hamburger.scss';
+@import './components/header.scss';
+@import './components/memberList.scss';

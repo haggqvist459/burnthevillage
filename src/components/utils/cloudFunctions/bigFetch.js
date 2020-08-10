@@ -1,11 +1,10 @@
-import { LOCAL_CLAN, LOCAL_CLAN_MEMBERS, LOCAL_PLAYER_TAG, BIG_FETCH, LOCAL_CURRENT_WAR } from './cloudConstants';
-
+import { local_constants, gcloud_constants } from '../constants';
 export default async function BigFetch() {
 
   var playerTag = '';
 
-  if (localStorage.getItem(LOCAL_PLAYER_TAG)) {
-    playerTag = localStorage.getItem(LOCAL_PLAYER_TAG);
+  if (localStorage.getItem(local_constants.LOCAL_PLAYER_TAG)) {
+    playerTag = localStorage.getItem(local_constants.LOCAL_PLAYER_TAG);
     console.log('tag passed from localStorage: ' + playerTag);
   }
   else {
@@ -16,7 +15,7 @@ export default async function BigFetch() {
   async function fetchData() {
 
     try {
-      await fetch(BIG_FETCH, {
+      await fetch(gcloud_constants.BIG_FETCH, {
         method: "GET",
         headers: {
           playerTag: playerTag,
@@ -28,18 +27,18 @@ export default async function BigFetch() {
         
         console.log(result);
 
-        localStorage.removeItem(LOCAL_CLAN);
-        localStorage.setItem(LOCAL_CLAN, JSON.stringify(result.clan));
+        localStorage.removeItem(local_constants.LOCAL_CLAN);
+        localStorage.setItem(local_constants.LOCAL_CLAN, JSON.stringify(result.clan));
 
-        localStorage.removeItem(LOCAL_CLAN_MEMBERS);
+        localStorage.removeItem(local_constants.LOCAL_CLAN_MEMBERS);
         let members = [];
         result.clan.memberList.forEach(element => {
           members.push(element);
         });
-        localStorage.setItem(LOCAL_CLAN_MEMBERS, JSON.stringify(members));
+        localStorage.setItem(local_constants.LOCAL_CLAN_MEMBERS, JSON.stringify(members));
 
-        localStorage.removeItem(LOCAL_CURRENT_WAR);
-        localStorage.setItem(LOCAL_CURRENT_WAR, result.currentWar);
+        localStorage.removeItem(local_constants.LOCAL_CURRENT_WAR);
+        localStorage.setItem(local_constants.LOCAL_CURRENT_WAR, result.currentWar);
       })
     } catch (error) {
       console.log(error);

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import '../sass/pages/profile.scss';
-import Header from './header/header';
-import Footer from './footer/footer';
 import { withRouter } from 'react-router';
-import { VIEW_PLAYER } from '../cloudFunctions';
+import '../sass/index.scss';
+import { Header, Footer, local_constants } from './';
+
 
 
 const ViewPlayer = ({ history }) => {
 
-    const [player, setPlayer] = useState(JSON.parse(localStorage.getItem(VIEW_PLAYER)));
+    const [player, setPlayer] = useState(JSON.parse(localStorage.getItem(local_constants.VIEW_PLAYER)));
 
     useEffect(() => {
-        setPlayer(JSON.parse(localStorage.getItem(VIEW_PLAYER)));
+        setPlayer(JSON.parse(localStorage.getItem(local_constants.VIEW_PLAYER)));
     }, []);
 
     return (

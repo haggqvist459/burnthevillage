@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Header from '../components/header/header';
-import Footer from '../components/footer/footer';
-import '../sass/pages/about.scss';
+import { Header, Footer } from '../components';
+import '../sass/index.scss';
 import Tim from '../assets/images/about/abouttim.png';
 import Max from '../assets/images/about/aboutmax.png';
 import Alicia from '../assets/images/about/aboutalicia.png';

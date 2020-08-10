@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from "react-router";
-import Header from '../components/header/header';
-import Footer from '../components/footer/footer';
-import '../sass/components/memberList.scss'
+import { withRouter } from 'react-router';
+import '../sass/index.scss';
+import { Header, Footer, local_constants } from './';
+import { makeStyles, GridList, GridListTile, GridListTileBar, ListSubheader, IconButton } from '@material-ui/core';
+import { Info } from '@material-ui/icons';
 
-import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import { LOCAL_CLAN_MEMBERS, VIEW_PLAYER } from '../cloudFunctions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -39,14 +32,14 @@ const MemberList = ({ history }) => {
     useEffect(() => {
 
         console.log('memberList from localStorage');
-        setList(JSON.parse(localStorage.getItem(LOCAL_CLAN_MEMBERS)))
+        setList(JSON.parse(localStorage.getItem(local_constants.LOCAL_CLAN_MEMBERS)))
 
     }, [])
 
     const handleClick = (tag) => {
         let viewPlayer = list.find(player => player.tag === tag)
-        localStorage.removeItem(VIEW_PLAYER);
-        localStorage.setItem(VIEW_PLAYER, JSON.stringify(viewPlayer));
+        localStorage.removeItem(local_constants.VIEW_PLAYER);
+        localStorage.setItem(local_constants.VIEW_PLAYER, JSON.stringify(viewPlayer));
 
         try {
             history.push('/viewPlayer');
@@ -78,7 +71,7 @@ const MemberList = ({ history }) => {
                                     subtitle={<span>tag: {member.tag}</span>}
                                     actionIcon={
                                         <IconButton aria-label={`info about ${member.name}`} className={classes.icon} onClick={() => handleClick(member.tag)}>
-                                            <InfoIcon />
+                                            <Info />
                                         </IconButton>
                                     }
                                 />

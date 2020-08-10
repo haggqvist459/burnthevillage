@@ -1,6 +1,5 @@
 import React, { useEffect, useState, createContext } from 'react';
 import firebase from './firebaseConfig';
-
 import { Grid, CircularProgress } from '@material-ui/core'
 
 export const AuthContext = createContext();

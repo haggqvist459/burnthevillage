@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import '../sass/pages/clanpage.scss';
-import Header from '../components/header/header';
-import Footer from '../components/footer/footer';
 import { withRouter } from "react-router";
-import { ClanByTag, CurrentWar, LOCAL_CLAN, LOCAL_CURRENT_WAR } from '../cloudFunctions';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { IconButton } from '@material-ui/core';
-import GroupIcon from '@material-ui/icons/Group';
-import Badge from '@material-ui/core/Badge';
+import '../sass/index.scss';
+import { Header, Footer, ClanByTag, CurrentWar, local_constants } from '../components';
+import { IconButton, CircularProgress, Badge } from '@material-ui/core';
+import { Group } from '@material-ui/icons';
 
 const ClanPage = ({ history }) => {
 
@@ -37,15 +33,15 @@ const ClanPage = ({ history }) => {
         const fetchData = async () => {
 
             await ClanByTag().then(() => {
-                setClanObject(JSON.parse(localStorage.getItem(LOCAL_CLAN)));
+                setClanObject(JSON.parse(localStorage.getItem(local_constants.constants.LOCAL_CLAN)));
             });
 
             await CurrentWar().then(() => {
-                setCurrentWar(JSON.parse(localStorage.getItem(LOCAL_CURRENT_WAR)));
+                setCurrentWar(JSON.parse(localStorage.getItem(local_constants.LOCAL_CURRENT_WAR)));
             });
         };
 
-        if (!localStorage.getItem(LOCAL_CLAN)) {
+        if (!localStorage.getItem(local_constants.LOCAL_CLAN)) {
             fetchData().then(() => {
                 setLoad(false);
             }).catch(function (error) {
@@ -53,7 +49,7 @@ const ClanPage = ({ history }) => {
             });
         }
         else {
-            setClanObject(JSON.parse(localStorage.getItem(LOCAL_CLAN)));
+            setClanObject(JSON.parse(localStorage.getItem(local_constants.LOCAL_CLAN)));
             setLoad(false);
         }
 
@@ -95,7 +91,7 @@ const ClanPage = ({ history }) => {
                                     <IconButton onClick={handleListClick} >
                                         Members
                                         <Badge badgeContent={clanObject.members} color="secondary">
-                                            <GroupIcon color="primary" />
+                                            <Group color="primary" />
                                         </Badge>
                                     </IconButton>}
                             </div>

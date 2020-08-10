@@ -1,12 +1,12 @@
-import { PLAYER_BY_TAG, LOCAL_PLAYER_TAG, LOCAL_PLAYER, LOCAL_CLAN_TAG } from './cloudConstants';
+import { local_constants, gcloud_constants } from '../constants';
 
 export default async function PlayerByTag() {
 
   console.log('player fetch init');
   var playerTag = '';
 
-  if (localStorage.getItem(LOCAL_PLAYER_TAG)) {
-    playerTag = localStorage.getItem(LOCAL_PLAYER_TAG);
+  if (localStorage.getItem(local_constants.LOCAL_PLAYER_TAG)) {
+    playerTag = localStorage.getItem(local_constants.LOCAL_PLAYER_TAG);
     console.log('tag passed from localStorage: ' + playerTag);
   }
   else {
@@ -18,7 +18,7 @@ export default async function PlayerByTag() {
 
     try {
       console.log('fetching player.. ');
-      await fetch(PLAYER_BY_TAG, {
+      await fetch(gcloud_constants.PLAYER_BY_TAG, {
         method: "GET",
         headers: {
           playerTag: playerTag,
@@ -30,13 +30,13 @@ export default async function PlayerByTag() {
         console.log('player fetch complete, results: ');  
         console.log(result);
 
-        localStorage.removeItem(LOCAL_PLAYER);
-        localStorage.setItem(LOCAL_PLAYER, JSON.stringify(result));
+        localStorage.removeItem(local_constants.LOCAL_PLAYER);
+        localStorage.setItem(local_constants.LOCAL_PLAYER, JSON.stringify(result));
 
-        localStorage.removeItem(LOCAL_CLAN_TAG)
+        localStorage.removeItem(local_constants.LOCAL_CLAN_TAG)
         if(result.clan) {
           let tag = result.clan.tag;
-          localStorage.setItem(LOCAL_CLAN_TAG, tag.slice(1));
+          localStorage.setItem(local_constants.LOCAL_CLAN_TAG, tag.slice(1));
         }
       })
     } catch (error) {

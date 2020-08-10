@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Header from '../components/header/header'
+import '../sass/index.scss';
+import { Header } from '../components';
+
 
 class Terms extends Component {
   render (){
