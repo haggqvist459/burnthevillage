@@ -36,9 +36,9 @@ function App() {
             <Route path='/about' component={About} />
             <Route path='/forgot' component={Forgot} />
             <PrivateRoute path='/profile' component={Profile} />
-            <Route path='/clan' component={ClanPage} />
+            <PrivateRoute path='/clan' component={ClanPage} />
             <Route path='/viewPlayer' component={ViewPlayer} />
-            <Route path='/memberList' component={MemberList} />
+            <PrivateRoute path='/memberList' component={MemberList} />
           </BrowserRouter>
         </AuthProvider>
       </ThemeProvider>

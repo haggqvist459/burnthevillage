@@ -3,7 +3,7 @@ import '../sass/pages/clanpage.scss';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import { withRouter } from "react-router";
-import { ClanByTag, CurrentWar, LOCAL_CLAN, LOCAL_CLAN_MEMBERS, LOCAL_CURRENT_WAR } from '../cloudFunctions';
+import { ClanByTag, CurrentWar, LOCAL_CLAN, LOCAL_CURRENT_WAR } from '../cloudFunctions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { IconButton } from '@material-ui/core';
 import GroupIcon from '@material-ui/icons/Group';
@@ -13,10 +13,8 @@ const ClanPage = ({ history }) => {
 
     const [clanObject, setClanObject] = useState();
     const [currentWar, setCurrentWar] = useState();
-    const [loadClan, setLoadClan] = useState(true);
-    const [loadWar, setLoadWar] = useState(true);
+    const [load, setLoad] = useState(true);
     const [progress, setProgress] = useState(0);
-    const [noWar, setNoWar] = useState(true);
 
     const handleListClick = useCallback(async event => {
         event.preventDefault();
@@ -40,29 +38,30 @@ const ClanPage = ({ history }) => {
 
             await ClanByTag().then(() => {
                 setClanObject(JSON.parse(localStorage.getItem(LOCAL_CLAN)));
-            }).then(() => {
-                // setClanMembers(JSON.parse(localStorage.getItem(LOCAL_CLAN_MEMBERS)));
-                setLoadClan(false);
             });
 
             await CurrentWar().then(() => {
                 setCurrentWar(JSON.parse(localStorage.getItem(LOCAL_CURRENT_WAR)));
-
-            }).then(() => {
-
-                setLoadWar(false);
-            })
+            });
         };
 
-        if (loadWar) {
-            fetchData();
+        if (!localStorage.getItem(LOCAL_CLAN)) {
+            fetchData().then(() => {
+                setLoad(false);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+        else {
+            setClanObject(JSON.parse(localStorage.getItem(LOCAL_CLAN)));
+            setLoad(false);
         }
 
         return () => {
             clearInterval(timer);
         };
 
-    }, [loadWar])
+    }, [])
 
 
     return (
@@ -81,7 +80,7 @@ const ClanPage = ({ history }) => {
                         <div className="clan_container__clan_row__clan_fields">
 
                             <div>
-                                {loadClan ?
+                                {load ?
                                     <CircularProgress id="loader" variant="static" value={progress} />
                                     :
                                     <p className="clan_container__clan_row__clan_fields__name">
@@ -90,22 +89,22 @@ const ClanPage = ({ history }) => {
                             </div>
 
                             <div>
-                                {loadClan ?
+                                {load ?
                                     <CircularProgress id="loader" variant="static" value={progress} />
                                     :
                                     <IconButton onClick={handleListClick} >
-                                    Members
+                                        Members
                                         <Badge badgeContent={clanObject.members} color="secondary">
                                             <GroupIcon color="primary" />
                                         </Badge>
                                     </IconButton>}
                             </div>
                             <div>
-                                {loadWar ?
+                                {load ?
                                     <CircularProgress id="loader" variant="static" value={progress} />
                                     :
                                     <div>
-                                        <p>wars, not yet implemented</p>
+                                        {currentWar ? <div>not in war</div> : <p>wars, not yet implemented</p>}
                                     </div>
                                 }
 
@@ -123,7 +122,7 @@ const ClanPage = ({ history }) => {
 
                 <div className="clan_container__bio_row">
                     <h3>Description:</h3>
-                    {loadClan ?
+                    {load ?
                         <CircularProgress id="loader" variant="static" value={progress} />
                         :
                         <p>{clanObject.description}</p>}

@@ -11,3 +11,8 @@ export const LOCAL_CLAN_MEMBERS = 'clanMembers';
 
 export const CURRENT_WAR = 'https://australia-southeast1-burnthevillage.cloudfunctions.net/currentWar/';
 export const LOCAL_CURRENT_WAR = 'currentWar';
+
+export const BIG_FETCH = 'https://australia-southeast1-burnthevillage.cloudfunctions.net/bigFetchByPlayerTag/';
+
+
+export const FIRESTORE_SIGNUP = 'https://us-central1-burnthevillage-80012.cloudfunctions.net/signup';

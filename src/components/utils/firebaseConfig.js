@@ -1,7 +1,6 @@
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import 'firebase/auth'
-
+import firebase from "firebase/app";
+require('firebase/firestore')
+require('firebase/auth')
 
 var firebaseConfig = {
     apiKey: "AIzaSyDkAcymZFZfWf7s8P4y2qyKY-_09SXdeaE",
@@ -13,7 +12,6 @@ var firebaseConfig = {
     appId: "1:457279655537:web:f36bf00dc51b35302fd5d0",
     measurementId: "G-Z7E2JGMTFC"
 };
-
 
 
 firebase.initializeApp(firebaseConfig);
