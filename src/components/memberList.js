@@ -1,8 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import GroupIcon from '@material-ui/icons/Group';
-import Badge from '@material-ui/core/Badge';
-import Divider from '@material-ui/core/Divider';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from "react-router";
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
@@ -44,7 +40,6 @@ const MemberList = ({ history }) => {
 
         console.log('memberList from localStorage');
         setList(JSON.parse(localStorage.getItem(LOCAL_CLAN_MEMBERS)))
-        console.log(list);
 
     }, [])
 

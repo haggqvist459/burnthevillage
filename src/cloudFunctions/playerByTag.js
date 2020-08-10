@@ -1,7 +1,8 @@
-import { PLAYER_BY_TAG, LOCAL_PLAYER_TAG, LOCAL_PLAYER, LOCAL_CLAN, LOCAL_CLAN_TAG } from './cloudConstants';
+import { PLAYER_BY_TAG, LOCAL_PLAYER_TAG, LOCAL_PLAYER, LOCAL_CLAN_TAG } from './cloudConstants';
 
 export default async function PlayerByTag() {
 
+  console.log('player fetch init');
   var playerTag = '';
 
   if (localStorage.getItem(LOCAL_PLAYER_TAG)) {
@@ -16,6 +17,7 @@ export default async function PlayerByTag() {
   async function getPlayer() {
 
     try {
+      console.log('fetching player.. ');
       await fetch(PLAYER_BY_TAG, {
         method: "GET",
         headers: {
@@ -25,18 +27,17 @@ export default async function PlayerByTag() {
         return result.json();
       })
       .then(function(result) {
-
+        console.log('player fetch complete, results: ');  
         console.log(result);
 
         localStorage.removeItem(LOCAL_PLAYER);
         localStorage.setItem(LOCAL_PLAYER, JSON.stringify(result));
 
-        localStorage.removeItem(LOCAL_CLAN);
-        localStorage.setItem(LOCAL_CLAN, JSON.stringify(result.clan));
-
         localStorage.removeItem(LOCAL_CLAN_TAG)
-        let tag = JSON.stringify(result.clan.tag);
-        localStorage.setItem(LOCAL_CLAN_TAG, tag);
+        if(result.clan) {
+          let tag = result.clan.tag;
+          localStorage.setItem(LOCAL_CLAN_TAG, tag.slice(1));
+        }
       })
     } catch (error) {
       console.log(error);
@@ -45,7 +46,7 @@ export default async function PlayerByTag() {
 
   try {
     return await getPlayer().then(() => {
-      console.log('fetch completed');
+      console.log('player fetch exit');
     });
   } catch (error) {
     console.log(error);

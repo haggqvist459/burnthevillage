@@ -11,10 +11,7 @@ const ViewPlayer = ({ history }) => {
     const [player, setPlayer] = useState(JSON.parse(localStorage.getItem(VIEW_PLAYER)));
 
     useEffect(() => {
-
-        console.log(player.name);
-
-
+        setPlayer(JSON.parse(localStorage.getItem(VIEW_PLAYER)));
     }, []);
 
     return (
