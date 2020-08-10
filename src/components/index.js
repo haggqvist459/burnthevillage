@@ -7,7 +7,7 @@ import ViewPlayer from './viewPlayer';
 import WarList from './warList';
 
 //utils
-import { AuthContext } from './utils/auth';
+import { AuthContext, AuthProvider } from './utils/auth';
 import firebase from './utils/firebaseConfig';
 import PrivateRoute from './utils/privateRoute';
 
@@ -26,7 +26,7 @@ import { UploadIcon } from './styledmaterial/icons';
 
 export {
     Footer, Hamburger, Header, MemberList, ViewPlayer, WarList,
-    AuthContext, firebase, PrivateRoute,
+    AuthContext, AuthProvider, firebase, PrivateRoute,
     UploadButton, SignButton, SignField, UploadIcon,
     PlayerByTag, ClanByTag, CurrentWar,
     local_constants,

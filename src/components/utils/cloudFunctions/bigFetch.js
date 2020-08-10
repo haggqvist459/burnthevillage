@@ -1,4 +1,5 @@
 import { local_constants, gcloud_constants } from '../constants';
+
 export default async function BigFetch() {
 
   var playerTag = '';

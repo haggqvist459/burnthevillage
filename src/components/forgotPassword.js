@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Footer } from '../components';
+import { Header, Footer } from './';
 
 class Forgot extends Component {
   render (){

@@ -5,7 +5,7 @@ import { Header, Footer, ClanByTag, CurrentWar, local_constants } from '../compo
 import { IconButton, CircularProgress, Badge } from '@material-ui/core';
 import { Group } from '@material-ui/icons';
 
-const ClanPage = ({ history }) => {
+const Clan = ({ history }) => {
 
     const [clanObject, setClanObject] = useState();
     const [currentWar, setCurrentWar] = useState();
@@ -131,5 +131,5 @@ const ClanPage = ({ history }) => {
     )
 }
 
-export default withRouter(ClanPage);
+export default withRouter(Clan);
 
