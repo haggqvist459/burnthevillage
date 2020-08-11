@@ -2,15 +2,15 @@ import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
 import '../sass/index.scss';
-import { Header, Footer, SignButton, SignField, PlayerByTag, local_constants } from '../components';
+import { Header, Footer, SignButton, SignField, PlayerByTag, local_constants, firebase } from '../components';
 import { LinearProgress, IconButton, InputAdornment, Popover, Button } from '@material-ui/core';
 import { Visibility, VisibilityOff} from '@material-ui/icons';
-import firebase from 'firebase';
 
-const db = firebase.firestore();
+
 
 const SignUp = ({ history }) => {
 
+  const db = firebase.firestore();
   const [openPopover, setOpenPopover] = useState(false);
   const [load, setLoad] = useState(false);
   const [error, setError] = useState(false);
@@ -137,7 +137,7 @@ const SignUp = ({ history }) => {
         })
       }
     }
-  }, []);
+  }, [db]);
 
 
   return (

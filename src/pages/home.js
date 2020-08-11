@@ -4,7 +4,7 @@ import '../sass/index.scss';
 import { Hamburger } from '../components';
 import { Button } from '@material-ui/core';
 
-
+ 
 const Home = ({ history }) => {
 
 

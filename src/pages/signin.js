@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import '../sass/index.scss';
 import { Header, Footer, SignButton, SignField, firebase, PlayerByTag } from '../components';
-import { LinearProgress } from '@material-ui/core';
+import { LinearProgress, Grid, Typography } from '@material-ui/core';
 
 const SignIn = ({ history }) => {
 
@@ -95,10 +95,10 @@ const SignIn = ({ history }) => {
   // }
 
   return (
-    <div>
+    <Grid>
       <Header />
 
-      <div className="sign_in_container">
+      <Grid className="sign_in_container">
         <form onSubmit={handleLogin}>
 
           <SignField
@@ -121,36 +121,32 @@ const SignIn = ({ history }) => {
           />
 
           <SignButton type="submit" variant="outlined">Sign In</SignButton>
-          <div className="sign_in_container__bottom_row">
-            <div>
-              <Link to="/forgot">Forgot password?</Link>
-            </div>
-            <div>
-              <p>Need an account? </p>
+          <Grid className="sign_in_container__bottom_row">
+            <Grid>
+              <Link to="/forgot"> <Typography>Forgot password?</Typography></Link>
+            </Grid>
+            <Grid>
+              <Typography>Need an account? </Typography>
               <br></br>
-              <Link to="/signup">Sign up here!</Link>
-            </div>
-          </div>
+              <Link to="/signup"><Typography>Sign up here!</Typography></Link>
+            </Grid>
+          </Grid>
         </form>
 
-        <div>
+        <Grid>
           {load ?
-            <div style={{ marginTop: "30px" }}>
+            <Grid style={{ marginTop: "30px" }}>
               <LinearProgress color="primary" />
               <LinearProgress color="secondary" />
-            </div>
+            </Grid>
             : null}
 
-        </div>
-      </div>
+        </Grid>
+      </Grid>
+      
       <Footer />
-    </div>
+    </Grid>
   )
 }
 
 export default withRouter(SignIn);
-
-/*
-
-
-*/

@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { withRouter } from 'react-router';
 import '../sass/index.scss';
 import { Hamburger, UploadButton, UploadIcon } from '../components';
 
 
-class Upload extends Component {
-  render() {
+const Upload = ({ history }) => {
+  
     return (
       <div className="uploadBackground">
 
@@ -20,7 +21,6 @@ class Upload extends Component {
 
       </div>
     )
-  }
 }
 
-export default Upload;
+export default withRouter(Upload);

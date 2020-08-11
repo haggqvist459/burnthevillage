@@ -69,7 +69,6 @@ const Hamburger = () => {
     setState({ ...state, [anchor]: open });
   };
 
-
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {

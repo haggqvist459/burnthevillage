@@ -1,21 +1,22 @@
 import React from 'react';
 import '../sass/index.scss';
 import { Hamburger } from './';
+import { Grid, Typography } from '@material-ui/core';
 
 
 function Header() {
   return (
-    <div className="banner">
+    <Grid className="header">
     
-      <div className="banner__hamburger">
+      <Grid className="header__hamburger">
         <Hamburger />
-      </div>
-      <div className="banner__logo">
-        <div className="banner__image"></div>
-        <p className="banner__text">Burn the<br></br>Village</p>
-      </div>
+      </Grid>
+      <Grid className="header__logo">
+        <Grid className="header__logo__image"></Grid>
+        <Typography variant="h4" className="header__logo__text">Burn the<br></br>Village</Typography>
+      </Grid>
 
-    </div>
+    </Grid>
   );
 }
 

@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
-import { Header } from '../components';
+import React from 'react';
+import { withRouter } from 'react-router';
+import { Header, Footer } from '../components';
 
-class Contact extends Component {
-  render (){
-  
-    return(
-        <div className="">
-        <Header />
-        <p>contact</p>
-        </div>
-    )
-  }
+const Contact = ({ history }) => {
+
+  return (
+    <div className="">
+      <Header />
+      <p>contact</p>
+      <Footer />
+    </div> 
+  )
 }
 
-export default Contact;
+export default withRouter(Contact);
 
-  

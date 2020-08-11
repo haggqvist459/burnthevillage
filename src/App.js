@@ -3,11 +3,11 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import theme from './theme';
 import * as page from './pages';
 import { PrivateRoute, ViewPlayer, MemberList, AuthProvider } from './components';
-import { ThemeProvider } from '@material-ui/core'
+import { ThemeProvider, Grid } from '@material-ui/core'
 
 function App() {
   return (
-    <div className="App">
+    <Grid>
       <StrictMode>
         <ThemeProvider theme={theme}>
           <AuthProvider>
@@ -30,7 +30,7 @@ function App() {
           </AuthProvider>
         </ThemeProvider>
       </StrictMode>
-    </div>
+    </Grid>
   )
 }
 

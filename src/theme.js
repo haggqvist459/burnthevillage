@@ -11,7 +11,6 @@ const theme = createMuiTheme({
         }
     },
     typography: {
-
         fontFamily: "ComicNeue-Regular",
 
         h1: {
@@ -34,6 +33,8 @@ const theme = createMuiTheme({
         },
     },
 });
+ 
+
 const responsiveTheme = responsiveFontSizes(theme);
 
 export default responsiveTheme;

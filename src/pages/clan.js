@@ -33,7 +33,7 @@ const Clan = ({ history }) => {
         const fetchData = async () => {
 
             await ClanByTag().then(() => {
-                setClanObject(JSON.parse(localStorage.getItem(local_constants.constants.LOCAL_CLAN)));
+                setClanObject(JSON.parse(localStorage.getItem(local_constants.LOCAL_CLAN)));
             });
 
             await CurrentWar().then(() => {
