@@ -5,6 +5,7 @@ import '../sass/index.scss';
 import { Header, Footer, SignButton, SignField, firebase, PlayerByTag } from '../components';
 import { LinearProgress, Grid, Typography } from '@material-ui/core';
 
+
 const SignIn = ({ history }) => {
 
   const auth = firebase.auth();
@@ -12,28 +13,25 @@ const SignIn = ({ history }) => {
   const [load, setLoad] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
-  const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+  //const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  //const buffer300 = async (time) => { await sleep(time) }
+  //const startBuffer = async () => { await buffer300(300) }
 
   const handleLogin = useCallback(async event => {
     event.preventDefault();
     const { email, password } = event.target.elements;
+
     setError(false);
-
-    const buffer300 = async (time) => { await sleep(time) }
-    const startBuffer = async () => { await buffer300(300) }
-
     setLoad(true);
-    await startBuffer();
 
     try {
-
       await auth.signInWithEmailAndPassword(email.value, password.value).then((user) => {
         user.user.reload().then(() => {
           console.log({ emailVerified: user.user.emailVerified })
         })
         if (user.user.emailVerified) {
-          console.log('user is email verified');
-          console.log('username: ' + user.user.displayName);
+          console.log(user.user.displayName + ' is verified');
 
           try {
             const getUser = async () => {
@@ -76,7 +74,6 @@ const SignIn = ({ history }) => {
           setError(true);
         }
       })
-
     } catch (error) {
       setError(true);
       if (error.message.includes('Too many unsuccessful')) {
@@ -126,7 +123,7 @@ const SignIn = ({ history }) => {
             <SignButton type="submit" variant="outlined">Sign In</SignButton>
             <Grid className="sign_in_container__bottom_row">
               <Grid>
-                <Link to="/forgot"> <Typography>Forgot password?</Typography></Link>
+                <Typography>Forgot password?</Typography>
               </Grid>
               <Grid>
                 <Typography>Need an account? </Typography>
@@ -142,11 +139,12 @@ const SignIn = ({ history }) => {
                 <LinearProgress color="primary" />
                 <LinearProgress color="secondary" />
               </Grid>
-              : null}
+              :
+              null}
 
           </Grid>
         </Grid>
-      
+
       </Grid>
 
       <Footer />

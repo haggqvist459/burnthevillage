@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import '../sass/index.scss';
 import { Header, Footer, local_constants } from './';
+import { Grid, Typography } from '@material-ui/core'
 
 
 
@@ -14,42 +15,48 @@ const ViewPlayer = ({ history }) => {
     }, []);
 
     return (
-        <div>
+        <Grid className="wrapper">
+
             <Header />
 
-            <div className="profile_container">
-                <div className="profile_container__profile_row">
+            <Grid className="content">
 
-                    <div className="profile_container__profile_row__profile_box">
+                <Grid className="profile_container">
+                    <Grid className="profile_container__profile_row">
 
-                        <div className="profile_container__profile_row__profile_picture">
+                        <Grid className="profile_container__profile_row__profile_box">
 
-                        </div>
+                            <Grid className="profile_container__profile_row__profile_picture">
 
-                        <div className="profile_container__profile_row__profile_fields">
-                            <p className="profile_container__profile_row__profile_fields__name">
-                                {player.name}
-                            </p>
-                            <p className="profile_container__profile_row__profile_fields__clan">
-                            </p>
-                        </div>
+                            </Grid>
 
-                    </div>
+                            <Grid className="profile_container__profile_row__profile_fields">
+                                <Typography className="profile_container__profile_row__profile_fields__name">
+                                    {player.name}
+                                </Typography>
+                                <Typography className="profile_container__profile_row__profile_fields__clan">
+                                </Typography>
+                            </Grid>
 
-                </div>
+                        </Grid>
 
-                <div className="profile_container__bio_row">
-                    <h3>Bio:</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget metus et elit tempus imperdiet.
-                    Nunc facilisis cursus mi, vel consectetur dolor pretium ac.
-                    Nulla pellentesque, elit id feugiat vestibulum, libero sem finibus sapien, in elementum augue lorem non eros.
-                    Vestibulum dolor ex, semper hendrerit quam at, viverra efficitur est.</p>
-                </div>
+                    </Grid>
 
-            </div>
+                    <Grid className="profile_container__bio_row">
+                        <Typography variant="h3">Bio:</Typography>
+                        <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget metus et elit tempus imperdiet.
+                        Nunc facilisis cursus mi, vel consectetur dolor pretium ac.
+                        Nulla pellentesque, elit id feugiat vestibulum, libero sem finibus sapien, in elementum augue lorem non eros.
+                    Vestibulum dolor ex, semper hendrerit quam at, viverra efficitur est.</Typography>
+                    </Grid>
 
+                </Grid>
+
+            </Grid>
+            
             <Footer />
-        </div>
+
+        </Grid>
     )
 }
 

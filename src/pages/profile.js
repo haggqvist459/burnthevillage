@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router';
 import '../sass/index.scss';
-import { Header, Footer, PlayerByTag, ClanByTag, CurrentWar, local_constants, firebase } from '../components';
+import { Header, Footer, PlayerByTag, ClanByTag, CurrentWar, local_constants, firebase, PekkaLoader } from '../components';
 import { CircularProgress, Grid, Typography } from '@material-ui/core';
+
 
 
 const Profile = ({ history }) => {
@@ -10,6 +11,7 @@ const Profile = ({ history }) => {
     const auth = firebase.auth();
     const [playerObject, setPlayerObject] = useState(JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER)));
     const [load, setLoad] = useState(false);
+
 
     const handleClanClick = useCallback(async event => {
         event.preventDefault();
@@ -80,7 +82,7 @@ const Profile = ({ history }) => {
                         <Grid className="profile_container__profile_row__profile_box">
 
                             <Grid onClick={signOut} className="profile_container__profile_row__profile_picture">
-
+                                <Grid container direction={"row"}> <PekkaLoader /> </Grid>
                             </Grid>
 
                             <Grid className="profile_container__profile_row__profile_fields">
@@ -120,14 +122,11 @@ const Profile = ({ history }) => {
 
                     <Grid className="profile_container__bio_row">
                         <Typography variant="h3">Bio:</Typography>
-                        <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget metus et elit tempus imperdiet.
-                        Nunc facilisis cursus mi, vel consectetur dolor pretium ac.
-                        Nulla pellentesque, elit id feugiat vestibulum, libero sem finibus sapien, in elementum augue lorem non eros.
-                    Vestibulum dolor ex, semper hendrerit quam at, viverra efficitur est.</Typography>
+
                     </Grid>
 
                 </Grid>
-            
+
             </Grid>
 
             <Footer />
