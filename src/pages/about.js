@@ -26,132 +26,129 @@ const useStyles = makeStyles({
   },
 });
 
-
 const About = ({ history }) => {
+
   const classes = useStyles();
 
   return (
 
-    <Grid>
+    <Grid className="wrapper">
+
       <Header />
 
-      <Grid className="wrapper">
+      <Grid className="content">
 
-        <Grid className="content">
-
+        <Grid container direction={"column"} justify={"center"} alignItems={"center"}>
           <Grid container direction={"column"} justify={"center"} alignItems={"center"}>
-            <Grid container direction={"column"} justify={"center"} alignItems={"center"}>
-              <Typography variant="h2">About us</Typography>
+            <Typography variant="h2">About us</Typography>
 
-              {/* tim */}
-              <Card className={classes.root}>
+            {/* tim */}
+            <Card className={classes.root}>
 
-                <Grid container direction={"row"}>
-                  <Grid item xs={4} sm={6} m={6} l={6} xl={6}>
-                    <CardMedia
-                      component="img"
-                      alt={"portrait"}
-                      image={Tim}
-                    />
-                  </Grid>
-
-                  <Grid item xs={8} sm={6} m={6} l={6} xl={6} className="about_card_column__to_row">
-                    <Grid item m={10} l={6} >
-                      <CardContent className={classes.card_content} style={{ padding: '0' }}>
-                        <Typography variant="h6">Tim Häggqvist Luotomäki<br></br>developer</Typography>
-                      </CardContent>
-                    </Grid>
-                    <Grid item m={4} l={8}>
-                      <CardActions className="about_card_column__icons_to_col">
-                        <IconButton>
-                          <LinkedIn />
-                        </IconButton>
-                        <IconButton style={{marginLeft: '0'}}>
-                          <GitHub />
-                        </IconButton>
-                      </CardActions>
-                    </Grid>
-                  </Grid>
+              <Grid container direction={"row"}>
+                <Grid item xs={4} sm={6} m={6} l={6} xl={6}>
+                  <CardMedia
+                    component="img"
+                    alt={"portrait"}
+                    image={Tim}
+                  />
                 </Grid>
 
-              </Card>
-
-              {/* max */}
-              <Card className={classes.root}>
-
-                <Grid container direction={"row"}>
-                  <Grid item xs={4} sm={6} m={6} l={6} xl={6}>
-                    <CardMedia
-                      component="img"
-                      alt={"portrait"}
-                      image={Max}
-                    />
+                <Grid item xs={8} sm={6} m={6} l={6} xl={6} className="about_card_column__to_row">
+                  <Grid item m={10} l={6} >
+                    <CardContent className={classes.card_content} style={{ padding: '0' }}>
+                      <Typography variant="h6">Tim Häggqvist Luotomäki<br></br>developer</Typography>
+                    </CardContent>
                   </Grid>
-
-                  <Grid item xs={8} sm={6} m={6} l={6} xl={6} className="about_card_column__to_row">
-                    <Grid item m={10} l={6} >
-                      <CardContent className={classes.card_content} style={{ padding: '0' }}>
-                        <Typography variant="h6">Max Häggqvist Luotomäki<br></br>developer</Typography>
-                      </CardContent>
-                    </Grid>
-                    <Grid item m={4} l={8}>
-                      <CardActions className="about_card_column__icons_to_col">
-                        <IconButton>
-                          <LinkedIn />
-                        </IconButton>
-                        <IconButton style={{marginLeft: '0'}}>
-                          <GitHub />
-                        </IconButton>
-                      </CardActions>
-                    </Grid>
+                  <Grid item m={4} l={8}>
+                    <CardActions className="about_card_column__icons_to_col">
+                      <IconButton>
+                        <LinkedIn />
+                      </IconButton>
+                      <IconButton style={{ marginLeft: '0' }}>
+                        <GitHub />
+                      </IconButton>
+                    </CardActions>
                   </Grid>
                 </Grid>
+              </Grid>
 
-              </Card>
+            </Card>
 
-              {/* alicia */}
-              <Card className={classes.root}>
+            {/* max */}
+            <Card className={classes.root}>
 
-                <Grid container direction={"row"}>
-                  <Grid item xs={4} sm={6} m={6} l={6} xl={6}>
-                    <CardMedia
-                      component="img"
-                      alt={"portrait"}
-                      image={Alicia}
-                    />
-                  </Grid>
-
-                  <Grid item xs={8} sm={6} m={6} l={6} xl={6} className="about_card_column__to_row">
-                    <Grid item m={10} l={6} >
-                      <CardContent className={classes.card_content} style={{ padding: '0' }}>
-                        <Typography variant="h6">Alicia Häggqvist Luotomäki<br></br>designer</Typography>
-                      </CardContent>
-                    </Grid>
-                    <Grid item m={4} l={8}>
-                      <CardActions className="about_card_column__icons_to_col">
-                        <IconButton>
-                          <LinkedIn />
-                        </IconButton>
-                        <IconButton style={{marginLeft: '0'}}>
-                          <GitHub />
-                        </IconButton>
-                      </CardActions>
-                    </Grid>
-                  </Grid>
+              <Grid container direction={"row"}>
+                <Grid item xs={4} sm={6} m={6} l={6} xl={6}>
+                  <CardMedia
+                    component="img"
+                    alt={"portrait"}
+                    image={Max}
+                  />
                 </Grid>
 
-              </Card>
+                <Grid item xs={8} sm={6} m={6} l={6} xl={6} className="about_card_column__to_row">
+                  <Grid item m={10} l={6} >
+                    <CardContent className={classes.card_content} style={{ padding: '0' }}>
+                      <Typography variant="h6">Max Häggqvist Luotomäki<br></br>developer</Typography>
+                    </CardContent>
+                  </Grid>
+                  <Grid item m={4} l={8}>
+                    <CardActions className="about_card_column__icons_to_col">
+                      <IconButton>
+                        <LinkedIn />
+                      </IconButton>
+                      <IconButton style={{ marginLeft: '0' }}>
+                        <GitHub />
+                      </IconButton>
+                    </CardActions>
+                  </Grid>
+                </Grid>
+              </Grid>
 
-            </Grid>
+            </Card>
+
+            {/* alicia */}
+            <Card className={classes.root}>
+
+              <Grid container direction={"row"}>
+                <Grid item xs={4} sm={6} m={6} l={6} xl={6}>
+                  <CardMedia
+                    component="img"
+                    alt={"portrait"}
+                    image={Alicia}
+                  />
+                </Grid>
+
+                <Grid item xs={8} sm={6} m={6} l={6} xl={6} className="about_card_column__to_row">
+                  <Grid item m={10} l={6} >
+                    <CardContent className={classes.card_content} style={{ padding: '0' }}>
+                      <Typography variant="h6">Alicia Häggqvist Luotomäki<br></br>designer</Typography>
+                    </CardContent>
+                  </Grid>
+                  <Grid item m={4} l={8}>
+                    <CardActions className="about_card_column__icons_to_col">
+                      <IconButton>
+                        <LinkedIn />
+                      </IconButton>
+                      <IconButton style={{ marginLeft: '0' }}>
+                        <GitHub />
+                      </IconButton>
+                    </CardActions>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+            </Card>
+
           </Grid>
         </Grid>
-
-
       </Grid>
 
       <Footer />
 
     </Grid>
+
   )
 }
 

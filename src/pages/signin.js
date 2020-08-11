@@ -92,59 +92,65 @@ const SignIn = ({ history }) => {
 
   // if (currentUser) {
   //   return <Redirect to='/profile' />;
-  // }
+  // } 
 
   return (
-    <Grid>
+    <Grid className="wrapper">
+
       <Header />
 
-      <Grid className="sign_in_container">
-        <form onSubmit={handleLogin}>
+      <Grid className="content">
 
-          <SignField
-            error={error}
-            label="email"
-            name="email"
-            helperText={error ? errorMsg : ' '}
-            variant="outlined"
-            type="email"
-            required id="outlined-error-helper-text"
-          />
+        <Grid className="sign_in_container">
+          <form onSubmit={handleLogin}>
 
-          <SignField
-            error={error}
-            label="password"
-            name="password"
-            variant="outlined"
-            type="password"
-            required id="standard-required password"
-          />
+            <SignField
+              error={error}
+              label="email"
+              name="email"
+              helperText={error ? errorMsg : ' '}
+              variant="outlined"
+              type="email"
+              required id="outlined-error-helper-text"
+            />
 
-          <SignButton type="submit" variant="outlined">Sign In</SignButton>
-          <Grid className="sign_in_container__bottom_row">
-            <Grid>
-              <Link to="/forgot"> <Typography>Forgot password?</Typography></Link>
+            <SignField
+              error={error}
+              label="password"
+              name="password"
+              variant="outlined"
+              type="password"
+              required id="standard-required password"
+            />
+
+            <SignButton type="submit" variant="outlined">Sign In</SignButton>
+            <Grid className="sign_in_container__bottom_row">
+              <Grid>
+                <Link to="/forgot"> <Typography>Forgot password?</Typography></Link>
+              </Grid>
+              <Grid>
+                <Typography>Need an account? </Typography>
+                <br></br>
+                <Link to="/signup"><Typography>Sign up here!</Typography></Link>
+              </Grid>
             </Grid>
-            <Grid>
-              <Typography>Need an account? </Typography>
-              <br></br>
-              <Link to="/signup"><Typography>Sign up here!</Typography></Link>
-            </Grid>
+          </form>
+
+          <Grid>
+            {load ?
+              <Grid style={{ marginTop: "30px" }}>
+                <LinearProgress color="primary" />
+                <LinearProgress color="secondary" />
+              </Grid>
+              : null}
+
           </Grid>
-        </form>
-
-        <Grid>
-          {load ?
-            <Grid style={{ marginTop: "30px" }}>
-              <LinearProgress color="primary" />
-              <LinearProgress color="secondary" />
-            </Grid>
-            : null}
-
         </Grid>
-      </Grid>
       
+      </Grid>
+
       <Footer />
+
     </Grid>
   )
 }

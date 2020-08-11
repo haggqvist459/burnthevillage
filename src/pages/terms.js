@@ -6,14 +6,16 @@ import { Grid, Typography } from '@material-ui/core';
 const Terms = ({ history }) => {
 
   return (
-    <Grid>
+    <Grid className="wrapper">>
+    
       <Header />
-      <Grid className="wrapper">
-        <Grid className="content">
-          <Typography>terms</Typography>
-        </Grid>
+
+      <Grid className="content">
+        <Typography>terms</Typography>
       </Grid>
+
       <Footer />
+
     </Grid>
   )
 }

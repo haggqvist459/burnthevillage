@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { withRouter } from "react-router";
 import '../sass/index.scss';
 import { Header, Footer, ClanByTag, CurrentWar, local_constants } from '../components';
-import { IconButton, CircularProgress, Badge } from '@material-ui/core';
+import { Button, CircularProgress, Badge, Grid, Typography } from '@material-ui/core';
 import { Group } from '@material-ui/icons';
 
 const Clan = ({ history }) => {
@@ -61,73 +61,80 @@ const Clan = ({ history }) => {
 
 
     return (
-        <div>
+        <Grid className="wrapper">
+
             <Header />
 
-            <div className="clan_container">
-                <div className="clan_container__profile_row">
+            <Grid className="content">
 
-                    <div className="clan_container__clan_row__clan_box">
+                <Grid className="clan_container">
+                    <Grid className="clan_container__profile_row">
 
-                        <div className="clan_container__clan_row__clan_picture">
+                        <Grid className="clan_container__clan_row__clan_box">
 
-                        </div>
+                            <Grid className="clan_container__clan_row__clan_picture">
 
-                        <div className="clan_container__clan_row__clan_fields">
+                            </Grid>
 
-                            <div>
-                                {load ?
-                                    <CircularProgress id="loader" variant="static" value={progress} />
-                                    :
-                                    <p className="clan_container__clan_row__clan_fields__name">
-                                        {clanObject.name}
-                                    </p>}
-                            </div>
+                            <Grid className="clan_container__clan_row__clan_fields">
 
-                            <div>
-                                {load ?
-                                    <CircularProgress id="loader" variant="static" value={progress} />
-                                    :
-                                    <IconButton onClick={handleListClick} >
-                                        Members
-                                        <Badge badgeContent={clanObject.members} color="secondary">
-                                            <Group color="primary" />
-                                        </Badge>
-                                    </IconButton>}
-                            </div>
-                            <div>
-                                {load ?
-                                    <CircularProgress id="loader" variant="static" value={progress} />
-                                    :
-                                    <div>
-                                        {currentWar ? <div>not in war</div> : <p>wars, not yet implemented</p>}
-                                    </div>
-                                }
+                                <Grid>
+                                    {load ?
+                                        <CircularProgress id="loader" variant="static" value={progress} />
+                                        :
+                                        <Typography variant="h6" className="clan_container__clan_row__clan_fields__name">
+                                            {clanObject.name}
+                                        </Typography>}
+                                </Grid>
 
-                            </div>
+                                <Grid>
+                                    {load ?
+                                        <CircularProgress id="loader" variant="static" value={progress} />
+                                        :
+                                        <Grid>
+                                        <Button style={{ textTransform: 'none', padding: '0'}}> <Typography onClick={handleListClick} variant="h6">Members</Typography></Button>
+                                            <Badge badgeContent={clanObject.members} color="secondary">
+                                                <Group color="primary" style={{paddingLeft: '10'}}/>
+                                            </Badge>
+                                        </Grid>
+                                    }
+                                </Grid>
+                                <Grid>
+                                    {load ?
+                                        <CircularProgress id="loader" variant="static" value={progress} />
+                                        :
+                                        <Grid>
+                                            {currentWar ? <Typography variant="h6">not in war</Typography> : <Typography variant="h6">wars, not yet implemented</Typography>}
+                                        </Grid>
+                                    }
 
-                        </div>
+                                </Grid>
 
-                    </div>
+                            </Grid>
 
-                    <div className="clan_container__clan_row__edit_clan">
-                        <p>edit clan</p>
-                    </div>
+                        </Grid>
 
-                </div>
+                        <Grid className="clan_container__clan_row__edit_clan">
+                            <Typography>edit clan</Typography>
+                        </Grid>
 
-                <div className="clan_container__bio_row">
-                    <h3>Description:</h3>
-                    {load ?
-                        <CircularProgress id="loader" variant="static" value={progress} />
-                        :
-                        <p>{clanObject.description}</p>}
-                </div>
+                    </Grid>
 
-            </div>
+                    <Grid className="clan_container__bio_row">
+                        <Typography variant="h6">Description:</Typography>
+                        {load ?
+                            <CircularProgress id="loader" variant="static" value={progress} />
+                            :
+                            <Typography>{clanObject.description}</Typography>}
+                    </Grid>
+
+                </Grid>
+
+            </Grid>
 
             <Footer />
-        </div>
+
+        </Grid>
     )
 }
 

@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router';
 import '../sass/index.scss';
-import { Header, Footer, PlayerByTag, ClanByTag, CurrentWar, local_constants } from '../components';
-import { CircularProgress } from '@material-ui/core';
+import { Header, Footer, PlayerByTag, ClanByTag, CurrentWar, local_constants, firebase } from '../components';
+import { CircularProgress, Grid, Typography } from '@material-ui/core';
 
 
 const Profile = ({ history }) => {
 
-    const [playerObject, setPlayerObject]= useState(JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER)));
+    const auth = firebase.auth();
+    const [playerObject, setPlayerObject] = useState(JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER)));
     const [load, setLoad] = useState(false);
 
     const handleClanClick = useCallback(async event => {
@@ -22,7 +23,7 @@ const Profile = ({ history }) => {
     }, [history]);
 
     const signOut = () => {
-
+        auth.signOut();
     }
 
     useEffect(() => {
@@ -33,9 +34,9 @@ const Profile = ({ history }) => {
         }
 
         //no clan in localStorage, try fetch from API
-        if(!localStorage.getItem(local_constants.LOCAL_CLAN)) {
+        if (!localStorage.getItem(local_constants.LOCAL_CLAN)) {
             fetchClan().then(function () {
-                if(!playerObject) {
+                if (!playerObject) {
                     setLoad(true);
                     const fetchPlayer = async () => {
                         await PlayerByTag().then(function () {
@@ -44,7 +45,7 @@ const Profile = ({ history }) => {
                             console.log(error);
                         })
                     }
-        
+
                     try {
                         fetchPlayer().catch(function (error) {
                             console.log(error);
@@ -67,65 +68,71 @@ const Profile = ({ history }) => {
     }, [playerObject]);
 
     return (
-        <div>
+        <Grid className="wrapper">
+
             <Header />
 
-            <div className="profile_container">
-                <div className="profile_container__profile_row">
+            <Grid className="content">
 
-                    <div className="profile_container__profile_row__profile_box">
+                <Grid className="profile_container">
+                    <Grid className="profile_container__profile_row">
 
-                        <div onClick={signOut} className="profile_container__profile_row__profile_picture">
+                        <Grid className="profile_container__profile_row__profile_box">
 
-                        </div>
+                            <Grid onClick={signOut} className="profile_container__profile_row__profile_picture">
 
-                        <div className="profile_container__profile_row__profile_fields">
+                            </Grid>
 
-                        {load ?
-                                <div>
-                                <CircularProgress color="secondary" />
-                                </div>
-                                :
-                                <div className="profile_container__profile_row__profile_fields__clan">
-                                    {playerObject.name ? <div>{playerObject.name}</div> : null}
-                                </div>
-                            }
+                            <Grid className="profile_container__profile_row__profile_fields">
 
-                        {load ?
-                                <div>
-                                <CircularProgress color="secondary" />
-                                </div>
-                                :
-                                <div className="profile_container__profile_row__profile_fields__clan">
-                                    {playerObject.clan ? <div onClick={handleClanClick}>{playerObject.clan.name}</div> : <div>no clan</div>}
-                                </div>
-                            }
+                                {load ?
+                                    <Grid>
+                                        <CircularProgress color="secondary" />
+                                    </Grid>
+                                    :
+                                    <Grid className="profile_container__profile_row__profile_fields__clan">
+                                        {playerObject.name ? <Typography variant="h6">{playerObject.name}</Typography> : null}
+                                    </Grid>
+                                }
 
-                            <p className="profile_container__profile_row__profile_fields__upload_history">
-                                Upload history
-                                </p>
-                        </div>
+                                {load ?
+                                    <Grid>
+                                        <CircularProgress color="secondary" />
+                                    </Grid>
+                                    :
+                                    <Grid className="profile_container__profile_row__profile_fields__clan">
+                                        {playerObject.clan ? <Typography onClick={handleClanClick} variant="h6">{playerObject.clan.name}</Typography> : <Typography>no clan</Typography>}
+                                    </Grid>
+                                }
 
-                    </div>
+                                <Typography className="profile_container__profile_row__profile_fields__upload_history" variant="h6">
+                                    Upload history
+                                </Typography>
+                            </Grid>
 
-                    <div className="profile_container__profile_row__edit_profile">
-                        <p>edit profile</p>
-                    </div>
+                        </Grid>
 
-                </div>
+                        <Grid className="profile_container__profile_row__edit_profile">
+                            <Typography>edit profile</Typography>
+                        </Grid>
 
-                <div className="profile_container__bio_row">
-                    <h3>Bio:</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget metus et elit tempus imperdiet.
-                    Nunc facilisis cursus mi, vel consectetur dolor pretium ac.
-                    Nulla pellentesque, elit id feugiat vestibulum, libero sem finibus sapien, in elementum augue lorem non eros.
-                    Vestibulum dolor ex, semper hendrerit quam at, viverra efficitur est.</p>
-                </div>
+                    </Grid>
 
-            </div>
+                    <Grid className="profile_container__bio_row">
+                        <Typography variant="h3">Bio:</Typography>
+                        <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget metus et elit tempus imperdiet.
+                        Nunc facilisis cursus mi, vel consectetur dolor pretium ac.
+                        Nulla pellentesque, elit id feugiat vestibulum, libero sem finibus sapien, in elementum augue lorem non eros.
+                    Vestibulum dolor ex, semper hendrerit quam at, viverra efficitur est.</Typography>
+                    </Grid>
+
+                </Grid>
+            
+            </Grid>
 
             <Footer />
-        </div>
+
+        </Grid>
     )
 }
 

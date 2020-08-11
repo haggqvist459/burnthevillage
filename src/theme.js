@@ -13,6 +13,13 @@ const theme = createMuiTheme({
     typography: {
         fontFamily: "ComicNeue-Regular",
 
+        p: {
+            fontFamily: "ComicNeue-Regular"
+        },
+        link: {
+            fontFamily: "ComicNeue-Regular"
+        },
+
         h1: {
             fontFamily: "Supercell-magic-webfont",
         },
@@ -32,6 +39,7 @@ const theme = createMuiTheme({
             fontFamily: "Supercell-magic-webfont",
         },
     },
+    
 });
  
 

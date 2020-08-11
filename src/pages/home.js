@@ -2,7 +2,8 @@ import React, { useCallback } from 'react';
 import { withRouter } from 'react-router';
 import '../sass/index.scss';
 import { Hamburger } from '../components';
-import { Button } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
+
 
  
 const Home = ({ history }) => {
@@ -20,46 +21,46 @@ const Home = ({ history }) => {
   }, [history]);
 
   return (
-    <div className="homepageBackground">
-      <div className="hamburger">
+    <Grid className="homepageBackground">
+      <Grid className="hamburger">
         <Hamburger />
-      </div>
+      </Grid>
 
-      <div className="homepageBackground__instruction_container">
+      <Grid className="homepageBackground__instruction_container">
 
-        <div className="homepageBackground__instruction_container__row">
+        <Grid className="homepageBackground__instruction_container__row">
 
-          <div className="homepageBackground__instruction_container__row__instruction_box">
+          <Grid className="homepageBackground__instruction_container__row__instruction_box">
 
-            <p>[first instruction]</p>
-          </div>
+            <Typography>[first instruction]</Typography>
+          </Grid>
 
-          <div className="homepageBackground__instruction_container__row__instruction_box">
+          <Grid className="homepageBackground__instruction_container__row__instruction_box">
 
-            <p>[second instruction]</p>
-          </div>
+            <Typography>[second instruction]</Typography>
+          </Grid>
 
-          <div className="homepageBackground__instruction_container__row__instruction_box">
+          <Grid className="homepageBackground__instruction_container__row__instruction_box">
 
-            <p>[third instruction]</p>
-          </div>
+            <Typography>[third instruction]</Typography>
+          </Grid>
 
-        </div>
+        </Grid>
 
-        <div className="homepageBackground__instruction_container__row">
-          <div className="homepageBackground__instruction_container__row__instruction_box_hidden">
+        <Grid className="homepageBackground__instruction_container__row">
+          <Grid className="homepageBackground__instruction_container__row__instruction_box_hidden">
 
-          </div>
-          <div className="homepageBackground__instruction_container__row__instruction_box">
+          </Grid>
+          <Grid className="homepageBackground__instruction_container__row__instruction_box">
             <Button onClick={handleClick} >Get started!</Button>
-          </div>
-          <div className="homepageBackground__instruction_container__row__instruction_box_hidden">
+          </Grid>
+          <Grid className="homepageBackground__instruction_container__row__instruction_box_hidden">
 
-          </div>
-        </div>
+          </Grid>
+        </Grid>
 
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   )
 
 }

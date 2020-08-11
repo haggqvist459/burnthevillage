@@ -2,24 +2,25 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import '../sass/index.scss';
 import { Hamburger, UploadButton, UploadIcon } from '../components';
+import { Grid } from '@material-ui/core';
 
 
 const Upload = ({ history }) => {
   
     return (
-      <div className="uploadBackground">
+      <Grid className="uploadBackground">
 
-        <div className="hamburger">
+        <Grid className="hamburger">
           <Hamburger />
-        </div>
+        </Grid>
 
-        <div className="uploadBackground__upload_button">
+        <Grid className="uploadBackground__upload_button">
           <UploadButton>
             <UploadIcon />
           </UploadButton>
-        </div>
+        </Grid>
 
-      </div>
+      </Grid>
     )
 }
 

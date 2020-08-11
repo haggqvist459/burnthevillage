@@ -1,11 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
 import '../sass/index.scss';
 import { Header, Footer, SignButton, SignField, PlayerByTag, local_constants, firebase } from '../components';
-import { LinearProgress, IconButton, InputAdornment, Popover, Button } from '@material-ui/core';
-import { Visibility, VisibilityOff} from '@material-ui/icons';
-
+import { LinearProgress, IconButton, InputAdornment, Popover, Button, Grid, Typography } from '@material-ui/core';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 
 const SignUp = ({ history }) => {
@@ -90,12 +88,12 @@ const SignUp = ({ history }) => {
             displayName: username.value
           })
         })
-        .catch(function (error) {
-          //catch create user error
-          console.log(error);
-          setLoad(false);
-          throw new Error(error);
-        })
+          .catch(function (error) {
+            //catch create user error
+            console.log(error);
+            setLoad(false);
+            throw new Error(error);
+          })
 
         //send email verification
         await firebase.auth().currentUser.sendEmailVerification().catch(function (error) {
@@ -139,109 +137,128 @@ const SignUp = ({ history }) => {
     }
   }, [db]);
 
+  //handle terms
+  const handleTermClick = useCallback(async event => {
+    history.push('/terms');
+  }, [history])
+
+  //handle sign in
+  const handleSigninClick = useCallback(async event => {
+    history.push('/signin');
+  }, [history])
+
 
   return (
-    <div>
+
+    <Grid className="wrapper">
+
       <Header />
 
-      <div className="sign_up_container">
-        <form onSubmit={handleSignUp}>
+      <Grid className="content">
 
-          <SignField
-            variant="outlined"
-            name="username"
-            label="username"
-            required id="standard-required username"
-            value={values.username}
-            onChange={handleChange('username')}
-          />
+        <Grid className="sign_up_container">
 
-          <SignField
-            variant="outlined"
-            name="email"
-            label="email"
-            required id="standard-required email"
-            value={values.email}
-            onChange={handleChange('email')}
-          />
+          <form onSubmit={handleSignUp}>
 
-          <SignField
-            variant="outlined"
-            name="password"
-            label="password"
-            required id="standard-required password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>,
-            }}
-          />
+            <SignField
+              variant="outlined"
+              name="username"
+              label="username"
+              required id="standard-required username"
+              value={values.username}
+              onChange={handleChange('username')}
+            />
 
-          <SignField
-            error={error}
-            label="player-tag"
-            name="playertag"
-            helperText={error ? 'Invalid player-tag' : ' '}
-            variant="outlined"
-            required id="outlined-error-helper-text"
-            value={values.playertag}
-            onChange={handleChange('playertag')}
-          />
+            <SignField
+              variant="outlined"
+              name="email"
+              label="email"
+              required id="standard-required email"
+              value={values.email}
+              onChange={handleChange('email')}
+            />
 
-          <div>
-            <Popover
-              open={openPopover}
-              anchorReference="anchorPosition"
-              anchorPosition={{ top: 2, left: 2 }}
-              anchorOrigin={{
-                vertical: 'center',
-                horizontal: 'center',
+            <SignField
+              variant="outlined"
+              name="password"
+              label="password"
+              required id="standard-required password"
+              type={values.showPassword ? 'text' : 'password'}
+              value={values.password}
+              onChange={handleChange('password')}
+              InputProps={{
+                endAdornment: <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>,
               }}
-              className="modal"
-            >
-              <div><p>email verification popover</p></div>
+            />
+
+            <SignField
+              error={error}
+              label="player-tag"
+              name="playertag"
+              helperText={error ? 'Invalid player-tag' : ' '}
+              variant="outlined"
+              required id="outlined-error-helper-text"
+              value={values.playertag}
+              onChange={handleChange('playertag')}
+            />
+
+            <Grid>
+              <Popover
+                open={openPopover}
+                anchorReference="anchorPosition"
+                anchorPosition={{ top: 2, left: 2 }}
+                anchorOrigin={{
+                  vertical: 'center',
+                  horizontal: 'center',
+                }}
+                className="modal"
+              >
+                <Grid><Typography>email verification popover</Typography></Grid>
 
 
-              <Button onClick={handleClosePopover}>OK!</Button>
-            </Popover>
-            {load ?
+                <Button onClick={handleClosePopover}>OK!</Button>
+              </Popover>
 
-              <div style={{ marginTop: "30px" }}>
-                <LinearProgress color="primary" />
-                <LinearProgress color="secondary" />
-              </div>
-              :
-              <SignButton id="signupButton" variant="outlined" type="submit">Sign Up</SignButton>}
+              {load ?
 
-          </div>
-          <div className="sign_up_container__bottom_row">
+                <Grid style={{ marginTop: "30px" }}>
+                  <LinearProgress color="primary" />
+                  <LinearProgress color="secondary" />
+                </Grid>
+                :
+                <SignButton id="signupButton" variant="outlined" type="submit">Sign Up</SignButton>}
 
-            <div className="sign_up_container__bottom_row__text_row">
-              <p>By creating an account, you agree to our </p><Link to="/"> terms</Link>
-            </div>
-            <div className="sign_up_container__bottom_row__text_row">
-              <p>Already have an account? </p><Link to="/signin"> Sign in</Link>
-            </div>
+            </Grid>
+            <Grid className="sign_up_container__bottom_row">
 
-          </div>
+              <Grid className="sign_up_container__bottom_row__text_row">
+                <Typography>By creating an account, you agree to our </Typography>
+                <Typography onClick={handleTermClick} style={{ textDecoration: 'underline' }}>terms</Typography>
+              </Grid>
+              <Grid className="sign_up_container__bottom_row__text_row">
+                <Typography>Already have an account? </Typography>
+                <Typography onClick={handleSigninClick} style={{ textDecoration: 'underline' }}>Sign in!</Typography>
+              </Grid>
 
-        </form>
+            </Grid>
 
+          </form>
 
+        </Grid>
 
-      </div>
+      </Grid>
 
       <Footer />
-    </div>
+
+    </Grid>
   )
 }
 

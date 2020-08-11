@@ -2,7 +2,6 @@
     
     margin: auto;
     margin-top: 22vh;
-    height: 60vh;
     width: 90vw;
     display: flex;
     flex-direction: column;
@@ -80,8 +79,9 @@
     &__bio_row {
 
         width: 90vw;
-        margin-top: 20px;
         margin: auto;
+        margin-top: 20vh;
+       
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -97,6 +97,4 @@
             // margin-bottom: -10px;
         }
     }
-
-
 }

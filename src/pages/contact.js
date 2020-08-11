@@ -1,15 +1,22 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Header, Footer } from '../components';
+import { Grid, Typography } from '@material-ui/core'
 
 const Contact = ({ history }) => {
 
   return (
-    <div className="">
+    <Grid className="wrapper">
+    
       <Header />
-      <p>contact</p>
+
+      <Grid className="content">
+        <Typography>contact</Typography>
+      </Grid>
+
       <Footer />
-    </div> 
+
+    </Grid>
   )
 }
 
