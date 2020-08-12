@@ -82,7 +82,7 @@ const Profile = ({ history }) => {
                         <Grid className="profile_container__profile_row__profile_box">
 
                             <Grid onClick={signOut} className="profile_container__profile_row__profile_picture">
-                                <Grid container direction={"row"}> <PekkaLoader /> </Grid>
+                               
                             </Grid>
 
                             <Grid className="profile_container__profile_row__profile_fields">
