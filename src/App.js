@@ -2,7 +2,7 @@ import React, { StrictMode } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import theme from './theme';
 import * as page from './pages';
-import { PrivateRoute, ViewPlayer, MemberList, AuthProvider } from './components';
+import { PrivateRoute, ViewPlayer, MemberList, AuthProvider, WarList } from './components';
 import { ThemeProvider, Grid } from '@material-ui/core'
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
               {/* component routes */}
               <Route path='/viewPlayer' component={ViewPlayer} />
               <PrivateRoute path='/memberList' component={MemberList} />
+              <PrivateRoute path='/warList' component={WarList} />
             </BrowserRouter>
           </AuthProvider>
         </ThemeProvider>

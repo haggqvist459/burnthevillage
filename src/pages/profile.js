@@ -25,6 +25,12 @@ const Profile = ({ history }) => {
     }, [history]);
 
     const signOut = () => {
+        localStorage.removeItem('clan');
+        localStorage.removeItem('clanMembers');
+        localStorage.removeItem('playerTag');
+        localStorage.removeItem('currentWar');
+        localStorage.removeItem('player');
+        localStorage.removeItem('clanTag');
         auth.signOut();
     }
 
