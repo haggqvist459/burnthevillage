@@ -23,6 +23,15 @@ const Clan = ({ history }) => {
 
     }, [history]);
 
+    const handleWarClick = useCallback(async event => {
+        event.preventDefault();
+
+        try {
+            history.push('/warList');
+        } catch (error) {
+            alert(error);
+        }
+    }, [history])
 
     useEffect(() => {
 
@@ -50,6 +59,7 @@ const Clan = ({ history }) => {
         }
         else {
             setClanObject(JSON.parse(localStorage.getItem(local_constants.LOCAL_CLAN)));
+            setCurrentWar(JSON.parse(localStorage.getItem(local_constants.LOCAL_CURRENT_WAR)));
             setLoad(false);
         }
 
@@ -104,7 +114,11 @@ const Clan = ({ history }) => {
                                         <CircularProgress id="loader" variant="static" value={progress} />
                                         :
                                         <Grid>
-                                            {currentWar ? <Typography variant="h6">not in war</Typography> : <Typography variant="h6">wars, not yet implemented</Typography>}
+                                            {currentWar.state === 'preparation' ? 
+                                            <Button style={{ textTransform: 'none', padding: '0'}} onClick={handleWarClick}><Typography variant="h6">Current war</Typography></Button>
+                                            : 
+                                            <Typography variant="h6">not in war</Typography> 
+                                            }
                                         </Grid>
                                     }
 

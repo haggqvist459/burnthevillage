@@ -11,6 +11,7 @@ import { PekkaLoader } from '../components/styledmaterial/loader'
 import { AuthContext, AuthProvider } from './utils/auth';
 import firebase from './utils/firebaseConfig';
 import PrivateRoute from './utils/privateRoute';
+import WarClock from './utils/warClock';
 
 //utils - cloud functions
 import { PlayerByTag, ClanByTag, CurrentWar } from './utils/cloudFunctions';
@@ -26,7 +27,7 @@ import { UploadIcon } from './styledmaterial/icons';
 
 export {
     Footer, Hamburger, Header, MemberList, ViewPlayer, WarList, PekkaLoader,
-    AuthContext, AuthProvider, firebase, PrivateRoute,
+    AuthContext, AuthProvider, firebase, PrivateRoute, WarClock,
     UploadButton, SignButton, SignField, UploadIcon,
     PlayerByTag, ClanByTag, CurrentWar,
     local_constants,
