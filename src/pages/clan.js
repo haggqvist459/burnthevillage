@@ -114,7 +114,7 @@ const Clan = ({ history }) => {
                                         <CircularProgress id="loader" variant="static" value={progress} />
                                         :
                                         <Grid>
-                                            {currentWar.state === 'preparation' ? 
+                                            {currentWar.state === 'preparation' || currentWar.state === 'inWar' ? 
                                             <Button style={{ textTransform: 'none', padding: '0'}} onClick={handleWarClick}><Typography variant="h6">Current war</Typography></Button>
                                             : 
                                             <Typography variant="h6">not in war</Typography> 
