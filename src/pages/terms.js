@@ -1,18 +1,23 @@
-import React, { Component } from 'react';
-import Header from '../components/header/header'
+import React from 'react';
+import { withRouter } from 'react-router';
+import { Header, Footer } from '../components';
+import { Grid, Typography } from '@material-ui/core';
 
-class Terms extends Component {
-  render (){
-  
-    return(
-        <div className="">
-        <Header />
-        <p>terms</p>
-        </div>
-    )
-  }
+const Terms = ({ history }) => {
+
+  return (
+    <Grid className="wrapper">>
+    
+      <Header />
+
+      <Grid className="content">
+        <Typography>terms</Typography>
+      </Grid>
+
+      <Footer />
+
+    </Grid>
+  )
 }
 
-export default Terms;
-
-  
+export default withRouter(Terms);

@@ -1,41 +1,37 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { ThemeProvider } from '@material-ui/core'
-import Home from './pages/homepage';
-import Upload from './pages/upload';
-import Terms from './pages/terms';
-import Signin from './pages/signin';
-import Signup from './pages/signup';
-import About from './pages/about';
-import Contact from './pages/contact';
-import Forgot from './pages/forgot';
-import Profile from './pages/profile';
-import PrivateRoute from './components/utils/privateRoute'
-
-import { AuthProvider } from './components/utils/auth'
-
 import theme from './theme';
+import * as page from './pages';
+import { PrivateRoute, ViewPlayer, MemberList, AuthProvider, WarList } from './components';
+import { ThemeProvider, Grid } from '@material-ui/core'
 
 function App() {
   return (
-    <div className="App">
-      <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <BrowserRouter>
-            <Route exact path='/' component={Home} />
-            <Route path='/home' component={Home} />
-            <Route path='/upload' component={Upload} />
-            <Route path='/terms' component={Terms} />
-            <Route path='/signin' component={Signin} />
-            <Route path='/signup' component={Signup} />
-            <Route path='/contact' component={Contact} />
-            <Route path='/about' component={About} />
-            <Route path='/forgot' component={Forgot} />
-            <PrivateRoute path='/profile' component={Profile} />
-          </BrowserRouter>
-        </AuthProvider>
-      </ThemeProvider>
-    </div>
+    <Grid>
+      <StrictMode>
+        <ThemeProvider theme={theme}>
+          <AuthProvider>
+            <BrowserRouter>
+              {/* page routes */}
+              <Route exact path='/' component={page.Home} />
+              <Route path='/home' component={page.Home} />
+              <Route path='/upload' component={page.Upload} />
+              <Route path='/terms' component={page.Terms} />
+              <Route path='/signin' component={page.Signin} />
+              <Route path='/signup' component={page.Signup} />
+              <Route path='/contact' component={page.Contact} />
+              <Route path='/about' component={page.About} />
+              <PrivateRoute path='/profile' component={page.Profile} />
+              <PrivateRoute path='/clan' component={page.Clan} />
+              {/* component routes */}
+              <Route path='/viewPlayer' component={ViewPlayer} />
+              <PrivateRoute path='/memberList' component={MemberList} />
+              <PrivateRoute path='/warList' component={WarList} />
+            </BrowserRouter>
+          </AuthProvider>
+        </ThemeProvider>
+      </StrictMode>
+    </Grid>
   )
 }
 

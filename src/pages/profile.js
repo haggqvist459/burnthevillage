@@ -1,96 +1,145 @@
-import React, { Component } from 'react';
-import '../sass/pages/profile.scss';
-import Header from '../components/header/header';
-import Footer from '../components/footer/footer';
-//import {ProfileData} from '../components/api/profileData';
-import clashApi from 'clash-of-clans-api';
-import firebase from '../components/firebase/config';
+import React, { useState, useEffect, useCallback } from 'react';
+import { withRouter } from 'react-router';
+import '../sass/index.scss';
+import { Header, Footer, PlayerByTag, ClanByTag, CurrentWar, local_constants, firebase, PekkaLoader } from '../components';
+import { CircularProgress, Grid, Typography } from '@material-ui/core';
 
-const client = clashApi({
-    token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjQzZTUyMTUwLWJjODMtNDMwNi05ZWUxLWE0ZWQyZGJmZjU5OSIsImlhdCI6MTU5NTc3MjI0OCwic3ViIjoiZGV2ZWxvcGVyL2QwNDhlNjI1LTE0MjUtYzU2Yy01NTViLWY1MTIyMmZiNDAyZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjYwLjI0MS4yMjkuMjM2Il0sInR5cGUiOiJjbGllbnQifV19.NCgihYBBP8e55BpViHcqR5U4ng2OJKTiZVyiPpOY0t_xVQxI-8PI1MH5KQvwpjZh9Y9NpHz-4tSOC0u9p_GjTA"
-});
 
-class Profile extends Component {
 
-    state = {
-        profile: null
+const Profile = ({ history }) => {
+
+    const auth = firebase.auth();
+    const [playerObject, setPlayerObject] = useState(JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER)));
+    const [load, setLoad] = useState(false);
+
+
+    const handleClanClick = useCallback(async event => {
+        event.preventDefault();
+
+        try {
+            history.push('/clan');
+        } catch (error) {
+            alert(error);
+        }
+
+    }, [history]);
+
+    const signOut = () => {
+        localStorage.removeItem('clan');
+        localStorage.removeItem('clanMembers');
+        localStorage.removeItem('playerTag');
+        localStorage.removeItem('currentWar');
+        localStorage.removeItem('player');
+        localStorage.removeItem('clanTag');
+        auth.signOut();
     }
 
-    componentDidMount() {
+    useEffect(() => {
 
-        console.log(this.state.profile);
+        const fetchClan = async () => {
+            await ClanByTag();
+            await CurrentWar();
+        }
 
-        // //fetch here
-        // let playerTag = "LVPQ2R8R2"
-        // client
-        //     .fetch("https://api.clashofclans.com/v1/players/" + playerTag)
-        //     .then(response => response.json())
-        //     .then(data => console.log(data))
+        //no clan in localStorage, try fetch from API
+        if (!localStorage.getItem(local_constants.LOCAL_CLAN)) {
+            fetchClan().then(function () {
+                if (!playerObject) {
+                    setLoad(true);
+                    const fetchPlayer = async () => {
+                        await PlayerByTag().then(function () {
+                            setPlayerObject(JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER)));
+                        }).catch(function (error) {
+                            console.log(error);
+                        })
+                    }
 
-        client
-            .clans()
-            .withWarFrequency('always')
-            .withMinMembers(25)
-            .fetch()
-            .then(response => console.log(response))
-            .catch(err => console.log(err))
+                    try {
+                        fetchPlayer().catch(function (error) {
+                            console.log(error);
+                            setLoad(false);
+                        })
+                    } catch (error) {
+                        console.log(error);
+                        setLoad(false);
+                    }
+                }
+                else {
+                    setLoad(false);
+                }
+            }).catch(function (error) {
+                console.log(error)
+                setLoad(false);
+            })
+        }
 
-    }
+    }, [playerObject]);
 
-    signOut() {
-        firebase.auth().signOut()
-    }
+    return (
+        <Grid className="wrapper">
 
-    render() {
+            <Header />
 
-        return (
-            <div>
-                <Header />
+            <Grid className="content">
 
-                <div className="profile_container">
-                    <div className="profile_container__profile_row">
+                <Grid className="profile_container">
+                    <Grid className="profile_container__profile_row">
 
-                        <div className="profile_container__profile_row__profile_box">
+                        <Grid className="profile_container__profile_row__profile_box">
 
-                            <div className="profile_container__profile_row__profile_picture">
+                            <Grid onClick={signOut} className="profile_container__profile_row__profile_picture">
+                               
+                            </Grid>
 
-                            </div>
+                            <Grid className="profile_container__profile_row__profile_fields">
 
-                            <div onClick={this.signOut} className="profile_container__profile_row__profile_fields">
-                                <p className="profile_container__profile_row__profile_fields__name">
-                                    John Doe
-                        </p>
-                                <p className="profile_container__profile_row__profile_fields__clan">
-                                    Sample Clan
-                        </p>
-                                <p className="profile_container__profile_row__profile_fields__upload_history">
+                                {load ?
+                                    <Grid>
+                                        <CircularProgress color="secondary" />
+                                    </Grid>
+                                    :
+                                    <Grid className="profile_container__profile_row__profile_fields__clan">
+                                        {playerObject.name ? <Typography variant="h6">{playerObject.name}</Typography> : null}
+                                    </Grid>
+                                }
+
+                                {load ?
+                                    <Grid>
+                                        <CircularProgress color="secondary" />
+                                    </Grid>
+                                    :
+                                    <Grid className="profile_container__profile_row__profile_fields__clan">
+                                        {playerObject.clan ? <Typography onClick={handleClanClick} variant="h6">{playerObject.clan.name}</Typography> : <Typography>no clan</Typography>}
+                                    </Grid>
+                                }
+
+                                <Typography className="profile_container__profile_row__profile_fields__upload_history" variant="h6">
                                     Upload history
-                        </p>
-                            </div>
+                                </Typography>
+                            </Grid>
 
-                        </div>
+                        </Grid>
 
-                        <div className="profile_container__profile_row__edit_profile">
-                            <p>edit profile</p>
-                        </div>
+                        <Grid className="profile_container__profile_row__edit_profile">
+                            <Typography>edit profile</Typography>
+                        </Grid>
 
-                    </div>
+                    </Grid>
 
-                    <div className="profile_container__bio_row">
-                        <h3>Bio:</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget metus et elit tempus imperdiet.
-                        Nunc facilisis cursus mi, vel consectetur dolor pretium ac.
-                        Nulla pellentesque, elit id feugiat vestibulum, libero sem finibus sapien, in elementum augue lorem non eros.
-                    Vestibulum dolor ex, semper hendrerit quam at, viverra efficitur est.</p>
-                    </div>
+                    <Grid className="profile_container__bio_row">
+                        <Typography variant="h3">Bio:</Typography>
 
-                </div>
+                    </Grid>
 
-                <Footer />
-            </div>
-        )
-    }
+                </Grid>
+
+            </Grid>
+
+            <Footer />
+
+        </Grid>
+    )
 }
 
-export default Profile;
+export default withRouter(Profile);
 

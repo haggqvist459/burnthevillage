@@ -1,6 +1,5 @@
 import React, { useEffect, useState, createContext } from 'react';
-import firebase from '../firebase/config';
-
+import firebase from './firebaseConfig';
 import { Grid, CircularProgress } from '@material-ui/core'
 
 export const AuthContext = createContext();
@@ -9,11 +8,11 @@ export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const [pending, setPending] = useState(true);
 
-    useEffect(() => {
+    useEffect(() => {       
         firebase.auth().onAuthStateChanged((user) => {
             setCurrentUser(user)
             setPending(false)
-        });
+        }); 
     }, []);
 
     if (pending) {

@@ -1,38 +1,23 @@
-.aboutContainer {
-    margin: auto;
-    margin-top: 18vh;
-    width: 80vh;
-    padding-bottom: 250px;
+.about_card_column {
+
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-content: center;
     align-items: center;
 
-    &__card_column {
-        
+    &__to_row {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        &__card {
-            height: 22vh;
-            margin: auto;
-            margin-top: 10px;
-            display: flex;
+        @media screen and (max-width: 780px) {
             flex-direction: row;
-            justify-content: space-evenly;
-            align-items: center;
-            border: 1px solid black;
-
-            &__portrait {
-                height: 20vh;
-                margin: 10px;
-            }
-
-            &__description {
-                margin-right: 40px;
-            }
         }
     }
 
+    &__icons_to_col {
+        display: flex;
+        flex-direction: row;
+        @media screen and (max-width: 780px) {
+            flex-direction: column;
+        }
+    }
 }

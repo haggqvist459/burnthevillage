@@ -1,7 +1,7 @@
 .profile_container {
+    
     margin: auto;
     margin-top: 22vh;
-    height: 60vh;
     width: 90vw;
     display: flex;
     flex-direction: column;
@@ -79,8 +79,9 @@
     &__bio_row {
 
         width: 90vw;
-        margin-top: 20px;
         margin: auto;
+        margin-top: 20vh;
+       
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -93,9 +94,7 @@
 
         h3 {
             font-size: 3vh;
-            margin-bottom: -10px;
+            // margin-bottom: -10px;
         }
     }
-
-
 }

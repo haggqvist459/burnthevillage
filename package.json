@@ -11,14 +11,19 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.19.2",
     "bluebird": "^3.7.2",
     "cheeseburger-menu": "0.0.13",
     "clash-of-clans-api": "^0.6.3",
     "cls-bluebird": "^2.1.0",
-    "firebase": "^7.17.1",
+    "express": "^4.17.1",
+    "firebase": "^7.17.2",
+    "moment": "^2.27.0",
+    "node-fetch": "^2.6.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-dropdown": "^1.7.0",
     "react-hamburger-menu": "^1.2.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
@@ -46,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.13.0"
   }
 }
