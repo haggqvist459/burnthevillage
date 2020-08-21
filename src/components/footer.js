@@ -7,7 +7,8 @@ function Footer() {
   return (
     <Grid className="footer">
       <Grid className="footer__copyright">
-        <Typography>Copyright placeholder</Typography>
+        {/* <Typography>Copyright placeholder</Typography> */}
+        {/* We can't copyright the website  */}
       </Grid>
     </Grid>
   );
