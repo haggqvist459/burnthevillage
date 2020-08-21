@@ -32,17 +32,17 @@ const Home = ({ history }) => {
 
           <Grid className="homepageBackground__instruction_container__row__instruction_box">
 
-            <Typography>[first instruction]</Typography>
+            <Typography>Upload a screenshot</Typography>
           </Grid>
 
           <Grid className="homepageBackground__instruction_container__row__instruction_box">
 
-            <Typography>[second instruction]</Typography>
+            <Typography>Browse the results</Typography>
           </Grid>
 
           <Grid className="homepageBackground__instruction_container__row__instruction_box">
 
-            <Typography>[third instruction]</Typography>
+            <Typography>Duplicate the attack</Typography>
           </Grid>
 
         </Grid>
