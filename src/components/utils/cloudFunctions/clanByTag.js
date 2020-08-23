@@ -1,12 +1,12 @@
-import { local_constants, gcloud_constants } from '../constants';
+import { localConstants, cloudConstants } from '../constants';
 export default async function ClanByTag() {
 
   console.log('clan fetch init');
   var clanTag = '';
 
   //check clanTag in localStorage, throw error if empty
-  if (localStorage.getItem(local_constants.LOCAL_CLAN_TAG)) {
-    clanTag = localStorage.getItem(local_constants.LOCAL_CLAN_TAG);
+  if (localStorage.getItem(localConstants.LOCAL_CLAN_TAG)) {
+    clanTag = localStorage.getItem(localConstants.LOCAL_CLAN_TAG);
     console.log('tag passed from localStorage: ' + clanTag);
   }
   else {
@@ -19,7 +19,7 @@ export default async function ClanByTag() {
 
     try {
       console.log('fetching clan.. ');
-      await fetch(gcloud_constants.CLAN_BY_TAG, {
+      await fetch(cloudConstants.CLAN_BY_TAG, {
         method: "GET",
         headers: {
           clanTag: clanTag,
@@ -33,16 +33,16 @@ export default async function ClanByTag() {
         console.log(result);
 
         //update localstorage clan
-        localStorage.removeItem(local_constants.LOCAL_CLAN);
-        localStorage.setItem(local_constants.LOCAL_CLAN, JSON.stringify(result));
+        localStorage.removeItem(localConstants.LOCAL_CLAN);
+        localStorage.setItem(localConstants.LOCAL_CLAN, JSON.stringify(result));
 
         //update localstorage member array
-        localStorage.removeItem(local_constants.LOCAL_CLAN_MEMBERS);
+        localStorage.removeItem(localConstants.LOCAL_CLAN_MEMBERS);
         let memberList = [];
         result.memberList.forEach(element => {
           memberList.push(element);
         });
-        localStorage.setItem(local_constants.LOCAL_CLAN_MEMBERS, JSON.stringify(memberList));
+        localStorage.setItem(localConstants.LOCAL_CLAN_MEMBERS, JSON.stringify(memberList));
       })
     } catch (error) {
       console.log(error);

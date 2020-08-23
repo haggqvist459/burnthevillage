@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
 import '../sass/index.scss';
-import { Header, Footer, local_constants } from './';
-import { makeStyles, GridList, GridListTile, GridListTileBar, ListSubheader, IconButton } from '@material-ui/core';
+import { Header, Footer, localConstants } from './';
+import { makeStyles, GridList, GridListTile, GridListTileBar, ListSubheader, IconButton, Grid } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { clanActions } from '../store/actions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,22 +25,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
 const MemberList = ({ history }) => {
 
-    const [list, setList] = useState([]);
     const classes = useStyles();
-
-    useEffect(() => {
-
-        console.log('memberList from localStorage');
-        setList(JSON.parse(localStorage.getItem(local_constants.LOCAL_CLAN_MEMBERS)))
-
-    }, [])
+    const { memberList } = useSelector(state => state.clan);
+    const dispatch = useDispatch();
 
     const handleClick = (tag) => {
-        let viewPlayer = list.find(player => player.tag === tag)
-        localStorage.removeItem(local_constants.VIEW_PLAYER);
-        localStorage.setItem(local_constants.VIEW_PLAYER, JSON.stringify(viewPlayer));
+        let viewPlayer = memberList.find(player => player.tag === tag)
+
+        localStorage.removeItem(localConstants.VIEW_PLAYER);
+        localStorage.setItem(localConstants.VIEW_PLAYER, JSON.stringify(viewPlayer));
 
         try {
             history.push('/viewPlayer');
@@ -49,21 +47,25 @@ const MemberList = ({ history }) => {
         }
     }
 
-   
+    useEffect(() => {
+
+        let clanTag = localStorage.getItem(localConstants.CLAN_TAG);
+        dispatch(clanActions.getClan(clanTag));
+
+    }, [dispatch])
 
     return (
-        <div>
+        <Grid>
             <Header />
 
+            <Grid className="list_container">
 
-            <div className="list_container">
-
-                <div className={classes.root}>
+            <Grid className={classes.root}>
                     <GridList cellHeight={180} className={classes.gridList}>
                         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
                             <ListSubheader component="div">Members</ListSubheader>
                         </GridListTile>
-                        {list.map((member, index) => (
+                        {memberList && memberList.map((member, index) => (
                             <GridListTile key={index}>
                                 {/* <img src={tile.img} alt={tile.title} /> */}
                                 <GridListTileBar
@@ -78,11 +80,11 @@ const MemberList = ({ history }) => {
                             </GridListTile>
                         ))}
                     </GridList>
-                </div>
+                </Grid>
 
-            </div>
+            </Grid>
             <Footer />
-        </div>
+        </Grid>
     )
 }
 

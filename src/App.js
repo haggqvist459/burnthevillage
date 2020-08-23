@@ -1,9 +1,22 @@
 import React, { StrictMode } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { applyMiddleware, createStore } from 'redux';
+// store provider
+import { Provider } from 'react-redux';
+// store middleware allows actions to use async logic (without it, store actions can only do synchronus updates)
+import thunkMiddleware from 'redux-thunk';
+// root reducer contains all state
+import rootReducer from './store/reducers/rootReducer';
 import theme from './theme';
 import * as page from './pages';
 import { PrivateRoute, ViewPlayer, MemberList, AuthProvider, WarList } from './components';
 import { ThemeProvider, Grid } from '@material-ui/core'
+
+// store, preferred to create in app because it should not be accessed/imported elsewhere
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunkMiddleware)
+);
 
 function App() {
   return (
@@ -11,6 +24,7 @@ function App() {
       <StrictMode>
         <ThemeProvider theme={theme}>
           <AuthProvider>
+            <Provider store={store}>
             <BrowserRouter>
               {/* page routes */}
               <Route exact path='/' component={page.Home} />
@@ -28,6 +42,7 @@ function App() {
               <PrivateRoute path='/memberList' component={MemberList} />
               <PrivateRoute path='/warList' component={WarList} />
             </BrowserRouter>
+            </Provider>
           </AuthProvider>
         </ThemeProvider>
       </StrictMode>

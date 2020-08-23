@@ -1,11 +1,11 @@
-import { local_constants, gcloud_constants } from '../constants';
+import { localConstants, cloudConstants } from '../constants';
 
 export default async function BigFetch() {
 
   var playerTag = '';
 
-  if (localStorage.getItem(local_constants.LOCAL_PLAYER_TAG)) {
-    playerTag = localStorage.getItem(local_constants.LOCAL_PLAYER_TAG);
+  if (localStorage.getItem(localConstants.LOCAL_PLAYER_TAG)) {
+    playerTag = localStorage.getItem(localConstants.LOCAL_PLAYER_TAG);
     console.log('tag passed from localStorage: ' + playerTag);
   }
   else {
@@ -16,7 +16,7 @@ export default async function BigFetch() {
   async function fetchData() {
 
     try {
-      await fetch(gcloud_constants.BIG_FETCH, {
+      await fetch(cloudConstants.BIG_FETCH, {
         method: "GET",
         headers: {
           playerTag: playerTag,
@@ -28,18 +28,18 @@ export default async function BigFetch() {
         
         console.log(result);
 
-        localStorage.removeItem(local_constants.LOCAL_CLAN);
-        localStorage.setItem(local_constants.LOCAL_CLAN, JSON.stringify(result.clan));
+        localStorage.removeItem(localConstants.LOCAL_CLAN);
+        localStorage.setItem(localConstants.LOCAL_CLAN, JSON.stringify(result.clan));
 
-        localStorage.removeItem(local_constants.LOCAL_CLAN_MEMBERS);
+        localStorage.removeItem(localConstants.LOCAL_CLAN_MEMBERS);
         let members = [];
         result.clan.memberList.forEach(element => {
           members.push(element);
         });
-        localStorage.setItem(local_constants.LOCAL_CLAN_MEMBERS, JSON.stringify(members));
+        localStorage.setItem(localConstants.LOCAL_CLAN_MEMBERS, JSON.stringify(members));
 
-        localStorage.removeItem(local_constants.LOCAL_CURRENT_WAR);
-        localStorage.setItem(local_constants.LOCAL_CURRENT_WAR, result.currentWar);
+        localStorage.removeItem(localConstants.LOCAL_CURRENT_WAR);
+        localStorage.setItem(localConstants.LOCAL_CURRENT_WAR, result.currentWar);
       })
     } catch (error) {
       console.log(error);

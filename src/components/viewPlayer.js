@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import '../sass/index.scss';
-import { Header, Footer, local_constants } from './';
+import { Header, Footer, localConstants } from './';
 import { Grid, Typography } from '@material-ui/core'
 
 
 
 const ViewPlayer = ({ history }) => {
 
-    const [player, setPlayer] = useState(JSON.parse(localStorage.getItem(local_constants.VIEW_PLAYER)));
+    const [player, setPlayer] = useState(JSON.parse(localStorage.getItem(localConstants.VIEW_PLAYER)));
 
     useEffect(() => {
-        setPlayer(JSON.parse(localStorage.getItem(local_constants.VIEW_PLAYER)));
+        setPlayer(JSON.parse(localStorage.getItem(localConstants.VIEW_PLAYER)));
     }, []);
 
     return (
