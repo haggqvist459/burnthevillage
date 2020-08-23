@@ -49,7 +49,7 @@ function WarList({ history }) {
         return (
             <Grid container className="col_info_row" justify="space-around" item xs={12} sm={12} md={12} lg={12} xl={12}>
 
-                <Grid style={{ marginTop: '20px' }} item xs={12} sm={12} md={4} lg={4} xl={4}>
+                <Grid style={{ margin: '20px' }} item xs={12} sm={12} md={4} lg={4} xl={4}>
                     <Grid container direction={"row"} justify={"center"}>
                         {currentWar && currentWar.clan.name ?
                             <Typography variant="h6">{currentWar.clan.name} - lvl {currentWar.clan.clanLevel}</Typography>
@@ -75,7 +75,7 @@ function WarList({ history }) {
                     </Grid>
                 </Grid>
 
-                <Grid style={{ marginBottom: '20px' }} item xs={12} sm={12} md={4} lg={4} xl={4}>
+                <Grid style={{ margin: '20px' }} item xs={12} sm={12} md={4} lg={4} xl={4}>
                     <Grid container direction={"row"} justify={"center"}>
                         {currentWar && currentWar.opponent.name ?
                             <Typography variant="h6">{currentWar.opponent.name} - lvl {currentWar.opponent.clanLevel}</Typography>
