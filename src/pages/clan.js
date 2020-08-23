@@ -92,6 +92,7 @@ const Clan = ({ history }) => {
                                         </Grid>
                                         :
                                         <Grid>
+
                                             <Button style={{ textTransform: 'none', padding: '0' }} disabled>
                                                 <Typography variant="h6">war status.. </Typography>
                                             </Button>
