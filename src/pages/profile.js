@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 import '../sass/index.scss';
-import { Header, Footer, PlayerByTag, ClanByTag, CurrentWar, local_constants, firebase, PekkaLoader } from '../components';
-import { CircularProgress, Grid, Typography } from '@material-ui/core';
-
+import { Header, Footer, localConstants, firebase } from '../components';
+import { CircularProgress, Grid, Typography, Button, Badge } from '@material-ui/core';
+import { clanActions, userActions } from '../store/actions';
+import { Group } from '@material-ui/icons';
 
 
 const Profile = ({ history }) => {
 
     const auth = firebase.auth();
-    const [playerObject, setPlayerObject] = useState(JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER)));
-    const [load, setLoad] = useState(false);
-
+    const dispatch = useDispatch();
+    const { clan } = useSelector(state => state.clan);
+    const { player } = useSelector(state => state.user);
 
     const handleClanClick = useCallback(async event => {
         event.preventDefault();
@@ -25,55 +27,24 @@ const Profile = ({ history }) => {
     }, [history]);
 
     const signOut = () => {
-        localStorage.removeItem('clan');
-        localStorage.removeItem('clanMembers');
-        localStorage.removeItem('playerTag');
-        localStorage.removeItem('currentWar');
-        localStorage.removeItem('player');
-        localStorage.removeItem('clanTag');
+        localStorage.removeItem(localConstants.CLAN);
+        localStorage.removeItem(localConstants.CLAN_MEMBERS);
+        localStorage.removeItem(localConstants.PLAYER_TAG);
+        localStorage.removeItem(localConstants.CURRENT_WAR);
+        localStorage.removeItem(localConstants.PLAYER);
+        localStorage.removeItem(localConstants.CLAN_TAG);
         auth.signOut();
     }
 
     useEffect(() => {
 
-        const fetchClan = async () => {
-            await ClanByTag();
-            await CurrentWar();
-        }
+        let clanTag = localStorage.getItem(localConstants.CLAN_TAG);
+        let playerTag = localStorage.getItem(localConstants.PLAYER_TAG);
 
-        //no clan in localStorage, try fetch from API
-        if (!localStorage.getItem(local_constants.LOCAL_CLAN)) {
-            fetchClan().then(function () {
-                if (!playerObject) {
-                    setLoad(true);
-                    const fetchPlayer = async () => {
-                        await PlayerByTag().then(function () {
-                            setPlayerObject(JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER)));
-                        }).catch(function (error) {
-                            console.log(error);
-                        })
-                    }
+        dispatch(clanActions.getClan(clanTag));
+        dispatch(userActions.getUser(playerTag))
 
-                    try {
-                        fetchPlayer().catch(function (error) {
-                            console.log(error);
-                            setLoad(false);
-                        })
-                    } catch (error) {
-                        console.log(error);
-                        setLoad(false);
-                    }
-                }
-                else {
-                    setLoad(false);
-                }
-            }).catch(function (error) {
-                console.log(error)
-                setLoad(false);
-            })
-        }
-
-    }, [playerObject]);
+    }, [dispatch]);
 
     return (
         <Grid className="wrapper">
@@ -88,34 +59,59 @@ const Profile = ({ history }) => {
                         <Grid className="profile_container__profile_row__profile_box">
 
                             <Grid onClick={signOut} className="profile_container__profile_row__profile_picture">
-                               
+
                             </Grid>
 
                             <Grid className="profile_container__profile_row__profile_fields">
 
-                                {load ?
-                                    <Grid>
-                                        <CircularProgress color="secondary" />
+                                {player && player.name ?
+                                    <Grid className="profile_container__profile_row__profile_fields__clan">
+                                        <Typography variant="h6">{player.name}</Typography>
                                     </Grid>
                                     :
-                                    <Grid className="profile_container__profile_row__profile_fields__clan">
-                                        {playerObject.name ? <Typography variant="h6">{playerObject.name}</Typography> : null}
+                                    <Grid>
+                                        <CircularProgress color="secondary" />
                                     </Grid>
                                 }
 
-                                {load ?
+                                {clan && clan.name ?
                                     <Grid>
-                                        <CircularProgress color="secondary" />
+                                        <Button style={{ textTransform: 'none', padding: '0' }} onClick={handleClanClick}>
+                                            <Typography variant="h6">{clan.name}</Typography>
+                                        </Button>
+                                        <Badge badgeContent={clan.members} color="secondary">
+                                            <Group color="primary" style={{ paddingLeft: '10' }} />
+                                        </Badge>
                                     </Grid>
                                     :
-                                    <Grid className="profile_container__profile_row__profile_fields__clan">
-                                        {playerObject.clan ? <Typography onClick={handleClanClick} variant="h6">{playerObject.clan.name}</Typography> : <Typography>no clan</Typography>}
+                                    <Grid>
+                                        {player && player.clan ?
+                                            <Grid>
+                                                <Button style={{ textTransform: 'none', padding: '0' }} disabled>
+                                                    <Typography variant="h6">{player.clan.name}</Typography>
+                                                </Button>
+                                                <Badge badgeContent={0} color="secondary">
+                                                    <Group color="primary" style={{ paddingLeft: '10' }} />
+                                                </Badge>
+                                            </Grid>
+                                            :
+                                            <Grid>
+                                                <Button style={{ textTransform: 'none', padding: '0' }} disabled>
+                                                    <Typography variant="h6">loading clan.. </Typography>
+                                                </Button>
+                                                <Badge badgeContent={0} color="secondary">
+                                                    <Group color="primary" style={{ paddingLeft: '10' }} />
+                                                </Badge>
+                                            </Grid>
+                                        }
+
                                     </Grid>
                                 }
 
                                 <Typography className="profile_container__profile_row__profile_fields__upload_history" variant="h6">
                                     Upload history
                                 </Typography>
+
                             </Grid>
 
                         </Grid>

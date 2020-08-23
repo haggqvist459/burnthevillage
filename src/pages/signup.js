@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { withRouter } from "react-router";
 import '../sass/index.scss';
-import { Header, Footer, SignButton, SignField, PlayerByTag, local_constants, firebase } from '../components';
+import { Header, Footer, SignButton, SignField, PlayerByTag, localConstants, firebase } from '../components';
 import { LinearProgress, IconButton, InputAdornment, Popover, Button, Grid, Typography } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
@@ -60,13 +60,13 @@ const SignUp = ({ history }) => {
     setLoad(true);
 
     //set playertag in localstorage, will be used to fetch information
-    localStorage.setItem(local_constants.LOCAL_PLAYER_TAG, playertag.value);
+    localStorage.setItem(localConstants.LOCAL_PLAYER_TAG, playertag.value);
 
     //check if playertag exists in api, return is put in localstorage
     await PlayerByTag();
 
     //get localstorage value
-    let player = JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER));
+    let player = JSON.parse(localStorage.getItem(localConstants.LOCAL_PLAYER));
 
     //check missing playertag
     if (player.reason === 'notFound') {

@@ -1,12 +1,12 @@
-import { local_constants, gcloud_constants } from '../constants';
+import { localConstants, cloudConstants } from '../constants';
 
 export default async function PlayerByTag() {
 
   console.log('player fetch init');
   var playerTag = '';
 
-  if (localStorage.getItem(local_constants.LOCAL_PLAYER_TAG)) {
-    playerTag = localStorage.getItem(local_constants.LOCAL_PLAYER_TAG);
+  if (localStorage.getItem(localConstants.PLAYER_TAG)) {
+    playerTag = localStorage.getItem(localConstants.PLAYER_TAG);
     console.log('tag passed from localStorage: ' + playerTag);
   }
   else {
@@ -18,7 +18,7 @@ export default async function PlayerByTag() {
 
     try {
       console.log('fetching player.. ');
-      await fetch(gcloud_constants.PLAYER_BY_TAG, {
+      await fetch(cloudConstants.PLAYER_BY_TAG, {
         method: "GET",
         headers: {
           playerTag: playerTag,
@@ -26,19 +26,19 @@ export default async function PlayerByTag() {
       }).then(function (result) {
         return result.json();
       })
-      .then(function(result) {
-        console.log('player fetch complete, results: ');  
-        console.log(result);
+        .then(function (result) {
+          console.log('player fetch complete, results: ');
+          console.log(result);
 
-        localStorage.removeItem(local_constants.LOCAL_PLAYER);
-        localStorage.setItem(local_constants.LOCAL_PLAYER, JSON.stringify(result));
+          localStorage.removeItem(localConstants.PLAYER);
+          localStorage.setItem(localConstants.PLAYER, JSON.stringify(result));
 
-        localStorage.removeItem(local_constants.LOCAL_CLAN_TAG)
-        if(result.clan) {
-          let tag = result.clan.tag;
-          localStorage.setItem(local_constants.LOCAL_CLAN_TAG, tag.slice(1));
-        }
-      })
+          localStorage.removeItem(localConstants.CLAN_TAG)
+          if (result.clan) {
+            let tag = result.clan.tag;
+            localStorage.setItem(localConstants.CLAN_TAG, tag.slice(1));
+          }
+        })
     } catch (error) {
       console.log(error);
     }

@@ -1,8 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import '../sass/index.scss';
-import { Header, Footer, SignButton, SignField, firebase, PlayerByTag } from '../components';
+import { Header, Footer, SignButton, SignField, firebase, localConstants } from '../components';
+import { userActions } from '../store/actions';
 import { LinearProgress, Grid, Typography } from '@material-ui/core';
 
 
@@ -10,6 +12,7 @@ const SignIn = ({ history }) => {
 
   const auth = firebase.auth();
   const db = firebase.firestore();
+  const dispatch = useDispatch();
   const [load, setLoad] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
@@ -44,12 +47,10 @@ const SignIn = ({ history }) => {
               else {
                 console.log(doc.data());
                 let user = doc.data();
-                localStorage.setItem('playerTag', user.playertag);
+                localStorage.setItem(localConstants.PLAYER_TAG, user.playertag);
 
                 try {
-                  const fetchData = async () => { await PlayerByTag() }
-
-                  fetchData().then(() => {
+                  dispatch(userActions.getUser(user.playertag)).then(() => {
                     console.log('sign in fetch data complete ');
                     setLoad(false);
                     history.push('/profile');
@@ -85,7 +86,7 @@ const SignIn = ({ history }) => {
       setLoad(false);
       console.log(error);
     }
-  }, [history, auth, db, error]);
+  }, [history, auth, db, error, dispatch]);
 
   // if (currentUser) {
   //   return <Redirect to='/profile' />;
@@ -120,7 +121,12 @@ const SignIn = ({ history }) => {
               required id="standard-required password"
             />
 
-            <SignButton type="submit" variant="outlined">Sign In</SignButton>
+            {load ?
+              <SignButton variant="outlined" disabled>Sign In</SignButton>
+              :
+              <SignButton type="submit" variant="outlined">Sign In</SignButton>
+            }
+
             <Grid className="sign_in_container__bottom_row">
               <Grid>
                 <Typography>Forgot password?</Typography>

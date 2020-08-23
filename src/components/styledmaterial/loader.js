@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { p1, p2, p3, p4, p5, p6, p7, p8 } from '../../assets/images/pekka';
-import { h1, h2, h3, h4, h5, h6, h7, h8 } from '../../assets/images/hogrider';
+//import { h1, h2, h3, h4, h5, h6, h7, h8 } from '../../assets/images/hogrider';
 import { CardMedia, Grid } from '@material-ui/core';
 
 function Pekka(props) {
     const pekkas = [p1, p2, p3, p4, p5, p6, p7, p8];
-    const hogs = [h1, h2, h3, h4, h5, h6, h7, h8];
+    //const hogs = [h1, h2, h3, h4, h5, h6, h7, h8];
 
     return (
 
@@ -16,11 +16,6 @@ function Pekka(props) {
                 component="img"
                 alt={"P.E.K.K.A"}
                 image={pekkas[props.value]}
-            />
-            <CardMedia
-                component="img"
-                alt={"hogrider"}
-                image={hogs[props.value]}
             />
         </Grid>
     );

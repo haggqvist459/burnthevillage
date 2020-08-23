@@ -17,7 +17,7 @@ import WarClock from './utils/warClock';
 import { PlayerByTag, ClanByTag, CurrentWar } from './utils/cloudFunctions';
 
 //utils - constants
-import { local_constants } from './utils/constants';
+import { localConstants } from './utils/constants';
 
 //styled material 
 import { UploadButton, SignButton } from './styledmaterial/buttons';
@@ -30,5 +30,5 @@ export {
     AuthContext, AuthProvider, firebase, PrivateRoute, WarClock,
     UploadButton, SignButton, SignField, UploadIcon,
     PlayerByTag, ClanByTag, CurrentWar,
-    local_constants,
+    localConstants,
 };
