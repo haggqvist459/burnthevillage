@@ -13,9 +13,6 @@ import firebase from './utils/firebaseConfig';
 import PrivateRoute from './utils/privateRoute';
 import WarClock from './utils/warClock';
 
-//utils - cloud functions
-import { PlayerByTag, ClanByTag, CurrentWar } from './utils/cloudFunctions';
-
 //utils - constants
 import { localConstants } from './utils/constants';
 
@@ -29,6 +26,5 @@ export {
     Footer, Hamburger, Header, MemberList, ViewPlayer, WarList, PekkaLoader,
     AuthContext, AuthProvider, firebase, PrivateRoute, WarClock,
     UploadButton, SignButton, SignField, UploadIcon,
-    PlayerByTag, ClanByTag, CurrentWar,
     localConstants,
 };

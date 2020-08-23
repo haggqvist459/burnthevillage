@@ -22,7 +22,7 @@ function getUser(playerTag) {
                 async function getPlayer() {
 
                     try {
-                        console.log('fetching clan.. ');
+                        console.log('fetching user.. ');
                         await fetch(cloudConstants.PLAYER_BY_TAG, {
                             method: "GET",
                             headers: {
@@ -31,7 +31,7 @@ function getUser(playerTag) {
                         })
                             .catch(function (error) {
 
-                                console.log('error fetching clan.. ');
+                                console.log('error fetching user.. ');
                                 console.log(error);
                                 throw new Error(userConstants.USER_FAILED);
                             })
@@ -59,7 +59,7 @@ function getUser(playerTag) {
 
                 try {
                     return await getPlayer().then(() => {
-                        console.log('clan action complete');
+                        console.log('user action complete');
                     });
                 } catch (error) {
                     console.log(error);

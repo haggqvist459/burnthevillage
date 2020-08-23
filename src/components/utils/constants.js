@@ -42,9 +42,20 @@ export const userConstants = {
     USER_FAILED: 'USER_FAILED',
 }
 
+export const authConstants = {
+
+    AUTH_FAILED: 'AUTH_FAILED',
+    SIGNUP_SUCCESS: 'SIGNUP_SUCCESS',
+    SIGNUP_REQUEST: 'SIGNUP_REQUEST',
+    USER_SIGNIN: 'USER_SIGNIN',
+    USER_RESET_PASSWORD: 'USER_RESET_PASSWORD',
+    USER_CHANGE_PASSWORD: 'USER_CHANGE_PASSWORD',
+}
+
 export const errors = {
 
     CLAN_FAILED: 'notFound',
     WAR_FAILED: 'notFound',
     USER_FAILED: 'notFound',
+    TAG_FAILED: 'notFound',
 }

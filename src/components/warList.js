@@ -3,7 +3,7 @@ import { Grid, Typography, CardActionArea, CardMedia, GridList, CircularProgress
 import { withRouter } from 'react-router';
 import '../sass/index.scss';
 import baseImage from '../assets/images/upbackground.png';
-import { Header, Footer, WarClock, localConstants } from './';
+import { Header, Footer, localConstants } from './';
 import { clanActions } from '../store/actions';
 import { Rating } from '@material-ui/lab';
 import { useSelector, useDispatch } from 'react-redux';
@@ -98,18 +98,14 @@ function WarList({ history }) {
 
         let list = [];
 
-
         function getName(tag, clan) {
             let findPlayer = null;
-
             if (clan === 'opponent') {
                 findPlayer = currentWar.opponent.members.find(player => player.tag === tag);
             }
             else {
                 findPlayer = currentWar.clan.members.find(player => player.tag === tag);
             }
-
-            console.log('name found: ' + findPlayer.name);
             return (findPlayer.name);
         }
 
@@ -218,6 +214,7 @@ function WarList({ history }) {
                                 </Grid>
 
                             </Grid>
+                        
                         </Grid>
                         :
                         null

@@ -71,7 +71,6 @@ function getClan(clanTag) {
                 const clan = JSON.parse(localStorage.getItem(localConstants.CLAN));
                 dispatch(success(clan));
             }
-
         }
     }
 
