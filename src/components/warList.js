@@ -152,7 +152,7 @@ function WarList({ history }) {
                                             </Grid>
                                             {currentWar.clan.members[index].attacks.map((attack, index) => {
                                                 return (
-                                                    <Grid key={index} container direction={"column"} item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                                    <Grid key={index} container direction={"row"} item xs={12} sm={12} md={6} lg={12} xl={12}>
                                                         <Typography>{getName(attack.defenderTag, 'opponent')}:</Typography>
                                                         <Rating value={attack.stars} max={3} readOnly />
                                                     </Grid>
@@ -197,7 +197,9 @@ function WarList({ history }) {
                                 <Grid container direction={"column"} item xs={12} sm={12} md={12} lg={4} xl={4}>
                                     {currentWar.opponent.members[index].attacks ?
                                         <Grid>
-                                            <Grid container direction={"row"} justify={"flex-end"} item xs={12} sm={12} md={12} lg={12} xl={12}><Typography>Attacks: </Typography></Grid>
+                                            <Grid container direction={"row"} justify={"flex-end"} item xs={12} sm={12} md={12} lg={12} xl={12}>
+                                                <Typography>Attacks: </Typography>
+                                            </Grid>
                                             {item.attacks.map((attack, index) => {
                                                 return (
                                                     <Grid key={index} container direction={"row"} justify={"flex-end"} item xs={12} sm={12} md={6} lg={12} xl={12}>
