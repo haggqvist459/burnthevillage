@@ -3,9 +3,10 @@ import { withRouter } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import '../sass/index.scss';
 import { Header, Footer, localConstants, firebase } from '../components';
-import { CircularProgress, Grid, Typography, Button, Badge } from '@material-ui/core';
+import { CircularProgress, Grid, Typography, Button, Badge, CardActionArea, CardMedia } from '@material-ui/core';
 import { clanActions, userActions } from '../store/actions';
 import { Group } from '@material-ui/icons';
+import { RandomProfileImage } from '../components/utils/randomProfileImage';
 
 
 const Profile = ({ history }) => {
@@ -58,8 +59,15 @@ const Profile = ({ history }) => {
 
                         <Grid className="profile_container__profile_row__profile_box">
 
-                            <Grid onClick={signOut} className="profile_container__profile_row__profile_picture">
-
+                            <Grid  className="profile_container__profile_row__profile_picture">
+                                <CardActionArea onClick={signOut}>
+                                    <CardMedia
+                                        component="img"
+                                        alt="base img"
+                                        image={RandomProfileImage()}
+                                        title="profile"
+                                    />
+                                </CardActionArea>
                             </Grid>
 
                             <Grid className="profile_container__profile_row__profile_fields">
