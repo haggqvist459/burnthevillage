@@ -6,7 +6,7 @@ import { makeStyles, GridList, GridListTile, GridListTileBar, ListSubheader, Ico
 import { Info } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { clanActions } from '../store/actions';
-
+import { RandomProfileImage } from './utils/randomProfileImage'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,6 +54,7 @@ const MemberList = ({ history }) => {
 
     }, [dispatch])
 
+
     return (
         <Grid>
             <Header />
@@ -67,7 +68,7 @@ const MemberList = ({ history }) => {
                         </GridListTile>
                         {memberList && memberList.map((member, index) => (
                             <GridListTile key={index}>
-                                {/* <img src={tile.img} alt={tile.title} /> */}
+                            <img src={RandomProfileImage()} alt="profile" />;
                                 <GridListTileBar
                                     title={member.name}
                                     subtitle={<span>tag: {member.tag}</span>}
