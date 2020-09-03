@@ -6,6 +6,7 @@ const initState = {
     player: null,
     clan: null,
     error: null,
+    isFetching: false,
 }
 
 function userReducer(state = initState, action) {
@@ -13,22 +14,30 @@ function userReducer(state = initState, action) {
 
         case userConstants.USER_REQUEST:
 
-            localStorage.setItem(localConstants.PLAYER_TAG, JSON.stringify(action.playerTag));
             return {
-                playerTag: action.playerTag
+                isFetching: true,
             };
+
         case userConstants.USER_FAILED:
+
             return {
                 error: userConstants.USER_FAILED,
+                isFetching: false,
             };
+
         case userConstants.USER_SUCCESS:
 
+            localStorage.removeItem(localConstants.PLAYER);
             localStorage.setItem(localConstants.PLAYER, JSON.stringify(action.player));
+            localStorage.removeItem(localConstants.CLAN_TAG);
             localStorage.setItem(localConstants.CLAN_TAG, action.player.clan.tag.slice(1));
+
             return {
                 ...state,
                 player: action.player,
+                isFetching: false,
             };
+
         case userConstants.USER_UPDATE:
             return {};
 

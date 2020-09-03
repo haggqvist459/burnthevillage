@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
 import '../sass/index.scss';
-import { Header, Footer, localConstants } from './';
-import { makeStyles, GridList, Grid, Typography, CardMedia, CardActionArea } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
+import { Header, Footer, localConstants, Loaders } from './';
+import { makeStyles, GridList, Grid, Typography, CardActionArea } from '@material-ui/core';
 import { clanActions } from '../store/actions';
-import { RandomProfileImage } from './utils/randomProfileImage'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,10 +24,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-
 const MemberList = ({ history }) => {
 
+    const RandomProfileImage = lazy(() => import('./utils/randomProfileImage'));
     const classes = useStyles();
     const { memberList, clan } = useSelector(state => state.clan);
     const dispatch = useDispatch();
@@ -54,23 +52,23 @@ const MemberList = ({ history }) => {
 
     }, [dispatch])
 
-    function GetCol(member, index) {
+    function GetCell(member, index) {
 
         return (
-            <Grid container direction={"row"} justify={"space-between"}>
+            <Grid container direction={"column"} justify={'space-between'} style={{ height: 'auto' }} item xs={12} sm={12} md={12} lg={12} xl={12}>
 
-                <Grid container direction={"column"} justify={'center'} item xs={4} sm={4} md={4} lg={4} xl={4}>
-                    <CardActionArea onClick={() => handleClick(member.tag)}>
-                        <CardMedia
-                            component="img"
-                            alt="base img"
-                            image={RandomProfileImage()}
-                            title="profile"
-                        />
-                    </CardActionArea>
-                </Grid>
+                <Suspense fallback={Loaders.MemberListLoader()}>
+                    <Grid container direction={"row"}>
+                        <CardActionArea onClick={() => handleClick(member.tag)}>
+                            <Grid container justify={'center'} style={{ minHeight: '20vh' }}>
+                                <RandomProfileImage />
+                            </Grid>
+                        </CardActionArea>
+                    </Grid>
+                </Suspense>
 
-                <Grid container direction={"column"} justify={'center'} item xs={7} sm={7} md={7} lg={7} xl={7}>
+
+                <Grid container direction={"row"} justify={'center'}>
                     <Typography variant="h6">{member.name}</Typography>
                 </Grid>
 
@@ -93,16 +91,16 @@ const MemberList = ({ history }) => {
                         <Grid container direction={'row'} item xs={12} sm={12} md={12} lg={12} xl={12}>
                             {memberList && memberList.map((member, index) => {
                                 return (
-                                    <Grid key={index} container direction={"column"} justify={"space-between"} style={{ marginBottom: '10px' }} item xs={12} sm={12} md={6} lg={6} xl={6}>
-                                        {GetCol(member, index)}
+                                    <Grid key={index} container direction={"column"} justify={"space-between"} style={{ marginBottom: '10px' }} item xs={12} sm={6} md={6} lg={6} xl={6}>
+                                        {GetCell(member, index)}
                                     </Grid>
                                 )
                             })}
                         </Grid>
                     </GridList>
                 </Grid>
-
             </Grid>
+            
             <Footer />
         </Grid>
     )

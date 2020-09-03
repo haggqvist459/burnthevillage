@@ -1,10 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import '../sass/index.scss';
 import { Header, Footer, SignButton, SignField, firebase, localConstants } from '../components';
-import { userActions } from '../store/actions';
 import { LinearProgress, Grid, Typography } from '@material-ui/core';
 
 
@@ -12,7 +10,6 @@ const SignIn = ({ history }) => {
 
   const auth = firebase.auth();
   const db = firebase.firestore();
-  const dispatch = useDispatch();
   const [load, setLoad] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
@@ -29,46 +26,53 @@ const SignIn = ({ history }) => {
     setLoad(true);
 
     try {
-      await auth.signInWithEmailAndPassword(email.value, password.value).then((user) => {
-        user.user.reload().then(() => {
+
+      await auth.signInWithEmailAndPassword(email.value, password.value)
+      .then((user) => {
+
+        user.user
+        .reload()
+        .then(() => {
+
           console.log({ emailVerified: user.user.emailVerified })
         })
+
         if (user.user.emailVerified) {
+
           console.log(user.user.displayName + ' is verified');
 
           try {
+
             const getUser = async () => {
+
               const userRef = db.collection('users').doc(user.user.displayName);
               const doc = await userRef.get();
+
               if (!doc.exists) {
+
                 console.log(error);
                 throw new Error(error);
               }
               else {
+
                 console.log(doc.data());
                 let user = doc.data();
                 localStorage.setItem(localConstants.PLAYER_TAG, user.playertag);
-
-                try {
-                  dispatch(userActions.getUser(user.playertag)).then(() => {
-                    console.log('sign in fetch data complete ');
-                    setLoad(false);
-                    history.push('/profile');
-                  });
-                } catch (error) {
-                  console.log(error)
-                  throw new Error(error);
-                }
+                localStorage.setItem(localConstants.DISPLAY_NAME, user.username);
+                setLoad(false);
+                history.push('/profile');
               }
             }
 
             getUser();
           } catch (error) {
+
             console.log(error);
             throw new Error(error);
           }
         }
         else {
+
           console.log('user is not email verified');
           setLoad(false);
           setErrorMsg('email not verified');
@@ -76,17 +80,22 @@ const SignIn = ({ history }) => {
         }
       })
     } catch (error) {
+
       setError(true);
+
       if (error.message.includes('Too many unsuccessful')) {
+
         setErrorMsg(error.message);
       }
       else {
+
         setErrorMsg('bad combo')
       }
+
       setLoad(false);
       console.log(error);
     }
-  }, [history, auth, db, error, dispatch]);
+  }, [history, auth, db, error]);
 
   // if (currentUser) {
   //   return <Redirect to='/profile' />;

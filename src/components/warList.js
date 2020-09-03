@@ -168,7 +168,7 @@ function WarList({ history }) {
                         </Grid>
                         :
                         null
-                    }
+                    } 
 
                     {currentWar.opponent.members[index] ?
                         <Grid container direction={"column"} item xs={5} sm={5} md={5} lg={5} xl={5}>

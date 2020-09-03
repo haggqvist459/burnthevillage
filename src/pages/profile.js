@@ -3,10 +3,10 @@ import { withRouter } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import '../sass/index.scss';
 import { Header, Footer, localConstants, firebase } from '../components';
-import { CircularProgress, Grid, Typography, Button, Badge, CardActionArea, CardMedia } from '@material-ui/core';
+import { CircularProgress, Grid, Typography, Button, Badge, CardActionArea } from '@material-ui/core';
 import { clanActions, userActions } from '../store/actions';
 import { Group } from '@material-ui/icons';
-import { RandomProfileImage } from '../components/utils/randomProfileImage';
+import RandomProfileImage from '../components/utils/randomProfileImage';
 
 
 const Profile = ({ history }) => {
@@ -35,16 +35,14 @@ const Profile = ({ history }) => {
         localStorage.removeItem(localConstants.PLAYER);
         localStorage.removeItem(localConstants.CLAN_TAG);
         auth.signOut();
-    }
+    }  
 
     useEffect(() => {
 
-        let clanTag = localStorage.getItem(localConstants.CLAN_TAG);
-        let playerTag = localStorage.getItem(localConstants.PLAYER_TAG);
-
-        dispatch(clanActions.getClan(clanTag));
-        dispatch(userActions.getUser(playerTag))
-
+        dispatch(userActions.getUser(localStorage.getItem(localConstants.PLAYER_TAG))).then(function () {
+            dispatch(clanActions.getClan(localStorage.getItem(localConstants.CLAN_TAG)))
+        })
+    
     }, [dispatch]);
 
     return (
@@ -61,20 +59,15 @@ const Profile = ({ history }) => {
 
                             <Grid  className="profile_container__profile_row__profile_picture">
                                 <CardActionArea onClick={signOut}>
-                                    <CardMedia
-                                        component="img"
-                                        alt="base img"
-                                        image={RandomProfileImage()}
-                                        title="profile"
-                                    />
+                                   <RandomProfileImage />
                                 </CardActionArea>
                             </Grid>
 
                             <Grid className="profile_container__profile_row__profile_fields">
 
-                                {player && player.name ?
+                                {localStorage.getItem(localConstants.DISPLAY_NAME) ?
                                     <Grid className="profile_container__profile_row__profile_fields__clan">
-                                        <Typography variant="h6">{player.name}</Typography>
+                                        <Typography variant="h6">{localStorage.getItem(localConstants.DISPLAY_NAME)}</Typography>
                                     </Grid>
                                     :
                                     <Grid>

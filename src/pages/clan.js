@@ -1,11 +1,12 @@
 import React, { useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from "react-router";
 import '../sass/index.scss';
 import { Header, Footer, localConstants } from '../components';
+import { clanActions } from '../store/actions';
 import { Button, Badge, Grid, Typography, LinearProgress } from '@material-ui/core';
 import { Group } from '@material-ui/icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { clanActions } from '../store/actions';
+
 
 const Clan = ({ history }) => {
 
@@ -48,8 +49,9 @@ const Clan = ({ history }) => {
             <Header />
 
             <Grid className="content">
-
+ 
                 <Grid className="clan_container">
+
                     <Grid className="clan_container__profile_row">
 
                         <Grid className="clan_container__clan_row__clan_box">
@@ -86,9 +88,17 @@ const Clan = ({ history }) => {
                                 <Grid>
                                     {currentWar && currentWar.state ?
                                         <Grid>
+
+                                            {currentWar.state === 'notInWar' ? 
+                                            <Button style={{ textTransform: 'none', padding: '0' }} disabled>
+                                                <Typography variant="h6">no current war </Typography>
+                                            </Button>
+                                            :
                                             <Button style={{ textTransform: 'none', padding: '0' }} onClick={handleWarClick}>
                                                 <Typography variant="h6">{currentWar.state}</Typography>
                                             </Button>
+                                            }
+                                           
                                         </Grid>
                                         :
                                         <Grid>

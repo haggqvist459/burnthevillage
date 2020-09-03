@@ -5,13 +5,14 @@ import Header from './header';
 import MemberList from './memberList';
 import ViewPlayer from './viewPlayer';
 import WarList from './warList';
-import { PekkaLoader } from '../components/styledmaterial/loader'
+import { Loaders } from './utils/loader'
 
 //utils
 import { AuthContext, AuthProvider } from './utils/auth';
 import firebase from './utils/firebaseConfig';
 import PrivateRoute from './utils/privateRoute';
 import WarClock from './utils/warClock';
+import RandomProfileImage from './utils/randomProfileImage';
 
 //utils - constants
 import { localConstants } from './utils/constants';
@@ -23,8 +24,8 @@ import { UploadIcon } from './styledmaterial/icons';
 
 
 export {
-    Footer, Hamburger, Header, MemberList, ViewPlayer, WarList, PekkaLoader,
-    AuthContext, AuthProvider, firebase, PrivateRoute, WarClock,
+    Footer, Hamburger, Header, MemberList, ViewPlayer, WarList, Loaders,
+    AuthContext, AuthProvider, firebase, PrivateRoute, WarClock, RandomProfileImage,
     UploadButton, SignButton, SignField, UploadIcon,
     localConstants,
 };

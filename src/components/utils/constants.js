@@ -2,6 +2,7 @@
 export const localConstants = { 
     
     PLAYER: 'player',
+    DISPLAY_NAME: 'displayName',
     PLAYER_TAG: 'playerTag',
     VIEW_PLAYER: 'viewPlayer',
 

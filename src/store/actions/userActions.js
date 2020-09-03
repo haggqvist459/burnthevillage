@@ -12,7 +12,7 @@ function getUser(playerTag) {
         dispatch(request({ playerTag }));
 
         if (!playerTag) {
-            console.log('action tag undefined.. ');
+            console.log('user tag undefined.. ');
             dispatch(failure({ error: errors.USER_FAILED }));
         }
         else {
@@ -41,6 +41,7 @@ function getUser(playerTag) {
                             .then(function (result) {
 
                                 if (result.reason === errors.USER_FAILED) {
+                                    console.log('result reason')
                                     throw new Error(userConstants.USER_FAILED);
                                 }
                                 else {
