@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import '../sass/index.scss';
-import { Header, Footer, SignButton, SignField, firebase, PlayerByTag } from '../components';
+import { Header, Footer, SignButton, SignField, firebase, localConstants } from '../components';
 import { LinearProgress, Grid, Typography } from '@material-ui/core';
 
 
@@ -26,48 +26,53 @@ const SignIn = ({ history }) => {
     setLoad(true);
 
     try {
-      await auth.signInWithEmailAndPassword(email.value, password.value).then((user) => {
-        user.user.reload().then(() => {
+
+      await auth.signInWithEmailAndPassword(email.value, password.value)
+      .then((user) => {
+
+        user.user
+        .reload()
+        .then(() => {
+
           console.log({ emailVerified: user.user.emailVerified })
         })
+
         if (user.user.emailVerified) {
+
           console.log(user.user.displayName + ' is verified');
 
           try {
+
             const getUser = async () => {
+
               const userRef = db.collection('users').doc(user.user.displayName);
               const doc = await userRef.get();
+
               if (!doc.exists) {
+
                 console.log(error);
                 throw new Error(error);
               }
               else {
+
                 console.log(doc.data());
                 let user = doc.data();
-                localStorage.setItem('playerTag', user.playertag);
-
-                try {
-                  const fetchData = async () => { await PlayerByTag() }
-
-                  fetchData().then(() => {
-                    console.log('sign in fetch data complete ');
-                    setLoad(false);
-                    history.push('/profile');
-                  });
-                } catch (error) {
-                  console.log(error)
-                  throw new Error(error);
-                }
+                localStorage.setItem(localConstants.PLAYER_TAG, user.playertag);
+                localStorage.setItem(localConstants.DISPLAY_NAME, user.username);
+                setLoad(false);
+                history.push('/profile');
               }
             }
 
             getUser();
           } catch (error) {
+
             console.log(error);
             throw new Error(error);
           }
         }
         else {
+
           console.log('user is not email verified');
           setLoad(false);
           setErrorMsg('email not verified');
@@ -75,13 +80,18 @@ const SignIn = ({ history }) => {
         }
       })
     } catch (error) {
+
       setError(true);
+
       if (error.message.includes('Too many unsuccessful')) {
+
         setErrorMsg(error.message);
       }
       else {
+
         setErrorMsg('bad combo')
       }
+
       setLoad(false);
       console.log(error);
     }
@@ -120,7 +130,12 @@ const SignIn = ({ history }) => {
               required id="standard-required password"
             />
 
-            <SignButton type="submit" variant="outlined">Sign In</SignButton>
+            {load ?
+              <SignButton variant="outlined" disabled>Sign In</SignButton>
+              :
+              <SignButton type="submit" variant="outlined">Sign In</SignButton>
+            }
+
             <Grid className="sign_in_container__bottom_row">
               <Grid>
                 <Typography>Forgot password?</Typography>

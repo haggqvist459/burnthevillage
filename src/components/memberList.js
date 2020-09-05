@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
 import '../sass/index.scss';
-import { Header, Footer, local_constants } from './';
-import { makeStyles, GridList, GridListTile, GridListTileBar, ListSubheader, IconButton } from '@material-ui/core';
-import { Info } from '@material-ui/icons';
-
-
+import { Header, Footer, localConstants, Loaders } from './';
+import { makeStyles, GridList, Grid, Typography, CardActionArea } from '@material-ui/core';
+import { clanActions } from '../store/actions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,8 +15,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
     gridList: {
-        width: 500,
+        width: '80vw',
         height: 450,
+        justifyContent: 'center'
     },
     icon: {
         color: 'rgba(255, 255, 255, 0.54)',
@@ -26,20 +26,16 @@ const useStyles = makeStyles((theme) => ({
 
 const MemberList = ({ history }) => {
 
-    const [list, setList] = useState([]);
+    const RandomProfileImage = lazy(() => import('./utils/randomProfileImage'));
     const classes = useStyles();
-
-    useEffect(() => {
-
-        console.log('memberList from localStorage');
-        setList(JSON.parse(localStorage.getItem(local_constants.LOCAL_CLAN_MEMBERS)))
-
-    }, [])
+    const { memberList, clan } = useSelector(state => state.clan);
+    const dispatch = useDispatch();
 
     const handleClick = (tag) => {
-        let viewPlayer = list.find(player => player.tag === tag)
-        localStorage.removeItem(local_constants.VIEW_PLAYER);
-        localStorage.setItem(local_constants.VIEW_PLAYER, JSON.stringify(viewPlayer));
+        let viewPlayer = memberList.find(player => player.tag === tag)
+
+        localStorage.removeItem(localConstants.VIEW_PLAYER);
+        localStorage.setItem(localConstants.VIEW_PLAYER, JSON.stringify(viewPlayer));
 
         try {
             history.push('/viewPlayer');
@@ -49,40 +45,64 @@ const MemberList = ({ history }) => {
         }
     }
 
-   
+    useEffect(() => {
+
+        let clanTag = localStorage.getItem(localConstants.CLAN_TAG);
+        dispatch(clanActions.getClan(clanTag));
+
+    }, [dispatch])
+
+    function GetCell(member, index) {
+
+        return (
+            <Grid container direction={"column"} justify={'space-between'} style={{ height: 'auto' }} item xs={12} sm={12} md={12} lg={12} xl={12}>
+
+                <Suspense fallback={Loaders.MemberListLoader()}>
+                    <Grid container direction={"row"}>
+                        <CardActionArea onClick={() => handleClick(member.tag)}>
+                            <Grid container justify={'center'} style={{ minHeight: '20vh' }}>
+                                <RandomProfileImage />
+                            </Grid>
+                        </CardActionArea>
+                    </Grid>
+                </Suspense>
+
+
+                <Grid container direction={"row"} justify={'center'}>
+                    <Typography variant="h6">{member.name}</Typography>
+                </Grid>
+
+            </Grid>
+        )
+    }
+
 
     return (
-        <div>
+        <Grid>
             <Header />
 
+            <Grid className="list_container">
 
-            <div className="list_container">
-
-                <div className={classes.root}>
-                    <GridList cellHeight={180} className={classes.gridList}>
-                        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                            <ListSubheader component="div">Members</ListSubheader>
-                        </GridListTile>
-                        {list.map((member, index) => (
-                            <GridListTile key={index}>
-                                {/* <img src={tile.img} alt={tile.title} /> */}
-                                <GridListTileBar
-                                    title={member.name}
-                                    subtitle={<span>tag: {member.tag}</span>}
-                                    actionIcon={
-                                        <IconButton aria-label={`info about ${member.name}`} className={classes.icon} onClick={() => handleClick(member.tag)}>
-                                            <Info />
-                                        </IconButton>
-                                    }
-                                />
-                            </GridListTile>
-                        ))}
+                <Grid className={classes.root}>
+                    <Grid container direction={"row"} justify={"center"} style={{ marginBottom: '30px' }} item xs={12} sm={12} md={12} lg={12} xl={12}>
+                        <Typography variant="h3">{clan && clan.name}</Typography>
+                    </Grid>
+                    <GridList cellHeight={'auto'} style={{ height: '50vh', width: '80%' }}>
+                        <Grid container direction={'row'} item xs={12} sm={12} md={12} lg={12} xl={12}>
+                            {memberList && memberList.map((member, index) => {
+                                return (
+                                    <Grid key={index} container direction={"column"} justify={"space-between"} style={{ marginBottom: '10px' }} item xs={12} sm={6} md={6} lg={6} xl={6}>
+                                        {GetCell(member, index)}
+                                    </Grid>
+                                )
+                            })}
+                        </Grid>
                     </GridList>
-                </div>
-
-            </div>
+                </Grid>
+            </Grid>
+            
             <Footer />
-        </div>
+        </Grid>
     )
 }
 

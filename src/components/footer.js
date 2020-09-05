@@ -1,6 +1,6 @@
 import React from 'react';
 import '../sass/index.scss';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 
 function Footer() {

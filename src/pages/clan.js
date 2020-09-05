@@ -1,16 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from "react-router";
 import '../sass/index.scss';
-import { Header, Footer, ClanByTag, CurrentWar, local_constants } from '../components';
-import { Button, CircularProgress, Badge, Grid, Typography } from '@material-ui/core';
+import { Header, Footer, localConstants } from '../components';
+import { clanActions } from '../store/actions';
+import { Button, Badge, Grid, Typography, LinearProgress } from '@material-ui/core';
 import { Group } from '@material-ui/icons';
+
 
 const Clan = ({ history }) => {
 
-    const [clanObject, setClanObject] = useState();
-    const [currentWar, setCurrentWar] = useState();
-    const [load, setLoad] = useState(true);
-    const [progress, setProgress] = useState(0);
+    const { clan, currentWar } = useSelector(state => state.clan);
+    const dispatch = useDispatch();
 
     const handleListClick = useCallback(async event => {
         event.preventDefault();
@@ -35,39 +36,11 @@ const Clan = ({ history }) => {
 
     useEffect(() => {
 
-        const timer = setInterval(() => {
-            setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
-        }, 100);
+        let clanTag = localStorage.getItem(localConstants.CLAN_TAG);
+        dispatch(clanActions.getClan(clanTag));
+        dispatch(clanActions.getCurrentWar(clanTag));
 
-        const fetchData = async () => {
-
-            await ClanByTag().then(() => {
-                setClanObject(JSON.parse(localStorage.getItem(local_constants.LOCAL_CLAN)));
-            });
-
-            await CurrentWar().then(() => {
-                setCurrentWar(JSON.parse(localStorage.getItem(local_constants.LOCAL_CURRENT_WAR)));
-            });
-        };
-
-        if (!localStorage.getItem(local_constants.LOCAL_CLAN)) {
-            fetchData().then(() => {
-                setLoad(false);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }
-        else {
-            setClanObject(JSON.parse(localStorage.getItem(local_constants.LOCAL_CLAN)));
-            setCurrentWar(JSON.parse(localStorage.getItem(local_constants.LOCAL_CURRENT_WAR)));
-            setLoad(false);
-        }
-
-        return () => {
-            clearInterval(timer);
-        };
-
-    }, [])
+    }, [dispatch])
 
 
     return (
@@ -76,8 +49,9 @@ const Clan = ({ history }) => {
             <Header />
 
             <Grid className="content">
-
+ 
                 <Grid className="clan_container">
+
                     <Grid className="clan_container__profile_row">
 
                         <Grid className="clan_container__clan_row__clan_box">
@@ -89,39 +63,51 @@ const Clan = ({ history }) => {
                             <Grid className="clan_container__clan_row__clan_fields">
 
                                 <Grid>
-                                    {load ?
-                                        <CircularProgress id="loader" variant="static" value={progress} />
-                                        :
+                                    {clan && clan.name ?
                                         <Typography variant="h6" className="clan_container__clan_row__clan_fields__name">
-                                            {clanObject.name}
-                                        </Typography>}
+                                            {clan.name}
+                                        </Typography>
+                                        :
+                                        <LinearProgress color="primary" />
+                                    }
                                 </Grid>
 
                                 <Grid>
-                                    {load ?
-                                        <CircularProgress id="loader" variant="static" value={progress} />
-                                        :
+                                    {clan && clan.members ?
                                         <Grid>
-                                        <Button style={{ textTransform: 'none', padding: '0'}}> <Typography onClick={handleListClick} variant="h6">Members</Typography></Button>
-                                            <Badge badgeContent={clanObject.members} color="secondary">
-                                                <Group color="primary" style={{paddingLeft: '10'}}/>
+                                            <Button style={{ textTransform: 'none', padding: '0' }}> <Typography onClick={handleListClick} variant="h6">Members</Typography></Button>
+                                            <Badge badgeContent={clan.members} color="secondary">
+                                                <Group color="primary" style={{ paddingLeft: '10' }} />
                                             </Badge>
                                         </Grid>
+                                        :
+                                        <LinearProgress color="primary" />
                                     }
                                 </Grid>
+                               
                                 <Grid>
-                                    {load ?
-                                        <CircularProgress id="loader" variant="static" value={progress} />
+                                    {currentWar && currentWar.state ?
+                                        <Grid>
+
+                                            {currentWar.state === 'notInWar' ? 
+                                            <Button style={{ textTransform: 'none', padding: '0' }} disabled>
+                                                <Typography variant="h6">no current war </Typography>
+                                            </Button>
+                                            :
+                                            <Button style={{ textTransform: 'none', padding: '0' }} onClick={handleWarClick}>
+                                                <Typography variant="h6">{currentWar.state}</Typography>
+                                            </Button>
+                                            }
+                                           
+                                        </Grid>
                                         :
                                         <Grid>
-                                            {currentWar.state === 'preparation' || currentWar.state === 'inWar' ? 
-                                            <Button style={{ textTransform: 'none', padding: '0'}} onClick={handleWarClick}><Typography variant="h6">Current war</Typography></Button>
-                                            : 
-                                            <Typography variant="h6">not in war</Typography> 
-                                            }
+
+                                            <Button style={{ textTransform: 'none', padding: '0' }} disabled>
+                                                <Typography variant="h6">war status.. </Typography>
+                                            </Button>
                                         </Grid>
                                     }
-
                                 </Grid>
 
                             </Grid>
@@ -136,10 +122,11 @@ const Clan = ({ history }) => {
 
                     <Grid className="clan_container__bio_row">
                         <Typography variant="h6">Description:</Typography>
-                        {load ?
-                            <CircularProgress id="loader" variant="static" value={progress} />
+                        {clan && clan.description ?
+                            <Typography>{clan.description}</Typography>
                             :
-                            <Typography>{clanObject.description}</Typography>}
+                            <LinearProgress color="primary" />
+                        }
                     </Grid>
 
                 </Grid>

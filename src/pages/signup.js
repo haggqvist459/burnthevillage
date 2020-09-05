@@ -1,17 +1,16 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { withRouter } from "react-router";
 import '../sass/index.scss';
-import { Header, Footer, SignButton, SignField, PlayerByTag, local_constants, firebase } from '../components';
+import { Header, Footer, SignButton, SignField } from '../components';
 import { LinearProgress, IconButton, InputAdornment, Popover, Button, Grid, Typography } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-
+import { authActions } from '../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignUp = ({ history }) => {
 
-  const db = firebase.firestore();
   const [openPopover, setOpenPopover] = useState(false);
   const [load, setLoad] = useState(false);
-  const [error, setError] = useState(false);
   const [values, setValues] = useState({
     username: '',
     email: '',
@@ -19,6 +18,8 @@ const SignUp = ({ history }) => {
     playertag: '',
     showPassword: false,
   });
+  const dispatch = useDispatch();
+  const { user, error } = useSelector(state => state.auth);
 
   //close post register popover
   const handleClosePopover = useCallback(async event => {
@@ -59,83 +60,28 @@ const SignUp = ({ history }) => {
     const { email, password, username, playertag } = event.target.elements;
     setLoad(true);
 
-    //set playertag in localstorage, will be used to fetch information
-    localStorage.setItem(local_constants.LOCAL_PLAYER_TAG, playertag.value);
+    // dispatch signup
+    dispatch(authActions.signupUser(playertag.value, username.value, email.value, password.value))
 
-    //check if playertag exists in api, return is put in localstorage
-    await PlayerByTag();
+  }, [dispatch]);
 
-    //get localstorage value
-    let player = JSON.parse(localStorage.getItem(local_constants.LOCAL_PLAYER));
+  useEffect(() => {
 
-    //check missing playertag
-    if (player.reason === 'notFound') {
-
-      //it doesnt, set playertag text field error to true, remove loading 
-      console.log('tag not found')
-      setError(true);
+    if (user) {
+      console.log('user created');
+      setOpenPopover(true);
       setLoad(false);
     }
-    else {
-
-      //player tag exists, init a create user chain
-      try {
-
-        //first in chain, create user and give displayName = username (will be used later to connect user to firestore)
-        await firebase.auth().createUserWithEmailAndPassword(email.value, password.value).then(() => {
-          const user = firebase.auth().currentUser;
-          return user.updateProfile({
-            displayName: username.value
-          })
-        })
-          .catch(function (error) {
-            //catch create user error
-            console.log(error);
-            setLoad(false);
-            throw new Error(error);
-          })
-
-        //send email verification
-        await firebase.auth().currentUser.sendEmailVerification().catch(function (error) {
-          //catch email verification error
-          console.log(error);
-          setLoad(false);
-          throw new Error(error);
-        });
-
-        //store user firestore data
-        db
-          .collection('users')
-          .doc(username.value)
-          .set({
-            playertag: playertag.value,
-            username: username.value,
-            role: 'user',
-            createdAt: new Date(),
-          })
-          .then(() => {
-            console.log('user stored');
-            setLoad(false);
-            setOpenPopover(true);
-          }).catch(function (error) {
-            //catch store user error
-            console.log(error);
-            setLoad(false);
-            throw new Error(error);
-          })
-
-      } catch (error) {
-        //reset field values, error happened during registration
-        setLoad(false);
-        setValues({
-          username: '',
-          email: '',
-          password: '',
-          playertag: '',
-        })
-      }
+    if (error) {
+      setLoad(false);
+      setValues({
+        username: '',
+        email: '',
+        password: '',
+        playertag: '',
+      })
     }
-  }, [db]);
+  }, [user, error])
 
   //handle terms
   const handleTermClick = useCallback(async event => {
@@ -214,7 +160,7 @@ const SignUp = ({ history }) => {
               <Popover
                 open={openPopover}
                 anchorReference="anchorPosition"
-                anchorPosition={{ top: 2, left: 2 }}
+                anchorPosition={{ top: '50%', left: '50%' }}
                 anchorOrigin={{
                   vertical: 'center',
                   horizontal: 'center',
