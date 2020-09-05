@@ -13,7 +13,7 @@ function getClan(clanTag) {
         dispatch(request({ clanTag }));
 
         if (!clanTag) {
-            console.log('action tag undefined.. ');
+            console.log('clan tag undefined.. ');
             dispatch(failure({ error: errors.CLAN_FAILED }));
         }
         else {

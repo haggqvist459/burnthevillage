@@ -2,8 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { p1, p2, p3, p4, p5, p6, p7, p8 } from '../../assets/images/pekka';
 //import { h1, h2, h3, h4, h5, h6, h7, h8 } from '../../assets/images/hogrider';
-import { CardMedia, Grid } from '@material-ui/core';
+import { CardMedia, Grid, Typography } from '@material-ui/core';
 
+
+export const Loaders = {
+    MemberListLoader,
+    PekkaLoader
+}
+
+// pekka loader
 function Pekka(props) {
     const pekkas = [p1, p2, p3, p4, p5, p6, p7, p8];
     //const hogs = [h1, h2, h3, h4, h5, h6, h7, h8];
@@ -23,7 +30,7 @@ function Pekka(props) {
 
 Pekka.propTypes = { value: PropTypes.number.isRequired };
 
-export function PekkaLoader() {
+function PekkaLoader() {
     // const [progress, setProgress] = useState(10);
     // const [pekka, setPekka] = useState(1);
     // const pekkas = [p1, p2, p3, p4, p5, p6, p7, p8];
@@ -49,4 +56,14 @@ export function PekkaLoader() {
     );
 
     return <Pekka value={pekka.current.counter} />;
+}
+
+
+// lazy loader
+function MemberListLoader() {
+
+    return(
+        <Typography>loading..</Typography>
+    )
+
 }

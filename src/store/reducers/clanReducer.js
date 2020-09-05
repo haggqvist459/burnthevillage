@@ -22,7 +22,9 @@ function clanReducer(state = initState, action) {
             };
         case clanConstants.CLAN_SUCCESS:
 
+            localStorage.removeItem(localConstants.CLAN);
             localStorage.setItem(localConstants.CLAN, JSON.stringify(action.clan));
+            localStorage.removeItem(localConstants.CLAN_MEMBERS);
             localStorage.setItem(localConstants.CLAN_MEMBERS, JSON.stringify(action.clan.memberList));
             return {
                 ...state,
@@ -43,6 +45,7 @@ function clanReducer(state = initState, action) {
             };
         case clanConstants.WAR_SUCCESS: 
 
+            localStorage.removeItem(localConstants.CURRENT_WAR);
             localStorage.setItem(localConstants.CURRENT_WAR, JSON.stringify(action.currentWar));
             return {
                 ...state,
