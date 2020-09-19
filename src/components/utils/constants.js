@@ -56,6 +56,7 @@ export const userConstants = {
 
     UPLOAD_HISTORY: 'UPLOAD_HISTORY',
     TAG_COLLECTION: 'TAG_COLLECTION',
+    PROGRESS: 'PROGRESS',
 }
 
 export const authConstants = {

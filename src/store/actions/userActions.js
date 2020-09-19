@@ -221,3 +221,38 @@ function getUserTags(displayName) {
     function success(tags) { return { type: userConstants.TAG_COLLECTION, tags } }
     function failure(error) { return { type: userConstants.USER_FAILED, error } }
 }
+
+// function uploadImage() {
+
+//     const db = firebase.firestore();
+//     // upload history collection reference
+//     var progress;
+//     var files = e.target.files;
+//     var file;
+//     console.log(files);
+
+//     for (var i = 0; i < files.length; i++) {
+//         file = files.item(i);
+//         const uploadHistoryRef = db.collection(firestoreConstants.USER_COLLECTION).doc(displayName).collection(firestoreConstants.UPLOAD_HISTORY);
+//         uploadHistoryRef.on(
+//             "state_changed",
+//             snapshot => {
+//                 progress = Math.round(
+//                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+//                 );
+//                 UpdateProgress(progress);
+//             },
+//             error => {
+//                 console.log(error);
+//             },
+//             () => {
+//                 // completed
+//                 console.log("upload completed.")
+//             }
+//         );
+//     }
+
+    
+//     function UpdateProgress(progress) { return { type: userConstants.PROGRESS, progress } }
+
+// }
