@@ -9,6 +9,7 @@ const initState = {
     tagList: null,
     error: null,
     isFetching: false,
+    progress: null,
 }
 
 function userReducer(state = initState, action) {
@@ -17,12 +18,14 @@ function userReducer(state = initState, action) {
         case userConstants.USER_REQUEST:
 
             return {
+                ...state,
                 isFetching: true,
             };
 
         case userConstants.USER_FAILED:
 
             return {
+                ...state,
                 error: userConstants.USER_FAILED,
                 isFetching: false,
             };
@@ -48,6 +51,7 @@ function userReducer(state = initState, action) {
             localStorage.removeItem(localConstants.UPLOAD_HISTORY);
             localStorage.setItem(localConstants.UPLOAD_HISTORY, JSON.stringify(action.uploadCollection));
             return {
+                ...state,
                 uploadHistory: action.uploadCollection
             };
 
@@ -56,7 +60,14 @@ function userReducer(state = initState, action) {
             localStorage.removeItem(localConstants.TAG_COLLECTION);
             localStorage.setItem(localConstants.TAG_COLLECTION, JSON.stringify(action.tags));
             return {
+                ...state,
                 tagList: action.tags
+            }
+        
+        case userConstants.PROGRESS: 
+            return{
+                ...state,
+                progress: action.progress
             }
         default:
             return state
