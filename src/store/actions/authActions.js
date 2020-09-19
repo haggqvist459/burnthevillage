@@ -1,4 +1,4 @@
-import { localConstants, authConstants } from '../../components/utils/constants';
+import { localConstants, authConstants, firestoreConstants } from '../../components/utils/constants';
 import { firebase } from '../../components';
 import { userActions } from './userActions';
 
@@ -46,7 +46,7 @@ function signupUser(playerTag, username, email, password) {
                     });
 
                 db
-                    .collection('users')
+                    .collection(firestoreConstants.USER_COLLECTION)
                     .doc(newUser.username)
                     .set({
                         playertag: newUser.playerTag,
