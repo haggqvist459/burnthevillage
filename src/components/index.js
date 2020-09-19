@@ -5,7 +5,8 @@ import Header from './header';
 import MemberList from './memberList';
 import ViewPlayer from './viewPlayer';
 import WarList from './warList';
-import { Loaders } from './utils/loader'
+import UploadHistory from './uploadHistory';
+import { Loaders } from './utils/loader';
 
 //utils
 import { AuthContext, AuthProvider } from './utils/auth';
@@ -24,7 +25,7 @@ import { UploadIcon } from './styledmaterial/icons';
 
 
 export {
-    Footer, Hamburger, Header, MemberList, ViewPlayer, WarList, Loaders,
+    Footer, Hamburger, Header, MemberList, ViewPlayer, WarList, UploadHistory, Loaders,
     AuthContext, AuthProvider, firebase, PrivateRoute, WarClock, RandomProfileImage,
     UploadButton, SignButton, SignField, UploadIcon,
     localConstants,

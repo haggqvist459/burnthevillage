@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import '../sass/index.scss';
-import { Header, Footer, localConstants, firebase } from '../components';
+import { Header, Footer, localConstants, firebase, UploadHistory } from '../components';
 import { CircularProgress, Grid, Typography, Button, Badge, CardActionArea } from '@material-ui/core';
 import { clanActions, userActions } from '../store/actions';
 import { Group } from '@material-ui/icons';
@@ -35,15 +35,22 @@ const Profile = ({ history }) => {
         localStorage.removeItem(localConstants.PLAYER);
         localStorage.removeItem(localConstants.CLAN_TAG);
         auth.signOut();
-    }  
+    }
 
     useEffect(() => {
 
         dispatch(userActions.getUser(localStorage.getItem(localConstants.PLAYER_TAG))).then(function () {
             dispatch(clanActions.getClan(localStorage.getItem(localConstants.CLAN_TAG)))
         })
-    
+
+        dispatch(userActions.getUploadHistory(localStorage.getItem(localConstants.DISPLAY_NAME)))
+        dispatch(userActions.getUserTags(localStorage.getItem(localConstants.DISPLAY_NAME)))
+
     }, [dispatch]);
+
+    function TagList() {
+        
+    }
 
     return (
         <Grid className="wrapper">
@@ -52,21 +59,23 @@ const Profile = ({ history }) => {
 
             <Grid className="content">
 
-                <Grid className="profile_container">
-                    <Grid className="profile_container__profile_row">
+                <Grid container direction={'row'} justify={'space-around'}>
 
-                        <Grid className="profile_container__profile_row__profile_box">
+                    {/* first row with profile picture and user information */}
+                    <Grid container direction={'row'} justify={'space-evenly'} item xs={12} sm={12} md={4} lg={4} xl={4} style={{ marginTop: '5vh' }}>
 
-                            <Grid  className="profile_container__profile_row__profile_picture">
-                                <CardActionArea onClick={signOut}>
-                                   <RandomProfileImage />
-                                </CardActionArea>
-                            </Grid>
+                        <Grid container direction={'column'} item xs={6} sm={6} md={6} lg={6} xl={6}>
+                            <CardActionArea onClick={signOut} style={{ textAlign: 'center' }}>
+                                <RandomProfileImage />
+                            </CardActionArea>
+                        </Grid>
 
-                            <Grid className="profile_container__profile_row__profile_fields">
+                        <Grid container direction={'column'} item xs={6} sm={6} md={6} lg={6} xl={6}>
+
+                            <Grid container direction={'row'}>
 
                                 {localStorage.getItem(localConstants.DISPLAY_NAME) ?
-                                    <Grid className="profile_container__profile_row__profile_fields__clan">
+                                    <Grid>
                                         <Typography variant="h6">{localStorage.getItem(localConstants.DISPLAY_NAME)}</Typography>
                                     </Grid>
                                     :
@@ -74,6 +83,9 @@ const Profile = ({ history }) => {
                                         <CircularProgress color="secondary" />
                                     </Grid>
                                 }
+                            </Grid>
+
+                            <Grid container direction={'row'}>
 
                                 {clan && clan.name ?
                                     <Grid>
@@ -109,25 +121,23 @@ const Profile = ({ history }) => {
                                     </Grid>
                                 }
 
-                                <Typography className="profile_container__profile_row__profile_fields__upload_history" variant="h6">
-                                    Upload history
-                                </Typography>
-
                             </Grid>
 
                         </Grid>
-
-                        <Grid className="profile_container__profile_row__edit_profile">
-                            <Typography>edit profile</Typography>
+                        
+                        <Grid container direction={'row'} justify={'center'} item xs={12} sm={12} md={12} lg={12} xl={12}>
+                                <Typography variant={'h6'}>my tags</Typography>
+                                
                         </Grid>
 
                     </Grid>
 
-                    <Grid className="profile_container__bio_row">
-                        <Typography variant="h3">Bio:</Typography>
-
+                    {/* second row with list of user upload history */}
+                    <Grid container direction={'row'} justify={'space-evenly'} item xs={12} sm={12} md={6} lg={6} xl={6} style={{ marginTop: '5vh' }}>
+                        <Grid container direction={'column'} item xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <UploadHistory />
+                        </Grid>
                     </Grid>
-
                 </Grid>
 
             </Grid>
@@ -139,4 +149,5 @@ const Profile = ({ history }) => {
 }
 
 export default withRouter(Profile);
+
 

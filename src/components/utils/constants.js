@@ -6,10 +6,13 @@ export const localConstants = {
     PLAYER_TAG: 'playerTag',
     VIEW_PLAYER: 'viewPlayer',
 
-    CLAN: 'clan',
+    CLAN: 'clan', 
     CLAN_TAG: 'clanTag',
     CLAN_MEMBERS: 'clanMembers',
     CURRENT_WAR: 'currentWar',
+
+    UPLOAD_HISTORY: 'uploadHistory',
+    TAG_COLLECTION: 'tags'
 } 
 
 //google cloud function constants (used to make API calls)
@@ -19,6 +22,15 @@ export const cloudConstants = {
     CLAN_BY_TAG: 'https://australia-southeast1-burnthevillage.cloudfunctions.net/clanByTag/',
     CURRENT_WAR: 'https://australia-southeast1-burnthevillage.cloudfunctions.net/currentWar/',
     BIG_FETCH: 'https://australia-southeast1-burnthevillage.cloudfunctions.net/bigFetchByPlayerTag/',
+}
+
+// firestore collections
+export const firestoreConstants = {
+
+    USER_COLLECTION: 'users',
+    TAG_COLLECTION: 'tags',
+    UPLOAD_HISTORY: 'uploadHistory',
+    UPLOAD_MATCHES: 'matches'
 }
 
 // store constants
@@ -41,6 +53,9 @@ export const userConstants = {
     USER_SUCCESS: 'USER_SUCCESS',
     USER_UPDATE: 'USER_UPDATE',
     USER_FAILED: 'USER_FAILED',
+
+    UPLOAD_HISTORY: 'UPLOAD_HISTORY',
+    TAG_COLLECTION: 'TAG_COLLECTION',
 }
 
 export const authConstants = {
@@ -59,4 +74,7 @@ export const errors = {
     WAR_FAILED: 'notFound',
     USER_FAILED: 'notFound',
     TAG_FAILED: 'notFound',
+    UPLOAD_HISTORY_FAILED: 'upload history failed to fetch',
+    TAG_COLLECTION_FAILED: 'tag collection failed to fetch',
+
 }

@@ -5,6 +5,8 @@ const initState = {
     playerTag: null,
     player: null,
     clan: null,
+    uploadHistory: null,
+    tagList: null,
     error: null,
     isFetching: false,
 }
@@ -41,6 +43,21 @@ function userReducer(state = initState, action) {
         case userConstants.USER_UPDATE:
             return {};
 
+        case userConstants.UPLOAD_HISTORY:
+
+            localStorage.removeItem(localConstants.UPLOAD_HISTORY);
+            localStorage.setItem(localConstants.UPLOAD_HISTORY, JSON.stringify(action.uploadCollection));
+            return {
+                uploadHistory: action.uploadCollection
+            };
+
+        case userConstants.TAG_COLLECTION:
+
+            localStorage.removeItem(localConstants.TAG_COLLECTION);
+            localStorage.setItem(localConstants.TAG_COLLECTION, JSON.stringify(action.tags));
+            return {
+                tagList: action.tags
+            }
         default:
             return state
     }
