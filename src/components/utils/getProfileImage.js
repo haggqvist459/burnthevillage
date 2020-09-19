@@ -15,13 +15,17 @@ const images = [
     profile34, profile35, profile36, profile37, profile38, profile39, profile40, profile41, profile42, profile43, profile44
 ];
 
-function RandomProfileImage() {
-    const imageNumber = Math.floor(Math.random() * 43);
-
-    return ( <img src={images[imageNumber]} alt="random img" /> );
+function GetProfileImage({ number }) { 
+    if (!number) {
+        const random = Math.floor(Math.random() * 43);
+        return ( <img src={images[random]} alt="random img" /> )
+    }
+    else {
+        return ( <img src={images[number]} alt="random img" /> )
+    }
 }
 
-export default RandomProfileImage;
+export default GetProfileImage;
 
 
 

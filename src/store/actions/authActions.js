@@ -53,6 +53,7 @@ function signupUser(playerTag, username, email, password) {
                         username: newUser.username,
                         role: 'user',
                         createdAt: new Date(),
+                        profilePicture: Math.floor(Math.random() * 43),
                     })
                     .then(() => {
                         console.log('user stored');

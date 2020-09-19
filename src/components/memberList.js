@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MemberList = ({ history }) => {
 
-    const RandomProfileImage = lazy(() => import('./utils/randomProfileImage'));
+    const RandomProfileImage = lazy(() => import('./utils/getProfileImage'));
     const classes = useStyles();
     const { memberList, clan } = useSelector(state => state.clan);
     const dispatch = useDispatch();

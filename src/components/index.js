@@ -13,7 +13,7 @@ import { AuthContext, AuthProvider } from './utils/auth';
 import firebase from './utils/firebaseConfig';
 import PrivateRoute from './utils/privateRoute';
 import WarClock from './utils/warClock';
-import RandomProfileImage from './utils/randomProfileImage';
+import GetProfileImage from './utils/getProfileImage';
 
 //utils - constants
 import { localConstants } from './utils/constants';
@@ -26,7 +26,7 @@ import { UploadIcon } from './styledmaterial/icons';
 
 export {
     Footer, Hamburger, Header, MemberList, ViewPlayer, WarList, UploadHistory, Loaders,
-    AuthContext, AuthProvider, firebase, PrivateRoute, WarClock, RandomProfileImage,
+    AuthContext, AuthProvider, firebase, PrivateRoute, WarClock, GetProfileImage,
     UploadButton, SignButton, SignField, UploadIcon,
     localConstants,
 };
