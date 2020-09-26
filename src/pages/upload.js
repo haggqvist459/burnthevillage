@@ -59,8 +59,6 @@ const Upload = ({ history }) => {
   const uploadBucketFolder = "burnthevillageUploads/";
   const storageRef = firebase.storage().ref(uploadBucketFolder);
   const db = firebase.firestore();
-  const [imageURL, setImageURl] = useState("");
-  const [imageRef, setImageRef] = useState("");
 
 
 
@@ -73,60 +71,59 @@ const Upload = ({ history }) => {
   }
 
   const handleUpload = (e) => {
-    console.log("beginning file upload..."); 
+    console.log("beginning file upload...");
     var file = e.target.files[0];
     console.log(file);
 
-      const fileRef = storageRef.child(file.name).put(file);
-      fileRef.on(
-        "state_changed",
-        snapshot => {
-          const progress = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          setProgress(progress);
-        },
-        error => {
-          console.log(error);
-        },
-        () => {
-          setProgress(0);
-          // storageRef
-          //           .child(file.name)
-          //           .getDownloadURL()
-          //           .then(url => {
-          //               setImageURl(url);
-          //               setImageRef(uploadBucketFolder + file.name);
-          //           });
+    const fileRef = storageRef.child(file.name).put(file);
+    fileRef.on(
+      "state_changed",
+      snapshot => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        setProgress(0);
+        storageRef
+          .child(file.name)
+          .getDownloadURL()
+          .then(function (url) {
+            let bucket = uploadBucketFolder + file.name;
+            createFirestoreDocument({ url: url, bucket: bucket });
+          }).then(function () {
+            history.push('/profile');
+          })
+      }
+    );
+  };
 
-          // createFirestoreDocument();
-          history.push('/profile');
-        }
-      );
-   };
-
-  const createFirestoreDocument = (e) => {
+  function createFirestoreDocument({ url, bucket }) {
     //create a document named after the image uploaded
     //contain the fields layoutName, imageURL, layoutLink, youtubeURL, creationDate
     const createdAt = new Date().toISOString();
     const displayName = localStorage.getItem(localConstants.DISPLAY_NAME);
 
     db.collection(firestoreConstants.USER_COLLECTION).doc(displayName).collection(firestoreConstants.UPLOAD_HISTORY).doc().set({
-        // document fields
-        //created at 
-        createdAt: createdAt,
-        //image ref 
-        imageRef: imageRef,
-        //image url 
-        imageURL: imageURL,
+      // document fields
+      //created at 
+      createdAt: createdAt,
+      //image ref 
+      imageRef: bucket,
+      //image url 
+      imageURL: url,
     })
-        .then(function () {
-            console.log("Document successfully written!");
-        })
-        .catch(function (error) {
-            console.error("Error writing document: ", error);
-        });
-};
+      .then(function () {
+        console.log("Document successfully written!");
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+  };
 
   return (
     <>
