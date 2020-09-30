@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router';
 import { userActions } from '../store/actions';
+import { AuthContext } from '../components/utils/auth';
 import { firebase } from '../components';
 import { firestoreConstants, localConstants } from '../components/utils/constants';
 import '../sass/index.scss';
@@ -33,7 +34,20 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "2vmin",
     marginBottom: "2vmin",
     width: "100%",
+    // borderColor: "#101820",
+    backgroundColor: "#101820",
+    color: "white",
+    [theme.breakpoints.down('sm')]: {
+      width: "90%",
+    }
+  },
+  disabled: {
+    margin: "auto",
+    marginTop: "2vmin",
+    marginBottom: "2vmin",
+    width: "100%",
     borderColor: "#101820",
+    backgroundColor: "grey",
     color: "#101820",
     [theme.breakpoints.down('sm')]: {
       width: "90%",
@@ -59,7 +73,7 @@ const Upload = ({ history }) => {
   const uploadBucketFolder = "burnthevillageUploads/";
   const storageRef = firebase.storage().ref(uploadBucketFolder);
   const db = firebase.firestore();
-
+  const { currentUser } = useContext(AuthContext);
 
 
   const openModal = () => {
@@ -106,7 +120,8 @@ const Upload = ({ history }) => {
     //create a document named after the image uploaded
     //contain the fields layoutName, imageURL, layoutLink, youtubeURL, creationDate
     const createdAt = new Date().toISOString();
-    const displayName = localStorage.getItem(localConstants.DISPLAY_NAME);
+    var displayName = "";
+    displayName = localStorage.getItem(localConstants.DISPLAY_NAME);
 
     db.collection(firestoreConstants.USER_COLLECTION).doc(displayName).collection(firestoreConstants.UPLOAD_HISTORY).doc().set({
       // document fields
@@ -144,7 +159,8 @@ const Upload = ({ history }) => {
           {/* upload instructions  */}
           <Typography variant="h5"> Upload instructions: </Typography>
           <Typography> Center the village in your screenshots for the best result.</Typography>
-          <Typography> Screenshots from phones will work, but for the optimal results</Typography>
+          <Typography> Screenshots from phones will work, but for the optimal results use a tablet.</Typography>
+          <Typography> You need to be signed in to use this service. </Typography>
           <br />
           <input
             accept="image/*"
@@ -153,18 +169,27 @@ const Upload = ({ history }) => {
             type="file"
             onChange={handleUpload}
           />
-          <label htmlFor="contained-button-file">
-            <Button variant="outlined" className={classes.button} component="span">
-              Upload image
+
+          {currentUser ?
+            <>
+              <label htmlFor="contained-button-file">
+              <Button variant="contained" className={classes.button} component="span">
+                Upload image
             </Button>
-          </label>
-          <br />
-          <LinearProgress className={classes.progress} variant="determinate" value={progress} max="100" />
-          {/* upload input for the images */}
-          {/* progres bar for the upload progress */}
-          {/* close button perhaps */}
+            </label>
+            </>
+            :
+            <Button variant="disabled" className={classes.disabled} component="span">
+              Upload image
+            </Button>}
+          
+        <br />
+        <LinearProgress className={classes.progress} variant="determinate" value={progress} max="100" />
+        {/* upload input for the images */}
+        {/* progres bar for the upload progress */}
+        {/* close button perhaps */}
         </div>
-      </Modal>
+    </Modal>
     </>
   )
 }
