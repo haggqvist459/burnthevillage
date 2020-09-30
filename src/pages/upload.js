@@ -159,7 +159,7 @@ const Upload = ({ history }) => {
           {/* upload instructions  */}
           <Typography variant="h5"> Upload instructions: </Typography>
           <Typography> Center the village in your screenshots for the best result.</Typography>
-          <Typography> Screenshots from phones will work, but for the optimal results.</Typography>
+          <Typography> Screenshots from phones will work, but for the optimal results use a tablet.</Typography>
           <Typography> You need to be signed in to use this service. </Typography>
           <br />
           <input
