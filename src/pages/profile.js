@@ -82,7 +82,7 @@ const Profile = ({ history }) => {
 
                 <GridList cellHeight={10} className={classes.gridList} cols={1}>
                     {tagList.map((tag, index) => (
-                        <Grid container direction={'row'} justify={'space-between'} key={index}>
+                        <Grid container direction={'row'} key={index}>
                             <Grid>
                                 <Typography>{tag}</Typography>
                             </Grid>
