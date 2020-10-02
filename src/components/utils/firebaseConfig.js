@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 require('firebase/firestore')
+require('firebase/storage')
 require('firebase/auth')
 
 var firebaseConfig = {
