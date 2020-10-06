@@ -14,14 +14,14 @@ function UploadHistory({ uploads }) {
             currentList: 'uploadHistory'
         },
         list: {
-            content: null,
+            content: uploads,
         }
     })
 
     useEffect(() => {
 
         if (!state.uiState.mounted) {
-            if (uploadHistory) {
+            if (uploads) {
                 setState({
                     ...state,
                     uiState: {
@@ -29,7 +29,7 @@ function UploadHistory({ uploads }) {
                         mounted: true,
                     },
                     list: {
-                        content: uploadHistory,
+                        content: uploads,
                     }
                 })
                 console.log('list content: ', state.list.content);
@@ -49,7 +49,7 @@ function UploadHistory({ uploads }) {
                 }
             })
         }
-    }, [state, uploadHistory])
+    }, [state, uploads])
 
     function toggleMatches({ uploadItem }) {
         console.log('toggling to matches: ', uploadItem)
@@ -102,9 +102,16 @@ function UploadHistory({ uploads }) {
                 {state.uiState.currentList === "uploadHistory" ?
                     <Grid container direction={'row'} justify={'center'}>
                         <Typography>{item.createdAt}</Typography>
-                        <Badge badgeContent={item.uploadMatches.length} color="secondary">
-                            <DynamicFeed color="primary" style={{ paddingLeft: '10' }} />
-                        </Badge>
+                        {item.uploadMatches.length > 0 ?
+                            <Badge badgeContent={item.uploadMatches.length} color="secondary">
+                                <DynamicFeed color="primary" style={{ paddingLeft: '10' }} />
+                            </Badge>
+                            :
+                            <Badge badgeContent={"0"} color="secondary">
+                                <DynamicFeed color="primary" style={{ paddingLeft: '10' }} />
+                            </Badge>
+                        }
+
                     </Grid>
                     :
                     null
@@ -119,7 +126,8 @@ function UploadHistory({ uploads }) {
                 }
 
                 <Grid>
-                    <CardActionArea style={{ margin: '10px' }} onClick={() => toggleMatches({ uploadItem: item })}>
+                {state.uiState.currentList === "uploadMatches" || state.uiState.currentList === "uploadHistory" ? 
+                <CardActionArea style={{ margin: '10px' }} onClick={() => toggleMatches({ uploadItem: item })}>
                         <CardMedia
                             style={{ height: '140px' }}
                             component="img"
@@ -127,6 +135,10 @@ function UploadHistory({ uploads }) {
                             image={item.imageUrl}
                         />
                     </CardActionArea>
+                :
+                null
+                }
+                  
                 </Grid>
             </Grid>
         )

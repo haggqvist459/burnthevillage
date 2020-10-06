@@ -104,30 +104,38 @@ function getUploadHistory(displayName) {
         else {
 
             // fetch upload history from firestore
-            if (localStorage.getItem(localConstants.UPLOAD_HISTORY) == null) {
+            // if (localStorage.getItem(localConstants.UPLOAD_HISTORY) == null) {
 
-                try {
+               
+            // }
+            // else {
+            //     uploadCollection = JSON.parse(localStorage.getItem(localConstants.UPLOAD_HISTORY));
+            //     dispatch(success(uploadCollection));
+            // }
 
-                    // get upload history collection
-                    const uploadHistoryRes = await uploadHistoryRef.get()
+            try {
 
-                    // iterate every upload document to get list of matches
-                    const listUploadMatches = uploadHistoryRes.docs.map(async doc => {
+                // get upload history collection
+                const uploadHistoryRes = await uploadHistoryRef.get()
 
-                        // upload history match reference
-                        const uploadMatchRef = doc.ref.collection(firestoreConstants.UPLOAD_MATCHES);
+                // iterate every upload document to get list of matches
+                const listUploadMatches = uploadHistoryRes.docs.map(async doc => {
 
-                        // new list of matches every iteration of uploads
-                        let uploadMatches = [];
+                    // upload history match reference
+                    const uploadMatchRef = doc.ref.collection(firestoreConstants.UPLOAD_MATCHES);
 
-                        // get matching bases
-                        await uploadMatchRef.get()
-                            .catch(function (error) {
-                                console.log(error);
-                                throw new Error(errors.UPLOAD_HISTORY_FAILED);
-                            })
-                            .then(function (matchSnap) {
-                                // iterate every match document, push to list of matches
+                    // new list of matches every iteration of uploads
+                    let uploadMatches = [];
+
+                    // get matching bases
+                    await uploadMatchRef.get()
+                        .catch(function (error) {
+                            console.log(error);
+                            throw new Error(errors.UPLOAD_HISTORY_FAILED);
+                        })
+                        .then(function (matchSnap) {
+                            // iterate every match document, push to list of matches
+                            if (matchSnap) {
                                 matchSnap.forEach(async function (match) {
 
                                     let matchRes = {
@@ -136,32 +144,29 @@ function getUploadHistory(displayName) {
                                     };
                                     uploadMatches.push(matchRes);
                                 })
-                            })
-                        // store upload with list of matching bases
-                        let upload = {
-                            createdAt: moment(doc.data().createdAt.toDate()).calendar(),
-                            imageUrl: doc.data().imageUrl,
-                            uploadMatches: uploadMatches
-                        }
-                        // push upload to list of uploads
-                        uploadCollection.push(upload);
-                    })
+                            }
+                        })
+                    let date = doc.data().createdAt.toDate();
+                    // store upload with list of matching bases
+                    let upload = {
+                        createdAt: moment(date).format("YYYY-MM-DD"),
+                        imageUrl: doc.data().imageUrl,
+                        uploadMatches: uploadMatches
+                    }
+                    // push upload to list of uploads
+                    uploadCollection.push(upload);
+                })
 
-                    // wait for iterator to finish
-                    await Promise.all(listUploadMatches);
+                // wait for iterator to finish
+                await Promise.all(listUploadMatches);
 
-                    // send upload collection to reducer
-                    console.log('list length: ', uploadCollection.length);
-                    dispatch(success(uploadCollection));
-
-                } catch (error) {
-                    console.log('get upload history error: ' + error);
-                    return error;
-                }
-            }
-            else {
-                uploadCollection = JSON.parse(localStorage.getItem(localConstants.UPLOAD_HISTORY));
+                // send upload collection to reducer
+                console.log('list length: ', uploadCollection.length);
                 dispatch(success(uploadCollection));
+
+            } catch (error) {
+                console.log('get upload history error: ' + error);
+                return error;
             }
         }
 

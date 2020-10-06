@@ -165,7 +165,7 @@ const Profile = ({ history }) => {
                     <Grid container direction={'row'} justify={'space-evenly'} item xs={12} sm={12} md={6} lg={6} xl={6} style={{ marginTop: '5vh' }}>
                         <Typography variant={'h6'} style={{ marginBottom: '30px' }}>uploads</Typography>
                         <Grid container direction={'column'} item xs={12} sm={12} md={12} lg={12} xl={12} style={{ height: '100%' }}>
-                            <UploadHistory />
+                            <UploadHistory uploads={uploadHistory}/>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -8,6 +8,7 @@ import '../sass/index.scss';
 import { Hamburger, UploadButton, UploadIcon } from '../components';
 import { Grid, Modal, Typography, LinearProgress, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -119,7 +120,8 @@ const Upload = ({ history }) => {
   function createFirestoreDocument({ url, bucket }) {
     //create a document named after the image uploaded
     //contain the fields layoutName, imageURL, layoutLink, youtubeURL, creationDate
-    const createdAt = new Date().toISOString();
+    const createdAt = new Date();
+    moment(createdAt).format("YYYY-MM-DD");
     var displayName = "";
     displayName = localStorage.getItem(localConstants.DISPLAY_NAME);
 
@@ -128,9 +130,9 @@ const Upload = ({ history }) => {
       //created at 
       createdAt: createdAt,
       //image ref 
-      imageRef: bucket,
+      //imageRef: bucket,
       //image url 
-      imageURL: url,
+      imageUrl: url,
     })
       .then(function () {
         console.log("Document successfully written!");
